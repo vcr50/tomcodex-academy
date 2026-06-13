@@ -16,6 +16,7 @@
     "course-poc.html": "Capstone Project",
     "personalized-paths.html": "My Learning Path",
     "interview.html": "AI Interviewer",
+    "placement-guidance.html": "Placement Guidance",
     "code-review-ai.html": "Code Review AI",
     "study-groups.html": "Study Groups",
     "discussion-forums.html": "Forums",
@@ -40,6 +41,7 @@
       ["course-admin.html", "Check My Work", "Answer lab questions to verify your Salesforce setup"],
       ["course-admin.html", "AI Mastery Test", "15-question module evaluation"],
       ["interview.html", "AI Interviewer", "Technical and behavioral mock interviews"],
+      ["placement-guidance.html", "Placement Guidance", "Companies, referrals, and outreach templates"],
       ["code-review-ai.html", "Code Review AI", "Review Apex/LWC code and flows"],
       ["resume-generator.html", "Resume Project Generator", "Generate project resume points"]
     ] },

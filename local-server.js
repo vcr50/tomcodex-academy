@@ -918,6 +918,7 @@ const protectedAcademyPages = [
   "course-poc.html",
   "personalized-paths.html",
   "interview.html",
+  "placement-guidance.html",
   "code-review-ai.html",
   "resume-generator.html",
   "study-groups.html",

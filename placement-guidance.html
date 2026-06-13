@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Salesforce placement guidance, company discovery, resume tools, and outreach templates.">
+  <title>Placement Guidance | TomCodeX AI Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/placement-guidance.css">
+  <script src="js/academy-guard.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="academy-home.html"><span>TC</span><strong>Tom<span>CodeX</span> Academy</strong></a>
+    <nav aria-label="Academy tools">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="personalized-paths.html">Roadmap</a>
+      <a href="interview.html">Interview</a>
+      <a class="active" href="placement-guidance.html" aria-current="page">Placement Guidance</a>
+      <a href="resume-generator.html">Resume Builder</a>
+    </nav>
+    <b class="ai-badge"><i></i> AI-Powered</b>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <section class="profile-card">
+        <div class="profile-head"><span>TC</span><div><strong>Career Launchpad</strong><small>PLACEMENT READY</small></div></div>
+        <div class="profile-stats"><div><b>4</b><span>CITIES</span></div><div><b>21</b><span>COMPANIES</span></div><div><b>3</b><span>TOOLS</span></div><div><b>AI</b><span>RESUME</span></div></div>
+      </section>
+      <p class="side-label">PLACEMENT TOOLS</p>
+      <button class="side-link active" data-view="companies"><span>01</span> Companies Directory</button>
+      <button class="side-link" data-view="outreach"><span>02</span> Outreach Center</button>
+      <a class="side-link" href="resume-generator.html?tab=templates"><span>03</span> Resume Builder</a>
+      <a class="side-link" href="interview.html"><span>04</span> Mock Interview</a>
+      <p class="side-label">JOB CHANNELS</p>
+      <a class="side-link" href="https://www.linkedin.com/jobs/search/?keywords=Salesforce" target="_blank" rel="noopener noreferrer"><span>↗</span> LinkedIn Jobs</a>
+      <a class="side-link" href="https://trailblazercommunitygroups.com/" target="_blank" rel="noopener noreferrer"><span>↗</span> Trailblazer Community</a>
+    </aside>
+
+    <main>
+      <section class="hero">
+        <span class="eyebrow"><i></i> SALESFORCE CAREER LAUNCHPAD</span>
+        <h1>Find the right team.<br><em>Start the conversation.</em></h1>
+        <p>Explore Salesforce employers by city, find relevant professionals, and generate focused outreach that gets your profile noticed.</p>
+        <div class="hero-actions"><button data-open-view="companies">Explore Companies</button><button class="secondary" data-open-view="outreach">Build Outreach Message</button></div>
+        <div class="hero-stats"><div><b>21</b><span>CURATED EMPLOYERS</span></div><div><b>4</b><span>TECH HUBS</span></div><div><b>3</b><span>OUTREACH TEMPLATES</span></div><div><b>1</b><span>CAREER PLAN</span></div></div>
+      </section>
+
+      <section class="view active" id="view-companies">
+        <div class="section-heading"><div><span>COMPANY DIRECTORY</span><h2>Salesforce employers near you</h2></div><label>City<select id="cityFilter"><option value="all">All Cities</option><option value="Chennai">Chennai</option><option value="Bangalore">Bangalore</option><option value="Hyderabad">Hyderabad</option><option value="Kochi">Kochi</option></select></label></div>
+        <div class="company-grid" id="companyGrid"></div>
+      </section>
+
+      <section class="view" id="view-outreach">
+        <div class="section-heading"><div><span>OUTREACH CENTER</span><h2>Generate a focused introduction</h2></div></div>
+        <div class="outreach-layout">
+          <form class="panel" id="outreachForm">
+            <label>Contact name<input id="contactName" value="Rahul Sharma"></label>
+            <label>Company<input id="companyName" value="Accenture"></label>
+            <label>Your name<input id="studentName" value="Salesforce Professional"></label>
+            <label>Target role<input id="targetRole" value="Salesforce Developer"></label>
+            <label>Message type<select id="messageType"><option value="referral">Cold referral request</option><option value="recruiter">Recruiter pitch</option><option value="job">Job application follow-up</option></select></label>
+          </form>
+          <section class="panel output-panel"><div><span>GENERATED MESSAGE</span><button id="copyMessage">Copy Message</button></div><textarea id="messageOutput" readonly></textarea></section>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="js/placement-guidance.js"></script>
+  <script src="js/site-nav.js"></script>
+</body>
+</html>

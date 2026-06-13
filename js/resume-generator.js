@@ -621,13 +621,15 @@
   function setupTabListeners() {
     const tabPointsBtn = el("tabPointsBtn");
     const tabTemplatesBtn = el("tabTemplatesBtn");
+    const tabGuidanceBtn = el("tabGuidanceBtn");
     const pointsTabContent = el("pointsTabContent");
     const templatesTabContent = el("templatesTabContent");
+    const guidanceTabContent = el("guidanceTabContent");
 
     if (!tabPointsBtn || !tabTemplatesBtn) return;
 
-    const ALL_TABS = [tabPointsBtn, tabTemplatesBtn];
-    const ALL_CONTENTS = [pointsTabContent, templatesTabContent];
+    const ALL_TABS = [tabPointsBtn, tabTemplatesBtn, tabGuidanceBtn].filter(Boolean);
+    const ALL_CONTENTS = [pointsTabContent, templatesTabContent, guidanceTabContent].filter(Boolean);
 
     function deactivateAll() {
       ALL_TABS.forEach(btn => {
@@ -652,12 +654,24 @@
       renderLiveResume();
     });
 
+    if (tabGuidanceBtn) {
+      tabGuidanceBtn.addEventListener("click", () => {
+        activateTab(tabGuidanceBtn, guidanceTabContent);
+        setupPlacementGuidanceTab();
+      });
+    }
+
     // Check query params on load
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get("tab") === "templates") {
       activateTab(tabTemplatesBtn, templatesTabContent);
       updateTplHistoryDropdown();
       renderLiveResume();
+    } else if (urlParams.get("tab") === "guidance") {
+      if (tabGuidanceBtn) {
+        activateTab(tabGuidanceBtn, guidanceTabContent);
+        setupPlacementGuidanceTab();
+      }
     } else if (urlParams.get("tab") === "ats") {
       activateTab(tabTemplatesBtn, templatesTabContent);
       updateTplHistoryDropdown();
@@ -1320,6 +1334,321 @@
     }
 
     el("atsResultState")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  // ── Placement Guidance Tab ──────────────────────────────────────────────────
+
+  const SALESFORCE_COMPANIES = [
+    {
+      name: "Salesforce India",
+      tier: "office",
+      tierLabel: "Corporate Office",
+      cities: ["hyderabad", "bangalore"],
+      careerPage: "https://www.salesforce.com/in/company/careers/",
+      description: "Official India headquarters managing product engineering, support, and professional services."
+    },
+    {
+      name: "Cognizant",
+      tier: "global",
+      tierLabel: "Global Strategic Partner",
+      cities: ["chennai", "bangalore", "hyderabad"],
+      careerPage: "https://careers.cognizant.com/global/en",
+      description: "Leading Salesforce service provider with a massive global delivery network and specialized CRM consulting."
+    },
+    {
+      name: "Wipro",
+      tier: "global",
+      tierLabel: "Global Strategic Partner",
+      cities: ["chennai", "bangalore", "hyderabad", "kochi"],
+      careerPage: "https://careers.wipro.com/global-rinse",
+      description: "End-to-end Salesforce digital transformation services spanning multi-cloud consulting and custom development."
+    },
+    {
+      name: "TCS (Tata Consultancy Services)",
+      tier: "global",
+      tierLabel: "Global Strategic Partner",
+      cities: ["chennai", "bangalore", "hyderabad", "kochi"],
+      careerPage: "https://www.tcs.com/careers",
+      description: "Largest Indian IT consultant with extensive enterprise Salesforce migrations and industry-specific cloud solutions."
+    },
+    {
+      name: "Accenture",
+      tier: "global",
+      tierLabel: "Global Strategic Partner",
+      cities: ["bangalore", "chennai", "hyderabad"],
+      careerPage: "https://www.accenture.com/in-en/careers",
+      description: "Recognized leader in global Salesforce consulting, programmatic integrations, and complex business deployments."
+    },
+    {
+      name: "Deloitte",
+      tier: "global",
+      tierLabel: "Global Strategic Partner",
+      cities: ["bangalore", "hyderabad", "chennai"],
+      careerPage: "https://www2.deloitte.com/in/en/careers/careers.html",
+      description: "Deloitte Digital provides business advisory, UI design, and cloud strategy integration on Salesforce platforms."
+    },
+    {
+      name: "PwC India",
+      tier: "global",
+      tierLabel: "Global Strategic Partner",
+      cities: ["bangalore", "hyderabad", "chennai"],
+      careerPage: "https://www.pwc.in/careers.html",
+      description: "Focuses on strategic CRM deployments, analytics insights, and regulatory cloud integrations."
+    },
+    {
+      name: "IBM India",
+      tier: "global",
+      tierLabel: "Global Strategic Partner",
+      cities: ["bangalore", "hyderabad", "chennai"],
+      careerPage: "https://www.ibm.com/in-en/employment",
+      description: "Combines Salesforce solutions with IBM watsonx AI systems for autonomous customer service solutions."
+    },
+    {
+      name: "HCL Technologies",
+      tier: "global",
+      tierLabel: "Global Strategic Partner",
+      cities: ["chennai", "bangalore", "hyderabad"],
+      careerPage: "https://www.hcltech.com/careers",
+      description: "Broad Salesforce engineering division focused on programmatic customizations, APIs, and cloud services."
+    },
+    {
+      name: "Capgemini",
+      tier: "global",
+      tierLabel: "Global Strategic Partner",
+      cities: ["bangalore", "chennai", "hyderabad"],
+      careerPage: "https://www.capgemini.com/in-en/careers/",
+      description: "Global consulting and digital delivery specializing in Lightning components (LWC) and multi-cloud systems."
+    },
+    {
+      name: "Tech Mahindra",
+      tier: "crest",
+      tierLabel: "Crest Partner",
+      cities: ["hyderabad", "chennai", "bangalore"],
+      careerPage: "https://www.techmahindra.com/en-in/careers/",
+      description: "Crest-tier partner delivering specialized telecom and enterprise CRM solution engineering."
+    },
+    {
+      name: "Birlasoft",
+      tier: "crest",
+      tierLabel: "Crest Partner",
+      cities: ["chennai", "bangalore", "hyderabad"],
+      careerPage: "https://www.birlasoft.com/careers",
+      description: "Delivers mid-market and enterprise Salesforce optimizations with rapid time-to-value."
+    },
+    {
+      name: "LTIMindtree",
+      tier: "crest",
+      tierLabel: "Crest Partner",
+      cities: ["bangalore", "chennai", "hyderabad"],
+      careerPage: "https://www.ltimindtree.com/careers/",
+      description: "Aggressive CRM division providing customized programmatic migrations and Lightning transformations."
+    },
+    {
+      name: "Virtusa",
+      tier: "crest",
+      tierLabel: "Crest Partner",
+      cities: ["hyderabad", "chennai", "bangalore"],
+      careerPage: "https://www.virtusa.com/careers",
+      description: "Engineering-centric partner specialized in Salesforce financial services cloud and programmatic triggers."
+    },
+    {
+      name: "EPAM Systems",
+      tier: "crest",
+      tierLabel: "Crest Partner",
+      cities: ["hyderabad", "bangalore"],
+      careerPage: "https://www.epam.com/careers",
+      description: "Highly programmatic team of engineers specialized in custom Apex developments and complex integrations."
+    },
+    {
+      name: "Genpact",
+      tier: "crest",
+      tierLabel: "Crest Partner",
+      cities: ["hyderabad", "bangalore"],
+      careerPage: "https://www.genpact.com/careers",
+      description: "Integrates Salesforce CRM with operations databases to streamline customer engagement cycles."
+    },
+    {
+      name: "Persistent Systems",
+      tier: "crest",
+      tierLabel: "Crest Partner",
+      cities: ["hyderabad", "bangalore"],
+      careerPage: "https://www.persistent.com/careers/",
+      description: "Product engineering partner offering Salesforce health cloud implementations and programmatic APIs."
+    },
+    {
+      name: "UST Global",
+      tier: "crest",
+      tierLabel: "Crest Partner",
+      cities: ["kochi", "bangalore", "chennai", "hyderabad"],
+      careerPage: "https://www.ust.com/en/careers",
+      description: "Crest-tier partner with a massive delivery center in Kochi InfoPark. Specialized in LWC and Flows."
+    },
+    {
+      name: "IBS Software",
+      tier: "ridge",
+      tierLabel: "Ridge Partner",
+      cities: ["kochi", "bangalore"],
+      careerPage: "https://www.ibssoftware.com/careers",
+      description: "Ridge-tier partner headquartered in Kochi focusing on travel/hospitality logistics cloud integrations."
+    },
+    {
+      name: "Experion Technologies",
+      tier: "base",
+      tierLabel: "Base Partner",
+      cities: ["kochi", "bangalore"],
+      careerPage: "https://www.experionglobal.com/careers/",
+      description: "Boutique Salesforce consultancy delivering custom Lightning configurations and data loader services."
+    },
+    {
+      name: "KeyValue Software Systems",
+      tier: "base",
+      tierLabel: "Base Partner",
+      cities: ["kochi"],
+      careerPage: "https://keyvalue.systems/careers",
+      description: "High-growth software engineering house in Kochi providing custom web applications integrated with Salesforce."
+    }
+  ];
+
+  let isGuidanceInitialized = false;
+
+  function setupPlacementGuidanceTab() {
+    if (isGuidanceInitialized) return;
+    isGuidanceInitialized = true;
+
+    const citySelect = el("guidanceCitySelect");
+    if (citySelect) {
+      citySelect.addEventListener("change", renderCompanyGrid);
+    }
+
+    const outreachName = el("outreachName");
+    const outreachCompany = el("outreachCompany");
+    const outreachType = el("outreachType");
+    const copyOutreachBtn = el("copyOutreachBtn");
+
+    if (outreachName) outreachName.addEventListener("input", updateOutreachMessage);
+    if (outreachCompany) outreachCompany.addEventListener("input", updateOutreachMessage);
+    if (outreachType) outreachType.addEventListener("change", updateOutreachMessage);
+
+    if (copyOutreachBtn) {
+      copyOutreachBtn.addEventListener("click", () => {
+        const txt = el("outreachMessageText")?.value || "";
+        if (txt) {
+          navigator.clipboard.writeText(txt).then(() => {
+            const origText = copyOutreachBtn.innerHTML;
+            copyOutreachBtn.innerHTML = `
+              <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3" class="text-emerald-400"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              <span class="text-[10px] font-bold text-emerald-400">Copied!</span>
+            `;
+            setTimeout(() => {
+              copyOutreachBtn.innerHTML = origText;
+            }, 1500);
+          });
+        }
+      });
+    }
+
+    renderCompanyGrid();
+    updateOutreachMessage();
+  }
+
+  function renderCompanyGrid() {
+    const citySelect = el("guidanceCitySelect");
+    const companyGrid = el("companyDirectoryGrid");
+    if (!companyGrid) return;
+
+    const selectedCity = citySelect ? citySelect.value : "all";
+
+    const filtered = SALESFORCE_COMPANIES.filter(c => {
+      if (selectedCity === "all") return true;
+      return c.cities.includes(selectedCity);
+    });
+
+    companyGrid.innerHTML = filtered.map(c => {
+      const cityLabels = c.cities.map(ct => ct.charAt(0).toUpperCase() + ct.slice(1)).join(", ");
+      
+      const searchCity = selectedCity === "all" ? c.cities[0] : selectedCity;
+      const linkedinSearchUrl = `https://www.linkedin.com/search/results/people/?keywords=Salesforce%20${encodeURIComponent(c.name)}%20${encodeURIComponent(searchCity)}`;
+
+      return `
+        <article class="company-card">
+          <div>
+            <div class="company-header">
+              <strong class="text-sm font-bold text-slate-800">${c.name}</strong>
+              <span class="partner-badge ${c.tier}">${c.tierLabel}</span>
+            </div>
+            <p class="text-[11px] text-slate-500 leading-relaxed mb-4">${c.description}</p>
+          </div>
+          
+          <div class="flex flex-col gap-2 pt-3 border-t border-slate-100 mt-2">
+            <div class="flex items-center justify-between text-[9px] font-bold text-slate-400">
+              <span class="city-tag">
+                <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="currentColor" stroke-width="3" class="shrink-0"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                ${cityLabels}
+              </span>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-2 mt-2">
+              <a href="${c.careerPage}" target="_blank" class="text-center bg-slate-50 hover:bg-slate-100 border border-slate-200/60 rounded-lg py-2 text-[10px] font-bold text-slate-700 transition flex items-center justify-center gap-1">
+                Careers Site
+                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+              <a href="${linkedinSearchUrl}" target="_blank" class="text-center bg-blue-50 hover:bg-blue-100 border border-blue-100 rounded-lg py-2 text-[10px] font-bold text-blue-700 transition flex items-center justify-center gap-1">
+                LinkedIn Contacts
+                <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function updateOutreachMessage() {
+    const contactName = el("outreachName")?.value.trim() || "[Name]";
+    const company = el("outreachCompany")?.value.trim() || "[Company]";
+    const outreachType = el("outreachType")?.value || "referral";
+    const messageTextarea = el("outreachMessageText");
+
+    if (!messageTextarea) return;
+
+    // Pull student details dynamically from Templates tab inputs
+    const name = el("tplName")?.value || "Vijay Kumar";
+    const linkedin = el("tplLinkedIn")?.value || "linkedin.com/in/vijay-salesforce";
+    const email = el("tplEmail")?.value || "vijay@example.com";
+    const phone = el("tplPhone")?.value || "+1 (555) 019-2834";
+
+    const roleSelect = el("roleSelect");
+    const roleName = roleSelect ? roleSelect.options[roleSelect.selectedIndex].text : "Salesforce Developer";
+
+    let msg = "";
+
+    if (outreachType === "referral") {
+      msg = `Hi ${contactName},
+
+I hope you are doing well! 
+
+I noticed you work at ${company} as a Salesforce professional. I'm a Salesforce developer specializing in programmatic Apex, LWC development, and declarative Flows. I have been building a Student Success CRM portfolio project and was hoping to connect.
+
+If you have a moment, I would love to learn more about the Salesforce engineering culture at ${company} and see if you would be open to referring me for any open ${roleName} roles.
+
+Thanks so much,
+${name}
+https://${linkedin}`;
+    } else {
+      msg = `Hi ${contactName},
+
+I hope you're having a great week.
+
+I saw that ${company} is growing its Salesforce team. I am an active Salesforce professional with practical experience building complex automation schemes (Apex handlers, Lightning Web Components, and Agentforce classifiers).
+
+I've attached my portfolio details and was wondering if you are currently hiring for junior/mid-level ${roleName} positions? I would love to share my resume if you have an active opening.
+
+Best regards,
+${name}
+${email} | ${phone}`;
+    }
+
+    messageTextarea.value = msg;
   }
 
 })();

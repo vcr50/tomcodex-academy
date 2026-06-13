@@ -61,6 +61,10 @@
       <button id="tabTemplatesBtn" type="button" class="px-6 py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition focus:outline-none">
         Resume Maker Templates
       </button>
+      <button id="tabGuidanceBtn" type="button" class="px-6 py-3 border-b-2 border-transparent text-slate-500 hover:text-slate-800 transition focus:outline-none flex items-center gap-1.5">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        Placement Guidance
+      </button>
     </div>
 
     <!-- Tab 1: Points Generator -->
@@ -431,6 +435,144 @@
               <div>
                 <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-3">Strengths Detected</span>
                 <div id="atsStrengthList" class="space-y-2"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 3: Placement Guidance -->
+    <div id="guidanceTabContent" class="hidden space-y-8 animate-fadeIn">
+      <!-- Title Header -->
+      <div class="rounded-2xl bg-brand-950 p-8 text-white shadow-xl relative overflow-hidden">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-brand-500 rounded-full opacity-10 blur-2xl"></div>
+        <span class="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-cyan-200">
+          Career Placement Network
+        </span>
+        <h2 class="mt-4 text-2xl font-extrabold tracking-tight sm:text-3xl">
+          Salesforce Career & Placement Guidance
+        </h2>
+        <p class="mt-2 max-w-3xl text-sm text-slate-300 leading-relaxed">
+          Navigate active job channels, browse top Salesforce service companies in your region, and dynamically generate personalized LinkedIn referral requests.
+        </p>
+      </div>
+
+      <!-- Main Columns -->
+      <div class="grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
+        <!-- Left Column: Company Directory & Filters -->
+        <div class="space-y-6">
+          <!-- Filter Bar -->
+          <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h3 class="text-base font-bold text-brand-950">Salesforce Service Employers</h3>
+              <p class="text-xs text-slate-400 mt-0.5">Filter official partner offices and recruiters in your preferred location.</p>
+            </div>
+            <div class="min-w-[200px]">
+              <label for="guidanceCitySelect" class="sr-only">Select City</label>
+              <select id="guidanceCitySelect" class="w-full rounded-xl border border-slate-200 bg-slate-50 p-3 font-bold text-slate-800 focus:border-brand-500 focus:outline-none transition">
+                <option value="all">All Cities (Chennai, Bangalore, Hyd, Kochi)</option>
+                <option value="chennai">Chennai</option>
+                <option value="bangalore">Bangalore</option>
+                <option value="hyderabad">Hyderabad</option>
+                <option value="kochi">Kochi</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Company Grid -->
+          <div id="companyDirectoryGrid" class="grid gap-4 sm:grid-cols-2">
+            <!-- Dynamically populated company cards -->
+          </div>
+        </div>
+
+        <!-- Right Column: Referrals & Outreach Message Generator -->
+        <div class="space-y-8">
+          <!-- Referral Networks Card -->
+          <section class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+            <h3 class="text-base font-bold text-brand-950 border-b border-slate-100 pb-3 mb-4 flex items-center gap-1.5">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" class="text-brand-500"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              TomCodex Placement Networks
+            </h3>
+            <div class="space-y-3">
+              <a href="https://linkedin.com/jobs" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100 transition group">
+                <div class="flex items-center gap-3">
+                  <span class="p-2 rounded-lg bg-blue-50 text-blue-600 group-hover:bg-blue-100 transition">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                  </span>
+                  <div>
+                    <strong class="text-xs font-bold text-slate-800">LinkedIn Salesforce Jobs</strong>
+                    <p class="text-[10px] text-slate-400">Search active Salesforce developer and admin roles.</p>
+                  </div>
+                </div>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" class="text-slate-400 group-hover:translate-x-0.5 transition"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+
+              <a href="#" class="flex items-center justify-between p-3.5 rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100 transition group">
+                <div class="flex items-center gap-3">
+                  <span class="p-2 rounded-lg bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 transition">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                  </span>
+                  <div>
+                    <strong class="text-xs font-bold text-slate-800">Verified Alumni Referrals</strong>
+                    <p class="text-[10px] text-slate-400">Connect with past students who got hired as Salesforce specialists.</p>
+                  </div>
+                </div>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" class="text-slate-400 group-hover:translate-x-0.5 transition"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+
+              <a href="#" class="flex items-center justify-between p-3.5 rounded-xl border border-slate-100 bg-slate-50 hover:bg-slate-100 transition group">
+                <div class="flex items-center gap-3">
+                  <span class="p-2 rounded-lg bg-purple-50 text-purple-600 group-hover:bg-purple-100 transition">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                  </span>
+                  <div>
+                    <strong class="text-xs font-bold text-slate-800">Discord Placement Channel</strong>
+                    <p class="text-[10px] text-slate-400">Join daily peer discussions and job postings in #placements.</p>
+                  </div>
+                </div>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" class="text-slate-400 group-hover:translate-x-0.5 transition"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
+            </div>
+          </section>
+
+          <!-- Outreach Message Generator -->
+          <section class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-4">
+            <div>
+              <h3 class="text-base font-bold text-brand-950 flex items-center gap-1.5">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" class="text-indigo-500"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                LinkedIn Outreach Script Generator
+              </h3>
+              <p class="text-[11px] text-slate-400 mt-0.5">Customize an optimized pitch script based on your active target title.</p>
+            </div>
+
+            <div class="space-y-3">
+              <div class="grid gap-3 sm:grid-cols-2">
+                <div>
+                  <label for="outreachName" class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Employee / Contact Name</label>
+                  <input type="text" id="outreachName" class="w-full rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-xs font-medium text-slate-800 focus:border-brand-500 focus:outline-none transition" placeholder="e.g. Rahul Kumar">
+                </div>
+
+                <div>
+                  <label for="outreachCompany" class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Target Company</label>
+                  <input type="text" id="outreachCompany" class="w-full rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-xs font-medium text-slate-800 focus:border-brand-500 focus:outline-none transition" placeholder="e.g. Accenture">
+                </div>
+              </div>
+
+              <div>
+                <label for="outreachType" class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Outreach Scenario</label>
+                <select id="outreachType" class="w-full rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-xs font-bold text-slate-800 focus:border-brand-500 focus:outline-none transition">
+                  <option value="referral">Cold Outreach (Referral Request)</option>
+                  <option value="recruiter">Recruiter Pitch (Hiring Manager)</option>
+                </select>
+              </div>
+
+              <div class="relative group mt-3">
+                <textarea id="outreachMessageText" class="w-full h-36 p-3 font-mono text-[11px] bg-slate-900 text-slate-100 rounded-xl border border-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-500 leading-relaxed" readonly></textarea>
+                <button id="copyOutreachBtn" class="absolute top-2.5 right-2.5 p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition shadow-sm border border-slate-700 flex items-center gap-1">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span class="text-[10px] font-bold">Copy</span>
+                </button>
               </div>
             </div>
           </section>

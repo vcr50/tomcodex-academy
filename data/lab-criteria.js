@@ -57,6 +57,24 @@ export const LAB_CRITERIA = {
         type: "text",
         minLength: 3,
         hint: "Look at your browser address bar when logged in. The subdomain before .lightning.force.com is your org's unique URL."
+      },
+      {
+        id: "c6",
+        question: "Confirm your LEITR spaced review schedule (in days) to reinforce learning.",
+        type: "text",
+        acceptedValues: [
+          "1 day, 3 days, 7 days",
+          "1, 3, 7",
+          "1, 3, 7 days",
+          "1 day, 3 day, 7 day",
+          "1,3,7",
+          "1,3,7 days",
+          "1 day, 3 days, 7 days spaced review",
+          "1 day,3 days,7 days",
+          "1, 3, and 7 days",
+          "1, 3, and 7"
+        ],
+        hint: "According to the LEITR study system, what are the three spaced intervals for reviewing your notes and automation?"
       }
     ]
   },

@@ -2,7 +2,17 @@
 // The API key stays on the server and is never returned to the browser.
 export function registerAiEvaluatorRoute(app) {
   app.post("/api/ai/evaluate-mastery", async (request, response) => {
-    const { course, module, questions, answers, lessonPoints, passScore = 80, minimumQuestionCount = 15 } = request.body;
+    const {
+      course,
+      module,
+      questions,
+      answers,
+      lessonPoints,
+      passScore = 80,
+      minimumQuestionCount = 15,
+      evaluationCriteria = [],
+      projectEvidence = []
+    } = request.body;
 
     if (!Array.isArray(questions) || !Array.isArray(answers) || questions.length < minimumQuestionCount || answers.length < minimumQuestionCount) {
       return response.status(400).json({ error: `A minimum of ${minimumQuestionCount} answered questions is required.` });
@@ -16,9 +26,13 @@ export function registerAiEvaluatorRoute(app) {
 Evaluate if the student has demonstrated mastery (overall score >= 80) of the concepts.
 
 Lesson points to verify: ${(lessonPoints || []).join(" | ")}
+Evaluation criteria: ${(evaluationCriteria || []).join(" | ") || "Concept understanding | Hands-on completion | Correct Salesforce naming | Business explanation | Mistake awareness | Real-time job readiness"}
+Expected project evidence: ${(projectEvidence || []).join(" | ") || "Use the module lesson and practical requirements."}
 
 For each of the ${questions.length} questions, review the student's answer:
 - Assign a score from 0 to 100 based on technical accuracy, use of correct terminology, and practical explanation.
+- For a question containing "Correct answer:", award 100 only when the selected answer exactly matches it; otherwise award 0.
+- For scenario and practical questions, require business reasoning, correct Salesforce names, testing or evidence, and mistake awareness.
 - Provide constructive feedback.
 
 Questions:
@@ -81,11 +95,14 @@ Return ONLY a valid JSON object (no markdown, no backticks, no code block format
         rubric: {
           passScore,
           minimumQuestionCount,
-          criteria: ["technical accuracy", "clarity", "Salesforce terminology", "practical example"]
+          criteria: evaluationCriteria.length
+            ? evaluationCriteria
+            : ["technical accuracy", "clarity", "Salesforce terminology", "practical example"]
         },
         course,
         module,
         lessonPoints,
+        projectEvidence,
         questions,
         answers
       })

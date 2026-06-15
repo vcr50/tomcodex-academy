@@ -12,7 +12,10 @@ const localHostnames = new Set(["localhost", "127.0.0.1"]);
 const isStaticLocalPreview = window.location.protocol === "file:"
   || (localHostnames.has(window.location.hostname) && window.location.port !== "3000");
 if (isStaticLocalPreview) {
-  const localAcademyUrl = new URL(`${window.location.pathname || "/index.html"}${window.location.search}${window.location.hash}`, "http://localhost:3000");
+  const previewPath = window.location.protocol === "file:"
+    ? `/${window.location.pathname.split("/").pop() || "index.html"}`
+    : window.location.pathname || "/index.html";
+  const localAcademyUrl = new URL(`${previewPath}${window.location.search}${window.location.hash}`, "http://localhost:3000");
   window.location.replace(localAcademyUrl.href);
 }
 let existingSession = {};

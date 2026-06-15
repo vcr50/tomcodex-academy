@@ -107,12 +107,25 @@
       .match(/[a-z]{4,}/g) || [];
     const uniqueKeywords = [...new Set(lessonKeywords)].slice(0, 24);
     const feedback = answers.map((answer, index) => {
+      const question = String(questions[index] || "");
+      const correctAnswerMatch = question.match(/\nCorrect answer:\s*([\s\S]+)$/i);
+      if (correctAnswerMatch) {
+        const correctAnswer = correctAnswerMatch[1].trim();
+        const isCorrect = answer.trim() === correctAnswer;
+        return {
+          question: question.replace(/\nCorrect answer:[\s\S]+$/i, ""),
+          score: isCorrect ? 100 : 0,
+          feedback: isCorrect
+            ? "Correct. This answer matches the module's recommended Salesforce approach."
+            : "Review the module concept and select the answer that follows the recommended Salesforce Admin approach."
+        };
+      }
       const text = answer.trim().toLowerCase();
       const words = text ? text.split(/\s+/).length : 0;
       const matched = uniqueKeywords.filter((keyword) => text.includes(keyword)).length;
       const score = Math.min(100, Math.round(words * 1.4 + matched * 7));
       return {
-        question: questions[index],
+        question,
         score,
         feedback: score >= 80
           ? "Strong answer with useful detail and relevant Salesforce concepts."

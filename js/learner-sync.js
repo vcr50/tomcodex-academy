@@ -6,6 +6,7 @@
     || key === "tomcodex.personalizedPath.v1"
     || key === "tomcodex.aiCodeReviews.v1"
     || key === "tomcodex.adminCourseProgress.v1"
+    || key === "tomcodex.dailyJournalLogs.v1"
     || /^tomcodex\.(admin|apex|flow|lwc|integration|agentforce|poc)MasteryScores\.v1(\.finalExam)?$/.test(key);
   const originalSetItem = Storage.prototype.setItem;
   let pending = Promise.resolve();

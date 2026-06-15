@@ -23,11 +23,12 @@
     "peer-review.html": "Peer Review",
     "analytics.html": "Analytics",
     "gamification-dashboard.html": "Achievements",
+    "daily-log.html": "Daily Study Log",
     "access.html": "Login"
   };
   const learnItems = [
     ["course-admin.html", "Salesforce Admin", "Administration, security, data, and reporting"],
-    ["course-flow.html", "Flow Automation", "Low-code automation and delivery"],
+    ["course-flow.html", "Flow Mastery", "Basic-to-advanced practical automation"],
     ["course-apex.html", "Apex Development", "Code, triggers, testing, and integrations"],
     ["course-lwc.html", "Lightning Web Components", "Modern Salesforce user interfaces"],
     ["course-integration.html", "Salesforce Integration", "REST APIs, Named Credentials, and OAuth setups"],
@@ -53,6 +54,7 @@
       ["analytics.html", "Learning Analytics", "Consistency heatmap & metrics"],
       ["dashboard.html?tab=passport", "Skill Passport", "Verified credentials and passport portfolio"],
       ["gamification-dashboard.html", "Achievements", "Streaks, badges, and leaderboards"],
+      ["daily-log.html", "Daily Study Log", "Accountability journal & daily progress log"],
       ["resume-generator.html?tab=templates", "Resume Maker Templates", "Salesforce resume layouts & structures"]
     ] }
   ];

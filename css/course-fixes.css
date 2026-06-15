@@ -112,6 +112,70 @@
   flex: none;
 }
 
+.zentom-specialist-points {
+  display: grid;
+  gap: .4rem;
+  margin-top: .85rem;
+}
+
+.zentom-specialist-points span {
+  border-radius: .65rem;
+  background: var(--clr-brand-light);
+  padding: .45rem .6rem;
+  color: var(--clr-brand-text);
+  font-size: .66rem;
+  font-weight: 800;
+}
+
+.zentom-specialist-banner {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: .7rem;
+  border: 1px solid #67e8f9;
+  border-radius: .9rem;
+  background: linear-gradient(135deg, #ecfeff, #eef8ff);
+  padding: .55rem .8rem;
+}
+
+.zentom-specialist-banner img {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.zentom-specialist-banner span {
+  color: #075985;
+  font-size: .55rem;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.zentom-specialist-banner h3 {
+  margin-top: .1rem;
+  color: #062c3a;
+  font-size: .82rem;
+  font-weight: 900;
+}
+
+.zentom-specialist-banner p {
+  margin-top: .1rem;
+  color: #475569;
+  font-size: .65rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 560px) {
+  .zentom-specialist-banner {
+    grid-template-columns: auto 1fr;
+  }
+
+  .zentom-specialist-banner img {
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+}
+
 .course-doubt-answer {
   margin-top: 0.8rem;
   border: 1px solid var(--clr-border);
@@ -663,9 +727,18 @@
   font-size: 85%;
 }
 
-/* Fix sidebar overlap on desktop scroll by disabling sticky panel */
-.sticky-panel {
-  position: static !important;
+/* Keep curriculum available on wide screens without overlapping compact layouts. */
+@media (min-width: 1025px) {
+  .sticky-panel {
+    position: sticky !important;
+    top: 1rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sticky-panel {
+    position: static !important;
+  }
 }
 
 /* Premium Styling for Ask Zentom AI Card Elements */
@@ -702,3 +775,137 @@
   outline: none;
 }
 
+.practice-track-card {
+  display: grid;
+  gap: 1rem;
+  color: var(--clr-text-2);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.practice-track-card h4 {
+  color: var(--clr-text);
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.practice-track-label {
+  width: fit-content;
+  border-radius: 999px;
+  background: var(--clr-brand-light);
+  padding: 0.35rem 0.65rem;
+  color: var(--clr-brand-text);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.trailhead-resource-grid,
+.project-task-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.trailhead-resource-grid a,
+.project-task-group,
+.project-purpose,
+.project-build-steps,
+.project-expected {
+  border: 1px solid var(--clr-border);
+  border-radius: 0.9rem;
+  background: var(--clr-card-bg);
+  padding: 0.8rem;
+}
+
+.trailhead-resource-grid a {
+  display: grid;
+  gap: 0.25rem;
+  color: var(--clr-brand-text);
+}
+
+.trailhead-resource-grid a span {
+  color: var(--clr-text-3);
+  font-size: 0.65rem;
+}
+
+.project-name {
+  color: var(--clr-brand-text);
+  font-weight: 800;
+}
+
+.project-task-group > strong,
+.project-purpose > strong,
+.project-build-steps > strong,
+.project-expected > strong {
+  color: var(--clr-text);
+  font-size: 0.7rem;
+}
+
+.project-task-group ul,
+.project-build-steps ol {
+  margin-top: 0.45rem;
+  padding-left: 1.05rem;
+}
+
+.project-task-group ul {
+  list-style: disc;
+}
+
+.project-build-steps ol {
+  list-style: decimal;
+}
+
+.project-task-group li,
+.project-build-steps li {
+  margin-top: 0.3rem;
+}
+
+.mastery-question-card {
+  border: 1px solid var(--clr-border);
+  border-radius: 1rem;
+  background: var(--clr-card-bg);
+  padding: 0.9rem;
+}
+
+.mastery-question-type {
+  display: inline-flex;
+  margin-bottom: 0.55rem;
+  border-radius: 999px;
+  background: var(--clr-brand-light);
+  padding: 0.25rem 0.5rem;
+  color: var(--clr-brand-text);
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.mastery-answer-list select {
+  width: 100%;
+  border: 1px solid var(--clr-border);
+  border-radius: 0.75rem;
+  background: var(--clr-bg);
+  padding: 0.7rem;
+  color: var(--clr-text);
+  font-size: 0.75rem;
+}
+
+.mastery-answer-list select:focus {
+  border-color: var(--clr-brand);
+  box-shadow: 0 0 0 3px var(--clr-brand-light);
+  outline: none;
+}
+
+@media (max-width: 700px) {
+  .trailhead-resource-grid,
+  .project-task-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .practice-track-card,
+  .mastery-question-card {
+    font-size: 0.7rem;
+  }
+}

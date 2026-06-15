@@ -41,6 +41,12 @@ app.use((_request, response, next) => {
   next();
 });
 app.use(express.json({ limit: "15mb" }));
+app.use((request, response, next) => {
+  const localFileRoute = request.path.match(/^\/[a-z]:\/.*\/([a-z0-9._-]+\.html)$/i);
+  if (!localFileRoute) return next();
+  const query = request.originalUrl.includes("?") ? request.originalUrl.slice(request.originalUrl.indexOf("?")) : "";
+  return response.redirect(`/${localFileRoute[1]}${query}`);
+});
 
 function secureMatch(value, expected) {
   const valueBuffer = Buffer.from(String(value || ""));
@@ -124,6 +130,7 @@ function supportedProgressKey(key) {
     || key === "tomcodex.personalizedPath.v1"
     || key === "tomcodex.aiCodeReviews.v1"
     || key === "tomcodex.adminCourseProgress.v1"
+    || key === "tomcodex.dailyJournalLogs.v1"
     || key === ADMIN_LAB_ATTEMPTS_KEY
     || key === SKILL_PASSPORT_KEY
     || key === MODULE_UNLOCKS_KEY

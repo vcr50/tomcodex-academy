@@ -16,6 +16,7 @@
  */
 
 const GEMINI_BASE = "https://generativelanguage.googleapis.com/v1beta/models";
+const ZENTOM_SALESFORCE_IDENTITY = "Zentom is a Salesforce-specialized learning LLM grounded in Academy curriculum, Salesforce terminology, practical implementation patterns, certification concepts, and lab-verification rules.";
 
 // ─── Speed Mode Detector (single source of truth) ────────────────────────────
 const DEEP_SIGNALS = ["design", "architect", "compare", "difference", "explain in depth",
@@ -32,16 +33,22 @@ export function chooseEfficientMode(doubt = "") {
 
 // ─── Speed Mode Prompt Templates ─────────────────────────────────────────────
 const SPEED_PROMPTS = {
-  flash: (topic, doubt) => `You are Zentom, a concise Salesforce AI tutor.
+  flash: (topic, doubt, context = "") => `${ZENTOM_SALESFORCE_IDENTITY}
+Act as a concise Salesforce AI tutor.
 Topic: ${topic}. Student question: ${doubt}
+${context ? `Academy course context:\n${context}\n` : ""}
 Reply in 3–5 bullet points. Use Salesforce terminology. No filler.`,
 
-  normal: (topic, doubt) => `You are Zentom, a Salesforce AI tutor.
+  normal: (topic, doubt, context = "") => `${ZENTOM_SALESFORCE_IDENTITY}
+Act as a Salesforce AI tutor.
 Topic: ${topic}. Student question: ${doubt}
+${context ? `Academy course context:\n${context}\n` : ""}
 Give a clear explanation (150–250 words) with one real Salesforce example. Use bullet points where helpful.`,
 
-  deep: (topic, doubt) => `You are Zentom, a senior Salesforce architect and trainer.
+  deep: (topic, doubt, context = "") => `${ZENTOM_SALESFORCE_IDENTITY}
+Act as a senior Salesforce architect and trainer.
 Topic: ${topic}. Student question: ${doubt}
+${context ? `Academy course context:\n${context}\n` : ""}
 Provide a thorough response (300–500 words) covering:
 1. Core concept with Salesforce-specific context
 2. Step-by-step implementation or comparison
@@ -257,12 +264,13 @@ class AIEngine {
   // ─────────────────────────────────────────────────────────────────────────
 
   // ── 1. AI Trainer ─────────────────────────────────────────────────────────
-  async handleTrain({ topic, doubt, answerMode, speedMode, history }, key) {
+  async handleTrain({ topic, doubt, answerMode, speedMode, history, context }, key) {
     const resolvedMode = speedMode === "auto" || !speedMode
       ? chooseEfficientMode(doubt)
       : speedMode;
     const promptFn = SPEED_PROMPTS[resolvedMode] || SPEED_PROMPTS.normal;
-    const prompt = promptFn(topic, doubt);
+    const courseContext = String(context || "").slice(0, 6000);
+    const prompt = promptFn(topic, doubt, courseContext);
 
     const contents = [];
     if (history && Array.isArray(history) && history.length > 0) {
@@ -270,7 +278,7 @@ class AIEngine {
         if (idx === 0 && msg.role === "user") {
           contents.push({
             role: "user",
-            parts: [{ text: promptFn(topic, msg.text) }]
+            parts: [{ text: promptFn(topic, msg.text, courseContext) }]
           });
         } else {
           contents.push({
@@ -281,7 +289,7 @@ class AIEngine {
       });
       contents.push({
         role: "user",
-        parts: [{ text: `Follow-up question on the topic '${topic}': ${doubt}` }]
+        parts: [{ text: `${courseContext ? `Academy course context:\n${courseContext}\n\n` : ""}Follow-up question on the topic '${topic}': ${doubt}` }]
       });
     } else {
       contents.push({
@@ -301,7 +309,8 @@ class AIEngine {
 
   // ── 2. Generate Mastery Questions ─────────────────────────────────────────
   async handleGenerateQuestions({ course, module, lessonPoints = [], practice = [], questionCount = 15 }, key) {
-    const prompt = `You are a senior Salesforce Assessment Expert creating a mastery test for "${course}" course, "${module}" module.
+    const prompt = `${ZENTOM_SALESFORCE_IDENTITY}
+Act as a senior Salesforce Assessment Expert creating a mastery test for "${course}" course, "${module}" module.
 
 Generate exactly ${Math.max(questionCount, 15)} open-ended short-answer questions that test deep understanding.
 
@@ -330,15 +339,29 @@ Return ONLY a valid JSON array of question strings, no markdown, no numbering:
   }
 
   // ── 3. Evaluate Mastery ───────────────────────────────────────────────────
-  async handleEvaluateMastery({ course, module, questions, answers, lessonPoints = [], passScore = 80, minimumQuestionCount = 15 }, key) {
+  async handleEvaluateMastery({
+    course,
+    module,
+    questions,
+    answers,
+    lessonPoints = [],
+    passScore = 80,
+    minimumQuestionCount = 15,
+    evaluationCriteria = [],
+    projectEvidence = []
+  }, key) {
     if (!Array.isArray(questions) || questions.length < minimumQuestionCount
       || !Array.isArray(answers) || answers.length < minimumQuestionCount) {
       throw new Error(`Minimum of ${minimumQuestionCount} answered questions required.`);
     }
 
-    const prompt = `You are a Senior Salesforce Trainer evaluating student mastery for "${course}" course, "${module}" module.
+    const prompt = `${ZENTOM_SALESFORCE_IDENTITY}
+Act as a Senior Salesforce Trainer evaluating student mastery for "${course}" course, "${module}" module.
 Lesson points: ${lessonPoints.join(" | ")}
-
+Evaluation criteria: ${evaluationCriteria.join(" | ") || "Concept understanding | Hands-on completion | Correct Salesforce naming | Business explanation | Mistake awareness | Real-time job readiness"}
+Expected project evidence: ${projectEvidence.join(" | ") || "Use the module lesson and practical requirements."}
+For questions containing "Correct answer:", award 100 only for an exact matching selected answer; otherwise award 0.
+For scenario and practical questions, require business reasoning, correct Salesforce naming, testing or evidence, and mistake awareness.
 For each question, score 0–100 based on technical accuracy, Salesforce terminology, and practical understanding.
 
 ${questions.map((q, i) => `Q${i + 1}: ${q}\nA${i + 1}: ${answers[i]}`).join("\n\n")}
@@ -382,7 +405,8 @@ Return ONLY valid JSON:
     const needsAI = results.filter(r => r.confidence === "needs-ai");
 
     if (needsAI.length > 0 && key) {
-      const aiPrompt = `You are a Salesforce lab verifier for "${courseName}", "${moduleName}".
+      const aiPrompt = `${ZENTOM_SALESFORCE_IDENTITY}
+Act as a Salesforce lab verifier for "${courseName}", "${moduleName}".
 For each question decide if the student's answer is CORRECT. Be lenient on phrasing, strict on technical accuracy.
 
 ${needsAI.map((r, i) => `Q${i + 1}: ${r.question}\nStudent: "${r.answer}"`).join("\n\n")}

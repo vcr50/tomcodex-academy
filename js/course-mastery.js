@@ -4,7 +4,7 @@
     masteryKey: "tomcodex.adminMasteryScores.v1",
     courseName: "Salesforce Administrator",
     recordLabel: "Admin",
-    moduleHours: 3
+    moduleHours: 6
   };
   const modules = config.modules;
   const MASTERY_KEY = config.masteryKey;
@@ -16,9 +16,19 @@
   const FINAL_EXAM_QUESTION_COUNT = 60;
   const FINAL_EXAM_SECONDS = 60 * 60;
   const FINAL_EXAM_PASS_SCORE = 65;
-  let currentModule = 0;
+  const MODULE_SELECTION_KEY = `${MASTERY_KEY}.selectedModule`;
+  const requestedModuleParam = new URLSearchParams(window.location.search).get("module");
+  const requestedModule = requestedModuleParam === null ? NaN : Number(requestedModuleParam);
+  const savedModule = Number(localStorage.getItem(MODULE_SELECTION_KEY));
+  let currentModule = Number.isInteger(requestedModule) && requestedModule >= 0 && requestedModule < modules.length
+    ? requestedModule
+    : Number.isInteger(savedModule) && savedModule >= 0 && savedModule < modules.length
+      ? savedModule
+      : 0;
   let masteryScores = loadScores();
   let activeTestQuestions = [];
+  let flashcardIndex = 0;
+  let flashcardShowingAnswer = false;
   let finalExamQuestions = [];
   let finalExamTimer;
   let finalExamSecondsLeft = FINAL_EXAM_SECONDS;
@@ -139,7 +149,7 @@
           <span class="text-xs bg-lime/20 text-lime px-3 py-1 rounded-full font-bold uppercase tracking-wider">Founder Access Required</span>
           <h2 class="mt-6 text-3xl font-extrabold text-white">Unlock all modules in the program</h2>
           <p class="mt-4 text-slate-300 text-sm leading-6">
-            You are currently on the <strong>Free Starter Access</strong> tier. Complete all 14 Salesforce Admin modules, get unlimited Check My Work AI reviews, certification simulators, and verified completion credentials.
+            You are currently on the <strong>Free Starter Access</strong> tier. Complete all ${modules.length} Salesforce Admin modules, get unlimited Check My Work AI reviews, certification simulators, and verified completion credentials.
           </p>
           
           <div class="mt-8 p-4 bg-white/5 rounded-xl border border-white/10 text-left text-xs space-y-2">
@@ -215,20 +225,75 @@
       
       if (index === currentModule) buttonClass += " active";
       
-      return `<button type="button" data-module="${index}" ${disabledAttr} class="${buttonClass}"><span class="module-number">${icon}</span><span><strong>${module.title}</strong><span>${moduleState.label}</span></span></button>`;
+      const trackLabel = module.subCourse?.title ? `${module.subCourse.title} · ` : "";
+      return `<button type="button" data-module="${index}" ${disabledAttr} class="${buttonClass}"><span class="module-number">${icon}</span><span><strong>${module.title}</strong><span>${trackLabel}${moduleState.label}</span></span></button>`;
     }).join("");
 
-    document.querySelectorAll("[data-module]").forEach((button) => button.addEventListener("click", () => {
-      const index = Number(button.dataset.module);
-      const moduleState = getModuleState(index);
-      if (moduleState.state === "paywall") {
-        showPaywall(index);
-        return;
+    const moduleSelect = el("moduleSelect");
+    if (moduleSelect) {
+      moduleSelect.innerHTML = modules.map((module, index) => {
+        const moduleState = getModuleState(index);
+        const unavailable = moduleState.state === "gated" ? " disabled" : "";
+        const track = module.subCourse?.title || courseName;
+        return `<option value="${index}"${index === currentModule ? " selected" : ""}${unavailable}>Module ${index + 1}: ${module.title} - ${track}</option>`;
+      }).join("");
+      moduleSelect.onchange = () => selectModuleAndShowContent(Number(moduleSelect.value));
+    }
+
+    el("moduleNav").onclick = (event) => {
+      const button = event.target.closest("[data-module]");
+      if (!button || !el("moduleNav").contains(button)) return;
+      selectModuleAndShowContent(Number(button.dataset.module));
+    };
+  }
+
+  function selectModuleAndShowContent(index) {
+    if (!Number.isInteger(index) || index < 0 || index >= modules.length) return;
+    const moduleState = getModuleState(index);
+    if (moduleState.state === "paywall") {
+      showPaywall(index);
+      return;
+    }
+    if (moduleState.state === "gated") return;
+    currentModule = index;
+    localStorage.setItem(MODULE_SELECTION_KEY, String(index));
+    const selectedUrl = new URL(window.location.href);
+    selectedUrl.searchParams.set("module", String(index));
+    window.history.replaceState({}, "", selectedUrl);
+    render();
+    el("moduleContent")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function navigateToAdjacentModule(direction) {
+    const targetIndex = currentModule + direction;
+    if (targetIndex < 0 || targetIndex >= modules.length) {
+      if (direction > 0 && currentModule === modules.length - 1 && (isAdmin || passed(currentModule))) {
+        el("finalExamSection")?.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-      if (moduleState.state === "gated") return;
-      currentModule = index;
-      render();
-    }));
+      return;
+    }
+    if (direction > 0 && !isAdmin && !passed(currentModule)) return;
+    selectModuleAndShowContent(targetIndex);
+  }
+
+  function updateModuleNavigationButtons(isPassed) {
+    const previousTitle = modules[currentModule - 1]?.title;
+    const nextTitle = modules[currentModule + 1]?.title;
+    const previousButtons = [el("previousModuleTopBtn"), el("previousModuleBtn")].filter(Boolean);
+    const nextButtons = [el("nextModuleTopBtn"), el("nextModuleBtn")].filter(Boolean);
+
+    previousButtons.forEach((button) => {
+      button.disabled = currentModule === 0;
+      button.textContent = previousTitle ? `Previous: ${previousTitle}` : "Previous module";
+    });
+    nextButtons.forEach((button) => {
+      button.disabled = !isAdmin && !isPassed;
+      button.textContent = nextTitle
+        ? `Next: ${nextTitle}`
+        : isAdmin || isPassed
+          ? "Go to final exam"
+          : "Pass 80% to unlock final exam";
+    });
   }
 
   function renderProgress() {
@@ -603,7 +668,7 @@
     const module = modules[currentModule];
     const moduleId = `${courseKey}-${currentModule + 1}`;
     const labId = `${courseKey}-${currentModule + 1}-lab-1`;
-    const labCriteria = module.labCriteria || window.TomCodexLabCriteria?.[`${courseKey}-${currentModule}`]?.criteria || [];
+    const labCriteria = module.richContent?.labCriteria || module.labCriteria || window.TomCodexLabCriteria?.[`${courseKey}-${currentModule}`]?.criteria || [];
 
     try {
       const res = await fetch("/api/academy/verify-lab", {
@@ -738,6 +803,149 @@
     box.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
 
+  function renderNamedItems(label, items = []) {
+    return `<div class="project-task-group"><strong>${label}</strong><ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul></div>`;
+  }
+
+  function renderTrailheadPractice(practice) {
+    if (!practice) return "";
+    return `
+      <div class="practice-track-card">
+        <span class="practice-track-label">Track A: Official Salesforce Trailhead</span>
+        <h4>${practice.title}</h4>
+        <p>${practice.purpose}</p>
+        <div class="trailhead-resource-grid">
+          ${(practice.resources || []).map(([name, url]) => `<a href="${url}" target="_blank" rel="noopener noreferrer"><strong>${name}</strong><span>Open official Trailhead resource &#8599;</span></a>`).join("")}
+        </div>
+        ${renderNamedItems("Hands-on challenges", practice.tasks)}
+      </div>
+    `;
+  }
+
+  function renderProjectTask(projectName, task) {
+    if (!task) return "";
+    return `
+      <div class="practice-track-card project-track-card">
+        <span class="practice-track-label">Track B: Continuous TomCodeX Project</span>
+        <p class="project-name">${projectName}</p>
+        <h4>${task.title}</h4>
+        <div class="project-purpose"><strong>Business purpose</strong><p>${task.purpose}</p></div>
+        <div class="project-task-grid">
+          ${renderNamedItems("Object names", task.objects)}
+          ${renderNamedItems("Field names", task.fields)}
+          ${renderNamedItems("Flow names", task.flows)}
+          ${renderNamedItems("Report and dashboard names", task.reportsDashboards)}
+          ${renderNamedItems("Apex and LWC names", task.apexLwc)}
+        </div>
+        <div class="project-build-steps"><strong>Step-by-step build instructions</strong><ol>${task.steps.map((step) => `<li>${step}</li>`).join("")}</ol></div>
+        <div class="project-expected"><strong>Expected output</strong><p>${task.expected}</p></div>
+        ${renderNamedItems("AI validation criteria", task.validation)}
+      </div>
+    `;
+  }
+
+  function initLeitrRemindersUI() {
+    const toggleBtn = el("leitrScheduleToggleBtn");
+    const confirmBtn = el("leitrConfirmBtn");
+    const controlPanel = el("leitrSchedulerControl");
+    const statusText = el("leitrSchedulerStatus");
+    const reviewStep = el("leitrReviewStep");
+
+    if (!confirmBtn || !controlPanel || !statusText) return;
+
+    const module = modules[currentModule];
+    const courseKey = COURSE_KEY_MAP[courseName] || "admin";
+
+    // Toggle configure panel when clicking the rule button or review step
+    const togglePanel = () => {
+      controlPanel.classList.toggle("hidden");
+    };
+    if (toggleBtn) toggleBtn.onclick = togglePanel;
+    if (reviewStep) reviewStep.onclick = togglePanel;
+
+    // Load active reminders from localStorage
+    function updateStatus() {
+      let reminders = [];
+      try {
+        reminders = JSON.parse(localStorage.getItem("tomcodex.leitrReminders.v1")) || [];
+      } catch (e) {}
+
+      // Filter reminders for this course and module
+      const active = reminders.filter(r => r.courseName === courseName && r.moduleTitle === module.title);
+
+      const days1 = el("leitrDays1");
+      const days3 = el("leitrDays3");
+      const days7 = el("leitrDays7");
+
+      if (days1) days1.checked = active.some(r => r.days === 1);
+      if (days3) days3.checked = active.some(r => r.days === 3);
+      if (days7) days7.checked = active.some(r => r.days === 7);
+
+      if (active.length === 0) {
+        statusText.textContent = "No active review reminders.";
+      } else {
+        const parts = active.map(r => {
+          const dateStr = new Date(r.dueDate).toLocaleDateString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+          return `${r.days}-day (${r.notified ? "completed" : `due ${dateStr}`})`;
+        });
+        statusText.textContent = "Active: " + parts.join(", ");
+      }
+    }
+
+    updateStatus();
+
+    // Confirm schedule
+    confirmBtn.onclick = async () => {
+      if (!("Notification" in window)) {
+        alert("This browser does not support desktop notifications.");
+        return;
+      }
+
+      if (Notification.permission !== "granted") {
+        const permission = await Notification.requestPermission();
+        if (permission !== "granted") {
+          alert("Notification permission denied. Cannot schedule reminders.");
+          return;
+        }
+      }
+
+      const days1 = el("leitrDays1")?.checked;
+      const days3 = el("leitrDays3")?.checked;
+      const days7 = el("leitrDays7")?.checked;
+
+      let reminders = [];
+      try {
+        reminders = JSON.parse(localStorage.getItem("tomcodex.leitrReminders.v1")) || [];
+      } catch (e) {}
+
+      // Remove any existing reminders for this specific course & module
+      reminders = reminders.filter(r => !(r.courseName === courseName && r.moduleTitle === module.title));
+
+      const now = Date.now();
+      const intervals = [];
+      if (days1) intervals.push(1);
+      if (days3) intervals.push(3);
+      if (days7) intervals.push(7);
+
+      intervals.forEach(d => {
+        const dueDate = now + d * 24 * 60 * 60 * 1000;
+        reminders.push({
+          id: `${courseKey}-mod${currentModule}-day${d}-${now}`,
+          courseName: courseName,
+          moduleTitle: module.title,
+          days: d,
+          dueDate: dueDate,
+          notified: false
+        });
+      });
+
+      localStorage.setItem("tomcodex.leitrReminders.v1", JSON.stringify(reminders));
+      updateStatus();
+      alert("Spaced review reminders confirmed!");
+      controlPanel.classList.add("hidden");
+    };
+  }
+
   function render() {
     const moduleState = getModuleState(currentModule);
     if (moduleState.state === "paywall") {
@@ -767,7 +975,8 @@
 
     const module = modules[currentModule];
     const isPassed = passed(currentModule);
-    el("moduleLabel").textContent = `Module ${currentModule + 1} of ${modules.length} · ${isAdmin ? "Admin access" : `About ${moduleHours} hours`}`;
+    const subCourseLabel = module.subCourse?.title ? `${module.subCourse.title} · ` : "";
+    el("moduleLabel").textContent = `Module ${currentModule + 1} of ${modules.length} · ${subCourseLabel}${isAdmin ? "Admin access" : `About ${moduleHours} hours`}`;
     el("moduleTitle").textContent = module.title;
     el("moduleDescription").textContent = module.description;
 
@@ -781,21 +990,94 @@
     }
 
     if (hasRich) {
+      const preModuleSetup = module.richContent.preModuleSetup;
+      el("preModuleSetupSection")?.classList.toggle("hidden", !preModuleSetup);
+      if (preModuleSetup) {
+        el("preModuleSetupTitle").textContent = preModuleSetup.title;
+        el("preModuleSetupIntroduction").textContent = preModuleSetup.introduction;
+        el("preModuleSetupOptions").innerHTML = preModuleSetup.options.map((item) => `<li>${item}</li>`).join("");
+        el("preModuleSetupSteps").innerHTML = preModuleSetup.steps.map((item) => `<li>${item}</li>`).join("");
+        el("preModuleSafetyNotes").innerHTML = preModuleSetup.safetyNotes.map((item) => `<li>${item}</li>`).join("");
+        el("preModuleReadinessChecklist").innerHTML = preModuleSetup.readinessChecklist.map((item) => `<li class="flex items-start gap-2"><span class="font-bold text-emerald-700">✓</span><span>${item}</span></li>`).join("");
+      }
+      const projectConnection = module.richContent.projectConnection;
+      el("projectConnectionSection")?.classList.toggle("hidden", !projectConnection);
+      if (projectConnection) {
+        el("projectBuildsOn").textContent = projectConnection.buildsOn;
+        el("projectBuildsNow").textContent = projectConnection.buildsNow;
+        el("projectPreparesNext").textContent = projectConnection.preparesNext;
+      }
       el("richGoal").textContent = module.richContent.moduleGoal;
       el("richOutcomes").innerHTML = module.richContent.learningOutcomes.map((out) => `<li>${out}</li>`).join("");
       el("richExplanation").innerHTML = module.richContent.simpleExplanation;
+      const mainSyllabus = module.richContent.mainSyllabus;
+      el("richMainSyllabusSection")?.classList.toggle("hidden", !mainSyllabus?.content);
+      if (mainSyllabus?.content) {
+        el("richMainSyllabusTitle").textContent = mainSyllabus.title;
+        el("richMainSyllabusIntroduction").textContent = mainSyllabus.introduction;
+        el("richMainSyllabusContent").innerHTML = mainSyllabus.content;
+      }
+      const detailedLesson = module.richContent.detailedLessonSections || [];
+      el("richDetailedLessonSection")?.classList.toggle("hidden", detailedLesson.length === 0);
+      if (el("detailedLessonCount")) {
+        el("detailedLessonCount").textContent = `${detailedLesson.length} deep lessons`;
+      }
+      if (el("richDetailedLesson")) {
+        el("richDetailedLesson").innerHTML = detailedLesson.map((section, sectionIndex) => `
+          <details class="module-lesson-card" ${sectionIndex < 2 ? "open" : ""}>
+            <summary>
+              <span class="module-lesson-index">${String(sectionIndex + 1).padStart(2, "0")}</span>
+              <strong>${section.title}</strong>
+              <span class="module-lesson-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="module-lesson-body space-y-2">${section.content}</div>
+          </details>
+        `).join("");
+      }
+      const keyNotes = module.richContent.keyNotes || [];
+      el("richKeyNotesSection")?.classList.toggle("hidden", keyNotes.length === 0);
+      if (el("richKeyNotes")) el("richKeyNotes").innerHTML = keyNotes.map((item) => `<div class="module-key-note">${item}</div>`).join("");
+      const flashcards = module.richContent.flashcards || [];
+      el("richFlashcardsSection")?.classList.toggle("hidden", flashcards.length === 0);
+      flashcardIndex = Math.min(flashcardIndex, Math.max(0, flashcards.length - 1));
+      flashcardShowingAnswer = false;
+      renderFlashcard(flashcards);
       el("richBusiness").innerHTML = module.richContent.realBusinessExample;
       el("richWhereUsed").innerHTML = module.richContent.whereUsed;
       el("richStepByStep").innerHTML = module.richContent.stepByStepImplementation.map((step) => `<li>${step}</li>`).join("");
+      const trailheadPractice = module.richContent.trailheadPractice;
+      el("richTrailheadPracticeSection")?.classList.toggle("hidden", !trailheadPractice);
+      if (el("richTrailheadPractice")) el("richTrailheadPractice").innerHTML = renderTrailheadPractice(trailheadPractice);
+      const projectTask = module.richContent.projectTask;
+      el("richProjectTaskSection")?.classList.toggle("hidden", !projectTask);
+      if (el("richProjectTask")) el("richProjectTask").innerHTML = renderProjectTask(module.richContent.projectName, projectTask);
+      const projectEvidence = module.richContent.projectEvidence || [];
+      el("richProjectEvidenceSection")?.classList.toggle("hidden", projectEvidence.length === 0);
+      if (el("richProjectEvidence")) el("richProjectEvidence").innerHTML = projectEvidence.map((item) => `<li>${item}</li>`).join("");
       el("richBestPractices").innerHTML = module.richContent.bestPractices.map((bp) => `<li>${bp}</li>`).join("");
       el("richCommonMistakes").innerHTML = module.richContent.commonMistakes.map((cm) => `<li>${cm}</li>`).join("");
       el("richWhyMatters").innerHTML = module.richContent.whyMattersInJob;
       el("richInterview").innerHTML = module.richContent.interviewQuestions.map((q) => `<li>${q}</li>`).join("");
-      el("richLabDescription").innerHTML = module.richContent.handsOnLab.instructions;
+      const assignment = module.richContent.practicalAssignment || [];
+      el("richAssignmentSection")?.classList.toggle("hidden", assignment.length === 0);
+      if (el("richAssignment")) el("richAssignment").innerHTML = assignment.map((item) => `<li>${item}</li>`).join("");
+      const knowledgeCheck = module.richContent.knowledgeCheckQuestions || [];
+      el("richKnowledgeCheckSection")?.classList.toggle("hidden", knowledgeCheck.length === 0);
+      if (el("richKnowledgeCheck")) el("richKnowledgeCheck").innerHTML = knowledgeCheck.map((item) => `<li>${item}</li>`).join("");
+      const checklist = module.richContent.completionChecklist || [];
+      el("richChecklistSection")?.classList.toggle("hidden", checklist.length === 0);
+      if (el("richChecklist")) el("richChecklist").innerHTML = checklist.map((item) => `<li class="flex items-start gap-2"><span class="font-bold text-brand-600">✓</span><span>${item}</span></li>`).join("");
+      const finalSummary = module.richContent.finalSummary || "";
+      el("richSummarySection")?.classList.toggle("hidden", !finalSummary);
+      if (el("richSummary")) el("richSummary").textContent = finalSummary;
+      const masteryPrep = module.richContent.masteryPreparationQuestions || [];
+      el("richMasteryPrepSection")?.classList.toggle("hidden", masteryPrep.length === 0);
+      if (el("richMasteryPrep")) el("richMasteryPrep").innerHTML = masteryPrep.map((item) => `<li>${item}</li>`).join("");
+      el("richLabDescription").innerHTML = module.richContent.handsOnLab?.instructions || "";
 
       // Render Check My Work criteria form
       const courseKey = COURSE_KEY_MAP[courseName] || "admin";
-      const labCriteria = module.labCriteria || window.TomCodexLabCriteria?.[`${courseKey}-${currentModule}`]?.criteria || [];
+      const labCriteria = module.richContent?.labCriteria || module.labCriteria || window.TomCodexLabCriteria?.[`${courseKey}-${currentModule}`]?.criteria || [];
       renderLabCriteriaForm(labCriteria);
 
       // Restore previous result if exists
@@ -817,31 +1099,78 @@
     el("completeModuleBtn").textContent = isPassed ? `Mastery passed: ${scoreFor(currentModule)}%` : "AI mastery test required";
     el("completeModuleBtn").classList.toggle("done", isPassed);
     el("startMasteryTestBtn").textContent = isPassed ? "Retake AI mastery test" : "Start AI mastery test";
-    el("previousModuleBtn").disabled = currentModule === 0;
-    el("nextModuleBtn").disabled = !isAdmin && !isPassed;
-    el("nextModuleBtn").textContent = currentModule === modules.length - 1 ? isAdmin || isPassed ? "Go to final exam" : "Pass 80% to unlock final exam" : isAdmin || isPassed ? "Next module" : "Pass 80% to unlock next";
+    updateModuleNavigationButtons(isPassed);
     el("masteryTestPanel").classList.add("hidden");
     el("masteryResult").className = "mastery-result hidden";
     renderNav();
     renderProgress();
     renderFinalExamVisibility();
     renderFinalExamStatus();
+    initLeitrRemindersUI();
+  }
+
+  function renderFlashcard(cards = modules[currentModule]?.richContent?.flashcards || []) {
+    if (!cards.length || !el("flashcardCard")) return;
+    const card = cards[flashcardIndex];
+    el("flashcardProgress").textContent = `Card ${flashcardIndex + 1} of ${cards.length}`;
+    el("flashcardSideLabel").textContent = flashcardShowingAnswer ? "Answer" : "Question";
+    el("flashcardText").textContent = flashcardShowingAnswer ? card.back : card.front;
+    el("flashcardCard").classList.toggle("answer", flashcardShowingAnswer);
+    el("flipFlashcardBtn").textContent = flashcardShowingAnswer ? "Show question" : "Reveal answer";
+    el("previousFlashcardBtn").disabled = flashcardIndex === 0;
+    el("nextFlashcardBtn").disabled = flashcardIndex === cards.length - 1;
+  }
+
+  function setDetailedLessonsExpanded(expanded) {
+    document.querySelectorAll("#richDetailedLesson details").forEach((lesson) => {
+      lesson.open = expanded;
+    });
+  }
+
+  function flipFlashcard() {
+    flashcardShowingAnswer = !flashcardShowingAnswer;
+    renderFlashcard();
+  }
+
+  function moveFlashcard(direction) {
+    const cards = modules[currentModule]?.richContent?.flashcards || [];
+    flashcardIndex = Math.max(0, Math.min(cards.length - 1, flashcardIndex + direction));
+    flashcardShowingAnswer = false;
+    renderFlashcard(cards);
+  }
+
+  function masteryQuestionText(question) {
+    return typeof question === "string" ? question.replace(/^\d+\.\s*/, "") : question.question;
+  }
+
+  function renderMasteryQuestion(question, index) {
+    const type = typeof question === "string" ? "written" : question.type;
+    const label = type === "mcq" ? "Multiple choice" : type === "scenario" ? "Scenario-based" : type === "practical" ? "Practical verification" : "Written response";
+    const input = type === "mcq"
+      ? `<select id="masteryAnswer${index}" data-mastery-answer data-question-type="mcq"><option value="">Select the best answer</option>${question.options.map((option, optionIndex) => `<option value="${optionIndex}">${option}</option>`).join("")}</select>`
+      : `<textarea id="masteryAnswer${index}" data-mastery-answer data-question-type="${type}" placeholder="Explain clearly using Salesforce names, business reasoning, testing, and evidence."></textarea>`;
+    return `<div class="mastery-question-card"><span class="mastery-question-type">${label}</span><label for="masteryAnswer${index}">Question ${index + 1} of 15: ${masteryQuestionText(question)}</label>${input}</div>`;
   }
 
   async function startTest() {
     const module = modules[currentModule];
     el("masteryTestPanel").classList.remove("hidden");
     el("masteryResult").className = "mastery-result hidden";
-    el("masteryAnswerList").innerHTML = '<div class="mastery-loading">Zentom AI is generating 15 mastery questions...</div>';
-    activeTestQuestions = await window.TomCodexAI.generateMasteryQuestions({
-      course: courseName,
-      module: module.title,
-      lessonPoints: module.points,
-      recallQuestions: module.questions,
-      practice: module.practice,
-      questionCount: 15
-    });
-    el("masteryAnswerList").innerHTML = activeTestQuestions.map((question, index) => `<div><label for="masteryAnswer${index}">Question ${index + 1} of 15: ${question.replace(/^\d+\.\s*/, "")}</label><textarea id="masteryAnswer${index}" data-mastery-answer placeholder="Explain clearly and include a Salesforce example."></textarea></div>`).join("");
+    const structuredTest = module.richContent?.masteryTest;
+    if (Array.isArray(structuredTest) && structuredTest.length === 15) {
+      activeTestQuestions = structuredTest;
+    } else {
+      el("masteryAnswerList").innerHTML = '<div class="mastery-loading">Zentom is generating 15 Salesforce-specialized mastery questions...</div>';
+      activeTestQuestions = await window.TomCodexAI.generateMasteryQuestions({
+        course: courseName,
+        module: module.title,
+        lessonPoints: module.points,
+        recallQuestions: module.questions,
+        practice: module.practice,
+        questionCount: 15
+      });
+    }
+    el("masteryAnswerList").innerHTML = activeTestQuestions.map(renderMasteryQuestion).join("");
     el("masteryTestPanel").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -853,19 +1182,39 @@
 
   async function submitTest() {
     const module = modules[currentModule];
-    const answers = [...document.querySelectorAll("[data-mastery-answer]")].map((input) => input.value.trim());
+    const answerInputs = [...document.querySelectorAll("[data-mastery-answer]")];
+    const answers = answerInputs.map((input, index) => {
+      const value = input.value.trim();
+      if (input.dataset.questionType !== "mcq" || !value) return value;
+      return activeTestQuestions[index].options[Number(value)];
+    });
     if (activeTestQuestions.length < 15 || answers.length < 15) {
       showResult({ score: 0, passed: false, summary: "The mastery test must contain and answer at least 15 questions.", feedback: [] });
       return;
     }
-    if (answers.some((answer) => answer.length < 20)) {
-      showResult({ score: 0, passed: false, summary: "Answer all 15 questions with at least 20 characters before submitting.", feedback: [] });
+    const incomplete = answers.some((answer, index) => answerInputs[index].dataset.questionType === "mcq" ? !answer : answer.length < 20);
+    if (incomplete) {
+      showResult({ score: 0, passed: false, summary: "Answer all 15 questions. Written scenario and practical answers must contain at least 20 characters.", feedback: [] });
       return;
     }
     const button = el("submitMasteryTestBtn");
     button.disabled = true;
     button.textContent = "AI is evaluating...";
-    const result = await window.TomCodexAI.evaluateMastery({ course: courseName, module: module.title, questions: activeTestQuestions, answers, lessonPoints: module.points, passScore: 80, minimumQuestionCount: 15 });
+    const questionsForEvaluation = activeTestQuestions.map((question) => {
+      if (typeof question === "string") return question;
+      return question.type === "mcq" ? `${question.question}\nCorrect answer: ${question.answer}` : question.question;
+    });
+    const result = await window.TomCodexAI.evaluateMastery({
+      course: courseName,
+      module: module.title,
+      questions: questionsForEvaluation,
+      answers,
+      lessonPoints: module.points,
+      passScore: 80,
+      minimumQuestionCount: 15,
+      evaluationCriteria: module.richContent?.masteryEvaluationCriteria || [],
+      projectEvidence: module.richContent?.projectEvidence || []
+    });
     button.disabled = false;
     button.textContent = "Submit answers to AI";
     const best = scoreFor(currentModule);
@@ -880,13 +1229,16 @@
     renderFinalExamStatus();
     el("completeModuleBtn").textContent = passed(currentModule) ? `Mastery passed: ${scoreFor(currentModule)}%` : "AI mastery test required";
     el("completeModuleBtn").classList.toggle("done", passed(currentModule));
-    el("nextModuleBtn").disabled = !isAdmin && !passed(currentModule);
-    el("nextModuleBtn").textContent = currentModule === modules.length - 1 ? isAdmin || passed(currentModule) ? "Go to final exam" : "Pass 80% to unlock final exam" : isAdmin || passed(currentModule) ? "Next module" : "Pass 80% to unlock next";
+    updateModuleNavigationButtons(passed(currentModule));
   }
 
   el("completeModuleBtn").addEventListener("click", startTest);
   el("startMasteryTestBtn").addEventListener("click", startTest);
   el("startMasteryTestBtnRich")?.addEventListener("click", startTest);
+  el("flashcardCard")?.addEventListener("click", flipFlashcard);
+  el("flipFlashcardBtn")?.addEventListener("click", flipFlashcard);
+  el("previousFlashcardBtn")?.addEventListener("click", () => moveFlashcard(-1));
+  el("nextFlashcardBtn")?.addEventListener("click", () => moveFlashcard(1));
   el("checkMyWorkBtn")?.addEventListener("click", runCheckMyWork);
   el("retryCheckBtn")?.addEventListener("click", () => {
     el("labVerifyResult")?.classList.add("hidden");
@@ -894,24 +1246,281 @@
     document.querySelectorAll("[data-lab-criterion]").forEach(i => i.value = "");
     el("labCriteriaForm")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   });
+  el("expandAllLessonsBtn")?.addEventListener("click", () => setDetailedLessonsExpanded(true));
+  el("collapseAllLessonsBtn")?.addEventListener("click", () => setDetailedLessonsExpanded(false));
   el("submitMasteryTestBtn").addEventListener("click", submitTest);
-  el("previousModuleBtn").addEventListener("click", () => { if (currentModule > 0) { currentModule -= 1; render(); } });
-  el("nextModuleBtn").addEventListener("click", () => {
-    if (currentModule === modules.length - 1) {
-      if (!isAdmin && !passed(currentModule)) return;
-      el("finalExamSection")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
-    if (!isAdmin && !passed(currentModule)) return;
-    currentModule += 1;
-    render();
-  });
+  el("previousModuleTopBtn")?.addEventListener("click", () => navigateToAdjacentModule(-1));
+  el("nextModuleTopBtn")?.addEventListener("click", () => navigateToAdjacentModule(1));
+  el("previousModuleBtn").addEventListener("click", () => navigateToAdjacentModule(-1));
+  el("nextModuleBtn").addEventListener("click", () => navigateToAdjacentModule(1));
   el("continueCourseBtn").addEventListener("click", () => {
-    currentModule = modules.findIndex((_, index) => unlocked(index) && !passed(index));
-    if (currentModule < 0) currentModule = modules.length - 1;
-    render();
-    el("moduleContent").scrollIntoView({ behavior: "smooth" });
+    const nextCourseModule = modules.findIndex((_, index) => unlocked(index) && !passed(index));
+    selectModuleAndShowContent(nextCourseModule < 0 ? modules.length - 1 : nextCourseModule);
   });
+  function initFloatingLeitrTimer() {
+    if (el("leitrFloatingTimer")) return;
+
+    const container = document.createElement("div");
+    container.id = "leitrFloatingTimer";
+    container.className = "fixed top-24 right-6 z-50 font-sans text-slate-800 pointer-events-auto";
+    container.innerHTML = `
+      <!-- Collapsed Mini Pill -->
+      <button id="leitrTimerMini" class="flex items-center gap-2 bg-slate-900 text-white text-xs font-bold px-3 py-2 rounded-full shadow-lg border border-slate-700 hover:bg-slate-800 transition focus:outline-none" type="button">
+        <svg class="h-4 w-4 text-lime fill-none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        <span id="leitrTimerMiniLabel">LEITR Timer</span>
+        <span id="leitrTimerMiniClock" class="bg-slate-800 text-lime px-2 py-0.5 rounded-full font-mono text-[11px]">25:00</span>
+      </button>
+
+      <!-- Expanded Figma Panel -->
+      <div id="leitrTimerPanel" class="hidden w-80 bg-white rounded-xl border border-slate-200 shadow-xl p-4 flex flex-col gap-3.5 text-slate-800 animate-in fade-in zoom-in-95 duration-150">
+        <!-- Header -->
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+          <div class="flex items-center gap-1.5">
+            <span class="text-[10px] font-black uppercase tracking-wider text-slate-400">LEITR STUDY TIMER</span>
+            <span id="leitrTimerStatusPill" class="bg-brand-50 text-brand-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">LEARN</span>
+          </div>
+          <button id="leitrTimerClose" class="text-slate-400 hover:text-slate-600 focus:outline-none" type="button">
+            <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Timer Digits -->
+        <div class="flex flex-col items-center py-2">
+          <div id="leitrTimerClock" class="text-4xl font-black font-mono tracking-widest text-slate-800 select-none">25:00</div>
+          <!-- Progress Bar -->
+          <div class="w-full h-1.5 bg-slate-100 rounded-full mt-3 overflow-hidden">
+            <div id="leitrTimerProgress" class="h-full bg-brand-600 rounded-full transition-all duration-300 ease-linear" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <!-- Preset Figma Tabs -->
+        <div class="grid grid-cols-4 gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200">
+          <button data-preset="learn" class="preset-btn py-1.5 text-[10px] font-extrabold uppercase rounded-md text-slate-700 bg-white shadow-sm border border-slate-200/50 hover:bg-slate-50 transition focus:outline-none" type="button">Learn</button>
+          <button data-preset="explain" class="preset-btn py-1.5 text-[10px] font-extrabold uppercase rounded-md text-slate-600 hover:bg-slate-50 transition focus:outline-none" type="button">Explain</button>
+          <button data-preset="implement" class="preset-btn py-1.5 text-[10px] font-extrabold uppercase rounded-md text-slate-600 hover:bg-slate-50 transition focus:outline-none" type="button">Impl</button>
+          <button data-preset="test" class="preset-btn py-1.5 text-[10px] font-extrabold uppercase rounded-md text-slate-600 hover:bg-slate-50 transition focus:outline-none" type="button">Test</button>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-between pt-1">
+          <div class="flex items-center gap-1.5">
+            <button id="leitrTimerPlay" class="bg-slate-900 hover:bg-slate-800 text-white font-extrabold text-[11px] px-3.5 py-2 rounded-lg transition focus:outline-none flex items-center gap-1" type="button">
+              <svg class="h-3 w-3 fill-current" viewBox="0 0 24 24" id="leitrTimerPlayIcon"><path d="M8 5v14l11-7z"/></svg>
+              <span id="leitrTimerPlayText">Start</span>
+            </button>
+            <button id="leitrTimerReset" class="border border-slate-200 hover:bg-slate-50 text-slate-600 font-extrabold text-[11px] px-3.5 py-2 rounded-lg transition focus:outline-none" type="button">
+              Reset
+            </button>
+          </div>
+          <label class="inline-flex items-center gap-1.5 text-[10px] font-bold text-slate-500 cursor-pointer select-none">
+            <input type="checkbox" id="leitrTimerSound" checked class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+            <span>Sound</span>
+          </label>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(container);
+
+    const miniBtn = el("leitrTimerMini");
+    const panel = el("leitrTimerPanel");
+    const closeBtn = el("leitrTimerClose");
+    const playBtn = el("leitrTimerPlay");
+    const playText = el("leitrTimerPlayText");
+    const playIcon = el("leitrTimerPlayIcon");
+    const resetBtn = el("leitrTimerReset");
+    const soundToggle = el("leitrTimerSound");
+    const clockDisplay = el("leitrTimerClock");
+    const miniClockDisplay = el("leitrTimerMiniClock");
+    const progressBar = el("leitrTimerProgress");
+    const statusPill = el("leitrTimerStatusPill");
+    const miniLabel = el("leitrTimerMiniLabel");
+
+    const DURATIONS = {
+      learn: 25 * 60,
+      explain: 10 * 60,
+      implement: 30 * 60,
+      test: 10 * 60
+    };
+
+    let activePreset = "learn";
+    let secondsLeft = DURATIONS[activePreset];
+    let intervalId = null;
+    let lastTickTime = null;
+
+    miniBtn.onclick = () => {
+      miniBtn.classList.add("hidden");
+      panel.classList.remove("hidden");
+    };
+    closeBtn.onclick = () => {
+      panel.classList.add("hidden");
+      miniBtn.classList.remove("hidden");
+    };
+
+    function renderTime() {
+      const mins = Math.floor(secondsLeft / 60);
+      const secs = secondsLeft % 60;
+      const formatted = `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+      clockDisplay.textContent = formatted;
+      miniClockDisplay.textContent = formatted;
+
+      const total = DURATIONS[activePreset];
+      const pct = (secondsLeft / total) * 100;
+      progressBar.style.width = `${pct}%`;
+      
+      if (pct < 15) {
+        progressBar.className = "h-full bg-rose-600 rounded-full transition-all duration-300 ease-linear";
+      } else if (pct < 40) {
+        progressBar.className = "h-full bg-amber-500 rounded-full transition-all duration-300 ease-linear";
+      } else {
+        progressBar.className = "h-full bg-brand-600 rounded-full transition-all duration-300 ease-linear";
+      }
+    }
+
+    function selectPreset(presetName) {
+      activePreset = presetName;
+      secondsLeft = DURATIONS[presetName];
+      statusPill.textContent = presetName === "implement" ? "IMPL" : presetName.toUpperCase();
+      miniLabel.textContent = presetName === "implement" ? "LEITR Impl" : `LEITR ${presetName.charAt(0).toUpperCase() + presetName.slice(1)}`;
+
+      document.querySelectorAll("#leitrFloatingTimer .preset-btn").forEach(btn => {
+        const isCurrent = btn.getAttribute("data-preset") === presetName;
+        btn.className = isCurrent 
+          ? "preset-btn py-1.5 text-[10px] font-extrabold uppercase rounded-md text-slate-700 bg-white shadow-sm border border-slate-200/50 transition focus:outline-none" 
+          : "preset-btn py-1.5 text-[10px] font-extrabold uppercase rounded-md text-slate-600 hover:bg-slate-50 transition focus:outline-none";
+      });
+
+      stopTimer();
+      renderTime();
+    }
+
+    document.querySelectorAll("#leitrFloatingTimer .preset-btn").forEach(btn => {
+      btn.onclick = () => {
+        selectPreset(btn.getAttribute("data-preset"));
+      };
+    });
+
+    function startTimer() {
+      if (intervalId) return;
+      lastTickTime = Date.now();
+      playText.textContent = "Pause";
+      playIcon.innerHTML = `<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>`;
+
+      intervalId = setInterval(() => {
+        const now = Date.now();
+        const delta = Math.floor((now - lastTickTime) / 1000);
+        if (delta >= 1) {
+          secondsLeft = Math.max(0, secondsLeft - delta);
+          lastTickTime = now;
+          renderTime();
+
+          if (secondsLeft <= 0) {
+            triggerAlarm();
+          }
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (intervalId) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+      playText.textContent = "Start";
+      playIcon.innerHTML = `<path d="M8 5v14l11-7z"/>`;
+    }
+
+    function triggerAlarm() {
+      stopTimer();
+      playAlarmSound();
+
+      if (Notification.permission === "granted") {
+        new Notification("TomCodex Timer Alert", {
+          body: `LEITR Phase "${activePreset.toUpperCase()}" is complete! Time to explain, implement, or test.`,
+          icon: "assets/tomcodex-logo.svg"
+        });
+      }
+
+      alert(`LEITR ${activePreset.toUpperCase()} completed!`);
+      
+      const sequence = ["learn", "explain", "implement", "test"];
+      const nextIdx = (sequence.indexOf(activePreset) + 1) % sequence.length;
+      selectPreset(sequence[nextIdx]);
+    }
+
+    function playAlarmSound() {
+      if (!soundToggle.checked) return;
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const playBeep = (delay, freq, duration) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          
+          osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+          gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+          gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + delay + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration - 0.05);
+          
+          osc.start(ctx.currentTime + delay);
+          osc.stop(ctx.currentTime + delay + duration);
+        };
+        playBeep(0, 880, 0.25);
+        playBeep(0.3, 880, 0.25);
+        playBeep(0.6, 1100, 0.45);
+      } catch (e) {
+        console.warn(e);
+      }
+    }
+
+    playBtn.onclick = () => {
+      if (intervalId) {
+        stopTimer();
+      } else {
+        startTimer();
+      }
+    };
+
+    resetBtn.onclick = () => {
+      stopTimer();
+      secondsLeft = DURATIONS[activePreset];
+      renderTime();
+    };
+
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && intervalId) {
+        const now = Date.now();
+        const delta = Math.floor((now - lastTickTime) / 1000);
+        if (delta >= 1) {
+          secondsLeft = Math.max(0, secondsLeft - delta);
+          lastTickTime = now;
+          renderTime();
+          if (secondsLeft <= 0) {
+            triggerAlarm();
+          }
+        }
+      }
+    });
+
+    document.querySelectorAll(".leitr-cycle-grid article").forEach((article, idx) => {
+      if (idx < 4) {
+        article.classList.add("cursor-pointer", "transition", "hover:bg-brand-50/50");
+        article.onclick = () => {
+          miniBtn.classList.add("hidden");
+          panel.classList.remove("hidden");
+          const presets = ["learn", "explain", "implement", "test"];
+          selectPreset(presets[idx]);
+          panel.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        };
+      }
+    });
+
+    selectPreset("learn");
+  }
+
   injectFinalExam();
   render();
+  initFloatingLeitrTimer();
 })();

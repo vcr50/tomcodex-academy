@@ -69,8 +69,36 @@
     document.getElementById("toggleReminderBtn").addEventListener("click", () => enabled ? updateSettings(false) : enableNotifications());
   }
 
+  function checkLeitrReminders() {
+    if (Notification.permission !== "granted") return;
+    let reminders = [];
+    try {
+      reminders = JSON.parse(localStorage.getItem("tomcodex.leitrReminders.v1")) || [];
+    } catch {
+      return;
+    }
+    const now = Date.now();
+    let updated = false;
+    reminders.forEach((r) => {
+      if (!r.notified && now >= r.dueDate) {
+        new Notification(`LEITR Spaced Review: ${r.courseName}`, {
+          body: `It is time for your ${r.days}-day review of "${r.moduleTitle}". Explain it in simple English and review your notes.`,
+          icon: "assets/tomcodex-logo.svg",
+          tag: r.id
+        });
+        r.notified = true;
+        updated = true;
+      }
+    });
+    if (updated) {
+      localStorage.setItem("tomcodex.leitrReminders.v1", JSON.stringify(reminders));
+    }
+  }
+
   async function init() {
     if (!("Notification" in window)) return;
+    checkLeitrReminders();
+    setInterval(checkLeitrReminders, 60000);
     try {
       const response = await fetch("/api/student-reminders");
       if (!response.ok) return;

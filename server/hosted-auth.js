@@ -176,6 +176,7 @@ function supportedProgressKey(key) {
     || key === "tomcodex.personalizedPath.v1"
     || key === "tomcodex.aiCodeReviews.v1"
     || key === "tomcodex.adminCourseProgress.v1"
+    || key === "tomcodex.dailyJournalLogs.v1"
     || key === ADMIN_LAB_ATTEMPTS_KEY
     || key === SKILL_PASSPORT_KEY
     || key === MODULE_UNLOCKS_KEY

@@ -27,13 +27,23 @@
   <script>document.documentElement.dataset.theme="light"</script><div class="mx-auto flex max-w-7xl items-center gap-4 px-5 py-3 lg:px-8"><a href="index.html" class="flex items-center gap-2"><img src="assets/tomcodex-logo.svg" alt="Tom Codex" class="h-12 w-auto sm:h-14"><span class="hidden border-l border-slate-300 pl-3 text-sm font-bold sm:inline">Salesforce Admin</span></a><nav class="ml-auto flex items-center gap-4 text-sm font-bold"><a href="analytics.html" class="hidden text-slate-500 hover:text-brand-600 sm:block">Analytics</a><a href="dashboard.html" class="rounded-lg border border-brand-600 px-4 py-2 text-brand-700 hover:bg-brand-50">Dashboard</a></nav></div></header>
 
   <main>
-    <section class="bg-brand-950 text-white"><div class="mx-auto grid max-w-7xl gap-10 px-5 py-14 lg:grid-cols-[1fr_.42fr] lg:px-8"><div><span class="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-cyan-200">30+ hours · 10 modules · Beginner to advanced</span><h1 class="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Salesforce Administrator Program</h1><p class="mt-4 max-w-2xl text-lg leading-8 text-slate-300">Build job-ready Admin skills through 30+ hours of AI lessons, official Salesforce content, Trailhead practice, enterprise scenarios, and senior-admin responsibilities.</p><div class="mt-7 flex flex-wrap gap-3"><button id="continueCourseBtn" class="rounded-lg bg-lime px-6 py-3 font-extrabold text-brand-950">Continue current module</button><a href="interview.html" class="rounded-lg border border-white/30 px-6 py-3 font-bold text-white">Practice Admin interview</a></div></div><div class="course-progress-card"><div class="grid grid-cols-3 gap-3 text-center"><div><span>Course length</span><strong>30+ hrs</strong></div><div><span>Modules</span><strong>10</strong></div><div><span>Level</span><strong>All</strong></div></div><div class="mt-5 flex justify-between gap-3"><div><span>Program progress</span><strong id="courseProgressText">0%</strong></div><div class="text-right"><span>Completed</span><strong id="completedModulesText">0 / 10</strong></div></div><div class="course-progress-track"><div id="courseProgressBar"></div></div><p>Progress is saved automatically and added to your learning analytics.</p></div></div></section>
+    <section class="bg-brand-950 text-white"><div class="mx-auto grid max-w-7xl gap-10 px-5 py-14 lg:grid-cols-[1fr_.42fr] lg:px-8"><div><span class="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-cyan-200">60+ hours · 10 modules · Beginner to advanced</span><h1 class="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">Salesforce Administrator Program</h1><p class="mt-4 max-w-2xl text-lg leading-8 text-slate-300">Build job-ready Admin skills through 60+ hours of deep lessons, official Salesforce content, Trailhead practice, enterprise scenarios, labs, and production-admin responsibilities.</p><div class="mt-7 flex flex-wrap gap-3"><button id="continueCourseBtn" class="rounded-lg bg-lime px-6 py-3 font-extrabold text-brand-950">Continue current module</button><a href="interview.html" class="rounded-lg border border-white/30 px-6 py-3 font-bold text-white">Practice Admin interview</a></div></div><div class="course-progress-card"><div class="grid grid-cols-3 gap-3 text-center"><div><span>Course length</span><strong>60+ hrs</strong></div><div><span>Modules</span><strong>10</strong></div><div><span>Level</span><strong>All</strong></div></div><div class="mt-5 flex justify-between gap-3"><div><span>Program progress</span><strong id="courseProgressText">0%</strong></div><div class="text-right"><span>Completed</span><strong id="completedModulesText">0 / 10</strong></div></div><div class="course-progress-track"><div id="courseProgressBar"></div></div><p>Progress is saved automatically and added to your learning analytics.</p></div></div></section>
 
-    <section class="mx-auto grid max-w-7xl gap-6 px-5 py-10 lg:grid-cols-[.34fr_.66fr] lg:px-8">
-      <aside class="space-y-5">
-        <div class="course-panel sticky-panel"><span class="course-tag">Program curriculum</span><h2 class="mt-3">Admin learning path</h2><div id="moduleNav" class="module-nav"></div></div>
-        <div class="course-panel"><span class="course-tag">30+ hour plan</span><h2 class="mt-3">Learning time breakdown</h2><ul class="outcome-list"><li>10 hours of guided AI lessons</li><li>10 hours of Trailhead and official resources</li><li>8 hours of hands-on Admin projects</li><li>2+ hours of mastery tests and interview practice</li></ul></div>
-        <div class="course-panel doubt-guide-card"><div class="zentom-card-heading"><img src="assets/zentom-ai-logo.svg" alt="Zentom AI"><div><span class="course-tag">Zentom · Live</span><h2 class="mt-3">Ask Zentom AI</h2></div></div><p class="mt-2 text-xs leading-5 text-slate-500">Have a doubt about the current module? Ask your AI guide without leaving the course.</p><label for="courseDoubtSpeed">Answer speed</label><select id="courseDoubtSpeed"><option value="flash">Flash Mode</option><option value="normal">Normal Mode</option><option value="deep">Deep Trainer Mode</option></select><label for="courseDoubtInput">Your doubt</label><textarea id="courseDoubtInput" placeholder="Ask anything about this module..."></textarea><button id="askCourseGuideBtn" class="course-primary w-full" type="button">Ask Zentom</button><div id="courseDoubtAnswer" class="course-doubt-answer hidden" aria-live="polite"></div></div>
+    <section class="course-learning-layout mx-auto grid gap-6 px-5 py-10 lg:px-8">
+      <aside class="course-sidebar space-y-5">
+        <div class="course-panel sticky-panel">
+          <span class="course-tag">Program curriculum</span>
+          <h2 class="mt-3">Admin learning path</h2>
+          <div class="mobile-module-picker">
+            <label for="moduleSelect">Choose study module</label>
+            <select id="moduleSelect" aria-label="Choose study module"></select>
+            <p>Select an option to show its TomCodeX main syllabus below.</p>
+          </div>
+          <div id="moduleNav" class="module-nav"></div>
+        </div>
+        <div class="course-panel"><span class="course-tag">Two connected sub-courses</span><h2 class="mt-3">Admin learning tracks</h2><ul class="outcome-list"><li><strong>Salesforce Administrator:</strong> Modules 1-6</li><li><strong>Salesforce Advanced Administrator:</strong> Modules 7-10</li><li>All 28 syllabus phases plus capstone projects</li><li>60+ hours of lessons, Trailhead, labs, and mastery tests</li></ul></div>
+        <div class="course-panel"><span class="course-tag">LEITR method</span><h2 class="mt-3">Study rule</h2><ul class="outcome-list"><li>Learn one concept for 25 minutes</li><li>Explain it in simple English</li><li>Implement for at least 2x the learning time</li><li>Test yourself and review weak parts</li></ul></div>
+        <div class="course-panel doubt-guide-card"><div class="zentom-card-heading"><img src="assets/zentom-ai-logo.svg" alt="Zentom AI"><div><span class="course-tag">Salesforce-specialized LLM</span><h2 class="mt-3">Ask Zentom AI</h2></div></div><p class="mt-2 text-xs leading-5 text-slate-500">Ask a Salesforce-focused learning assistant grounded in Academy curriculum, platform terminology, practical scenarios, certification concepts, and lab-verification rules.</p><div class="zentom-specialist-points"><span>Admin and Developer guidance</span><span>Salesforce examples and best practices</span><span>Module-aware answers</span></div><label for="courseDoubtSpeed">Answer speed</label><select id="courseDoubtSpeed"><option value="flash">Flash Mode</option><option value="normal">Normal Mode</option><option value="deep">Deep Trainer Mode</option></select><label for="courseDoubtInput">Your Salesforce doubt</label><textarea id="courseDoubtInput" placeholder="Ask Zentom about this Salesforce module..."></textarea><button id="askCourseGuideBtn" class="course-primary w-full" type="button">Ask Salesforce-specialized Zentom</button><div id="courseDoubtAnswer" class="course-doubt-answer hidden" aria-live="polite"></div></div>
         <div class="course-panel"><h2>Program outcomes</h2><ul class="outcome-list"><li>Configure Salesforce confidently</li><li>Design enterprise-grade security</li><li>Build and govern advanced automation</li><li>Manage deployments and releases</li><li>Improve org health and performance</li><li>Lead senior-admin workplace delivery</li></ul></div>
       </aside>
 
@@ -43,12 +53,119 @@
             <span id="moduleLabel" class="course-tag">Module 1</span>
             <h2 id="moduleTitle" class="mt-3 text-2xl font-extrabold text-brand-950">Salesforce Platform Foundations</h2>
             <p id="moduleDescription" class="mt-3 text-slate-500"></p>
+            <nav class="module-top-navigation" aria-label="Module navigation">
+              <button id="previousModuleTopBtn" class="course-secondary" type="button">Previous module</button>
+              <button id="nextModuleTopBtn" class="course-primary" type="button">Next module</button>
+            </nav>
           </div>
           <button id="completeModuleBtn" class="complete-button" type="button">Mark module complete</button>
         </div>
 
         <!-- Rich Content timeline layout -->
         <div id="richModuleContent" class="hidden mt-6 space-y-8">
+          <div class="zentom-specialist-banner">
+            <img src="assets/zentom-ai-logo.svg" alt="Zentom AI">
+            <div><span>Powered by Zentom</span><h3>Salesforce learning assistant</h3><p>Module-aware guidance, practical patterns, and verification support.</p></div>
+          </div>
+
+          <div id="projectConnectionSection" class="hidden project-connection">
+            <div><span>Builds on</span><strong id="projectBuildsOn"></strong></div>
+            <div><span>Build in this module</span><strong id="projectBuildsNow"></strong></div>
+            <div><span>Prepares for next</span><strong id="projectPreparesNext"></strong></div>
+          </div>
+
+          <section class="leitr-cycle-card">
+            <div>
+              <span>TomCodeX LEITR study system</span>
+              <h3>Learn &gt; Explain &gt; Implement &gt; Test &gt; Review</h3>
+              <p>Use this rhythm in every Admin mastery step. Keep learning short, implementation heavy, and review spaced over time. The 1:2 rule: 1 hour learning = at least 2 hours implementing.</p>
+            </div>
+            <div class="leitr-cycle-grid">
+              <article>
+                <strong>1. Learn</strong>
+                <p>25 minutes: study one Admin concept only.</p>
+              </article>
+              <article>
+                <strong>2. Explain</strong>
+                <p>10 minutes: answer what, why, when, and one example.</p>
+              </article>
+              <article>
+                <strong>3. Implement</strong>
+                <p>30-60 minutes: build it yourself in Salesforce.</p>
+              </article>
+              <article>
+                <strong>4. Test</strong>
+                <p>10 minutes: explain, rebuild, and answer an interview question.</p>
+              </article>
+              <article class="cursor-pointer transition hover:bg-sky-50" id="leitrReviewStep">
+                <strong>5. Review (Functional Reminder)</strong>
+                <p>Review after 1 day, 3 days, and 7 days.</p>
+              </article>
+            </div>
+            <div id="leitrSchedulerControl" class="hidden mt-3 p-4 rounded-xl border border-blue-200 bg-white/90 backdrop-blur-sm shadow-sm space-y-3">
+              <h4 class="text-xs font-extrabold text-slate-800 uppercase tracking-wider">Schedule Spaced Reviews for this Module</h4>
+              <p class="text-xs text-slate-500">Enable browser notifications to receive reminders when it is time to review your learning.</p>
+              <div class="flex flex-wrap gap-2">
+                <label class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg border border-slate-300 cursor-pointer select-none transition">
+                  <input type="checkbox" id="leitrDays1" checked class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                  <span>1 Day Review</span>
+                </label>
+                <label class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg border border-slate-300 cursor-pointer select-none transition">
+                  <input type="checkbox" id="leitrDays3" checked class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                  <span>3 Days Review</span>
+                </label>
+                <label class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3 py-2 rounded-lg border border-slate-300 cursor-pointer select-none transition">
+                  <input type="checkbox" id="leitrDays7" checked class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                  <span>7 Days Review</span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between border-t border-slate-100 pt-3 flex-wrap gap-2">
+                <span id="leitrSchedulerStatus" class="text-xs font-semibold text-brand-700">No active review reminders.</span>
+                <button id="leitrConfirmBtn" class="bg-brand-600 hover:bg-brand-700 text-white font-extrabold text-xs px-4 py-2 rounded-lg transition" type="button">
+                  Confirm Spaced Schedule
+                </button>
+              </div>
+            </div>
+          </section>
+          <section id="richMainSyllabusSection" class="hidden tomcodex-main-syllabus">
+            <div class="tomcodex-main-syllabus-heading">
+              <div>
+                <span>Primary TomCodeX study resource</span>
+                <h3 id="richMainSyllabusTitle">TomCodeX Main Syllabus</h3>
+                <p id="richMainSyllabusIntroduction"></p>
+              </div>
+              <strong>Study this first</strong>
+            </div>
+            <div id="richMainSyllabusContent"></div>
+          </section>
+          <div id="preModuleSetupSection" class="hidden overflow-hidden rounded-2xl border-2 border-cyan-300 bg-cyan-50/50 shadow-sm">
+            <div class="bg-brand-950 px-5 py-4 text-white">
+              <span class="text-xs font-bold uppercase tracking-widest text-cyan-200">Required prerequisite</span>
+              <h3 id="preModuleSetupTitle" class="mt-2 text-lg font-extrabold"></h3>
+              <p id="preModuleSetupIntroduction" class="mt-2 text-xs leading-5 text-slate-300"></p>
+            </div>
+            <div class="space-y-6 p-5">
+              <div>
+                <h4 class="text-sm font-extrabold text-brand-950">Choose your practice org</h4>
+                <ul id="preModuleSetupOptions" class="mt-3 list-disc space-y-2 pl-5 text-xs leading-5 text-slate-600"></ul>
+              </div>
+              <div>
+                <h4 class="text-sm font-extrabold text-brand-950">Create and prepare the org</h4>
+                <ol id="preModuleSetupSteps" class="mt-3 list-decimal space-y-2 pl-5 text-xs leading-5 text-slate-600"></ol>
+              </div>
+              <div class="grid gap-5 md:grid-cols-2">
+                <div class="rounded-xl border border-amber-200 bg-amber-50 p-4">
+                  <h4 class="text-sm font-extrabold text-amber-900">Setup safety notes</h4>
+                  <ul id="preModuleSafetyNotes" class="mt-3 list-disc space-y-2 pl-5 text-xs text-slate-600"></ul>
+                </div>
+                <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+                  <h4 class="text-sm font-extrabold text-emerald-900">Ready for Module 1 when...</h4>
+                  <ul id="preModuleReadinessChecklist" class="mt-3 space-y-2 text-xs text-slate-600"></ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Step 1: Goal -->
           <div class="border-l-4 border-brand-500 pl-4 bg-brand-50/20 py-2 rounded-r-lg">
             <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700">Step 1: Module Goal</h3>
@@ -65,6 +182,54 @@
           <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
             <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 3: Simple Explanation</h3>
             <div id="richExplanation" class="space-y-3 text-xs text-slate-600 leading-relaxed"></div>
+          </div>
+
+          <div id="richDetailedLessonSection" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <div class="lesson-library-heading">
+              <div>
+                <span class="course-tag">Supporting study resource</span>
+                <h3>Supporting Deep-Dive Lesson Library</h3>
+                <p>Use these lessons to strengthen and expand the primary TomCodeX syllabus topics.</p>
+              </div>
+              <div class="lesson-library-actions">
+                <strong id="detailedLessonCount"></strong>
+                <button id="expandAllLessonsBtn" class="course-secondary" type="button">Expand all</button>
+                <button id="collapseAllLessonsBtn" class="course-secondary" type="button">Collapse all</button>
+              </div>
+            </div>
+            <div id="richDetailedLesson" class="space-y-5 text-xs text-slate-600 leading-relaxed"></div>
+          </div>
+
+          <div id="richKeyNotesSection" class="hidden rounded-2xl border-2 border-amber-300 bg-amber-50 p-5 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span class="inline-flex rounded-full bg-amber-200 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-amber-950">Important</span>
+                <h3 class="mt-3 text-lg font-extrabold text-amber-950">Key Notes to Remember</h3>
+              </div>
+              <strong class="text-xs text-amber-800">Review before the lab and mastery test</strong>
+            </div>
+            <div id="richKeyNotes" class="mt-4 grid gap-3 md:grid-cols-2"></div>
+          </div>
+
+          <div id="richFlashcardsSection" class="hidden rounded-2xl border border-brand-200 bg-brand-50/40 p-5 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span class="course-tag">Quick Revision</span>
+                <h3 class="mt-3 text-lg font-extrabold text-brand-950">Foundation Flashcards</h3>
+                <p class="mt-1 text-xs text-slate-500">Select the card to reveal the answer.</p>
+              </div>
+              <strong id="flashcardProgress" class="text-xs text-brand-700"></strong>
+            </div>
+            <button id="flashcardCard" class="module-flashcard mt-5 w-full text-left" type="button" aria-live="polite">
+              <span id="flashcardSideLabel" class="module-flashcard-label">Question</span>
+              <strong id="flashcardText" class="module-flashcard-text"></strong>
+              <span class="module-flashcard-hint">Select to flip</span>
+            </button>
+            <div class="mt-4 flex flex-wrap justify-between gap-3">
+              <button id="previousFlashcardBtn" class="course-secondary" type="button">Previous card</button>
+              <button id="flipFlashcardBtn" class="course-secondary" type="button">Reveal answer</button>
+              <button id="nextFlashcardBtn" class="course-primary" type="button">Next card</button>
+            </div>
           </div>
 
           <!-- Step 4: Real Business Example -->
@@ -85,28 +250,65 @@
             <ol id="richStepByStep" class="list-decimal pl-5 space-y-2 text-slate-600 text-sm"></ol>
           </div>
 
-          <!-- Step 7 & 8: Best Practices & Common Mistakes -->
+          <div id="richTrailheadPracticeSection" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 7: Supporting Salesforce Trailhead Practice</h3>
+            <div id="richTrailheadPractice"></div>
+          </div>
+
+          <div id="richProjectTaskSection" class="hidden bg-brand-50/50 p-5 rounded-2xl border-2 border-brand-300 shadow-sm">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 8: TomCodeX Hands-on Project Task</h3>
+            <div id="richProjectTask"></div>
+          </div>
+
+          <div id="richProjectEvidenceSection" class="hidden bg-cyan-50/60 p-5 rounded-2xl border border-cyan-200">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-cyan-800 mb-3">Step 9: Project Evidence Required</h3>
+            <ul id="richProjectEvidence" class="list-disc pl-5 space-y-2 text-slate-600 text-xs"></ul>
+          </div>
+
+          <!-- Step 10 & 11: Best Practices & Common Mistakes -->
           <div class="grid gap-6 md:grid-cols-2">
             <div class="bg-emerald-50/40 p-5 rounded-2xl border border-emerald-100">
-              <h3 class="text-sm font-bold uppercase tracking-wider text-emerald-700 mb-3">Step 7: Best Practices</h3>
+              <h3 class="text-sm font-bold uppercase tracking-wider text-emerald-700 mb-3">Step 10: Best Practices</h3>
               <ul id="richBestPractices" class="list-disc pl-5 space-y-1.5 text-slate-600 text-xs"></ul>
             </div>
             <div class="bg-rose-50/40 p-5 rounded-2xl border border-rose-100">
-              <h3 class="text-sm font-bold uppercase tracking-wider text-rose-700 mb-3">Step 8: Common Mistakes</h3>
+              <h3 class="text-sm font-bold uppercase tracking-wider text-rose-700 mb-3">Step 11: Common Mistakes</h3>
               <ul id="richCommonMistakes" class="list-disc pl-5 space-y-1.5 text-slate-600 text-xs"></ul>
             </div>
           </div>
 
-          <!-- Step 9: Why This Matters in Job -->
+          <!-- Step 12: Why This Matters in Job -->
           <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 9: Why This Matters in Job</h3>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 12: Why This Matters in Job</h3>
             <div id="richWhyMatters"></div>
           </div>
 
-          <!-- Step 10: Interview Questions -->
+          <!-- Step 13: Interview Questions -->
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 10: Interview Key Questions</h3>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 13: Interview Key Questions</h3>
             <ul id="richInterview" class="list-disc pl-5 space-y-2 text-slate-600 text-sm"></ul>
+          </div>
+
+          <div id="richAssignmentSection" class="hidden bg-brand-50/50 p-5 rounded-2xl border border-brand-100">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Practical Assignment</h3>
+            <p class="text-xs text-slate-600 mb-3">Create and submit a note containing these details from your Salesforce org before attempting the mastery test.</p>
+            <ul id="richAssignment" class="list-disc pl-5 space-y-1.5 text-slate-600 text-xs"></ul>
+          </div>
+
+          <div id="richKnowledgeCheckSection" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Check My Knowledge Questions</h3>
+            <p class="mb-3 text-xs text-slate-500">Answer these after completing the walkthrough and before using Check My Work.</p>
+            <ol id="richKnowledgeCheck" class="list-decimal space-y-2 pl-5 text-xs text-slate-600"></ol>
+          </div>
+
+          <div id="richChecklistSection" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 15: Module Completion Checklist</h3>
+            <ul id="richChecklist" class="space-y-2 text-slate-600 text-xs"></ul>
+          </div>
+
+          <div id="richSummarySection" class="hidden bg-slate-50 p-5 rounded-2xl border border-slate-200">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Final Summary</h3>
+            <p id="richSummary" class="text-slate-600 text-xs leading-relaxed"></p>
           </div>
 
           <!-- Step 11, 12, 13: Hands-on Practice Lab & Screenshot Upload -->
@@ -150,7 +352,11 @@
           <!-- Step 14: Zentom AI Mastery Test -->
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
             <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-2">Step 14: Zentom AI Mastery Test</h3>
-            <p class="text-xs text-slate-500">Zentom generates a fresh minimum of 15 questions for every attempt. Answer all questions and score 80% or higher to unlock the next module.</p>
+            <p class="text-xs text-slate-500">Complete 10 multiple-choice, 3 scenario-based, and 2 practical verification questions. Zentom checks concept understanding, hands-on completion, correct Salesforce naming, business explanation, mistake awareness, and job readiness. Pass: 80%.</p>
+            <div id="richMasteryPrepSection" class="hidden mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <h4 class="text-xs font-extrabold uppercase tracking-wider text-brand-700">Mastery Test Study Questions</h4>
+              <ol id="richMasteryPrep" class="mt-3 list-decimal space-y-2 pl-5 text-xs text-slate-600"></ol>
+            </div>
             <button id="startMasteryTestBtnRich" class="course-primary mt-3" type="button">Start 15-question AI test</button>
           </div>
         </div>
@@ -164,7 +370,7 @@
           <div class="content-section"><h3>AI lesson overview</h3><div id="lessonPoints" class="lesson-points"></div></div>
           <div class="content-section"><div class="topic-coverage-heading"><div><span class="course-tag">Detailed curriculum</span><h3>Complete topic coverage</h3><p>Open each subcategory to study the concept, implementation, example, best practices, common mistakes, and practical proof.</p></div><strong id="topicCoverageCount"></strong></div><div id="topicCoverage" class="topic-coverage"></div></div>
           <div class="grid gap-5 md:grid-cols-2"><div class="content-section"><h3>Official and free resources</h3><div id="resourceList" class="course-resource-list"></div></div><div class="content-section"><h3>Hands-on practice</h3><div id="practiceList" class="practice-list"></div></div></div>
-          <div class="content-section"><div class="flex flex-wrap items-center justify-between gap-3"><div><h3>Zentom AI mastery test</h3><p class="mt-2 text-xs text-slate-500">Zentom generates a fresh minimum of 15 questions for every attempt. Answer all questions and score 80% or higher to unlock the next module.</p></div><button id="startMasteryTestBtn" class="course-primary" type="button">Start 15-question AI test</button></div><div id="questionList" class="mastery-list"></div></div>
+          <div class="content-section"><div class="flex flex-wrap items-center justify-between gap-3"><div><h3>Zentom Salesforce-specialized mastery test</h3><p class="mt-2 text-xs text-slate-500">Zentom generates a fresh minimum of 15 module-aware Salesforce questions for every attempt. Answer all questions and score 80% or higher to unlock the next module.</p></div><button id="startMasteryTestBtn" class="course-primary" type="button">Start 15-question AI test</button></div><div id="questionList" class="mastery-list"></div></div>
         </div>
 
         <!-- Shared Mastery Test Panel -->
@@ -178,6 +384,7 @@
   <script src="js/learner-sync.js"></script>
   <script src="js/learning-records.js"></script>
   <script src="js/ai-client.js"></script>
+  <script src="js/learner-reminders.js"></script>
   <script src="js/course-admin.js"></script>
   <script src="js/course-mastery.js"></script>
   <script src="js/course-guide.js"></script>

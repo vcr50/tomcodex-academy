@@ -11,6 +11,20 @@
   const courseName = config.courseName;
   const recordLabel = config.recordLabel;
   const moduleHours = config.moduleHours;
+  const COURSE_KEY_MAP = {
+    "Salesforce Administrator": "admin",
+    "Apex Development": "apex",
+    "Salesforce Flow": "flow",
+    "Lightning Web Components": "lwc",
+    "Salesforce Integration": "integration",
+    "Salesforce Agentforce": "agentforce",
+    "Final POC Project": "poc"
+  };
+  const courseKey = COURSE_KEY_MAP[courseName] || "admin";
+  const currentPage = window.location.pathname.split("/").pop();
+  if (currentPage && currentPage.startsWith("course-") && currentPage.endsWith(".html")) {
+    localStorage.setItem("tomcodex.recentCourse.v1", currentPage);
+  }
   const AUTH_SESSION_KEY = "tomcodex.authSession.v1";
   const FINAL_EXAM_KEY = `${MASTERY_KEY}.finalExam`;
   const FINAL_EXAM_QUESTION_COUNT = 60;
@@ -18,14 +32,14 @@
   const FINAL_EXAM_PASS_SCORE = 65;
   const MODULE_SELECTION_KEY = `${MASTERY_KEY}.selectedModule`;
   const requestedModuleParam = new URLSearchParams(window.location.search).get("module");
-  const requestedModule = requestedModuleParam === null ? NaN : Number(requestedModuleParam);
-  const savedModule = Number(localStorage.getItem(MODULE_SELECTION_KEY));
-  let currentModule = Number.isInteger(requestedModule) && requestedModule >= 0 && requestedModule < modules.length
-    ? requestedModule
-    : Number.isInteger(savedModule) && savedModule >= 0 && savedModule < modules.length
-      ? savedModule
-      : 0;
+  const requestedModuleNumber = requestedModuleParam === null ? NaN : Number(requestedModuleParam);
+  const requestedModule = Number.isInteger(requestedModuleNumber)
+    ? requestedModuleNumber > 0
+      ? requestedModuleNumber - 1
+      : requestedModuleNumber
+    : NaN;
   let masteryScores = loadScores();
+  let currentModule = resolveInitialModule();
   let activeTestQuestions = [];
   let flashcardIndex = 0;
   let flashcardShowingAnswer = false;
@@ -49,20 +63,65 @@
   }
   function saveScores() { localStorage.setItem(MASTERY_KEY, JSON.stringify(masteryScores)); }
   function scoreFor(index) { return Number(masteryScores[index]?.score) || 0; }
-  function passed(index) { return scoreFor(index) >= 80; }
+  function isValidModuleIndex(index) { return Number.isInteger(index) && index >= 0 && index < modules.length; }
+  function labAttemptSummaryFor(index) {
+    const moduleId = `${courseKey}-${index + 1}`;
+    const legacyId = `${courseKey}-module-${index + 1}`;
+    const attempts = loadJson(`tomcodex.${courseKey}LabAttempts.v1`, {});
+    const legacyAttempts = loadJson("tomcodex.adminLabAttempts.v1", {});
+    return attempts[`${moduleId}:summary`] || legacyAttempts[`${moduleId}:summary`] || attempts[`${legacyId}:summary`] || legacyAttempts[`${legacyId}:summary`] || null;
+  }
+  function labResultFor(index) {
+    const labResults = loadJson(`${MASTERY_KEY}.labResults`, {});
+    return labResults[index] || labResults[String(index)] || null;
+  }
+  function bestStudyScore(index) {
+    return Math.max(
+      scoreFor(index),
+      Number(labAttemptSummaryFor(index)?.bestScore) || 0,
+      Number(labResultFor(index)?.score) || 0
+    );
+  }
+  function hasStudyHistory(index) {
+    if (scoreFor(index) > 0 || labResultFor(index)) return true;
+    const moduleId = `${courseKey}-${index + 1}`;
+    const legacyId = `${courseKey}-module-${index + 1}`;
+    const attempts = loadJson(`tomcodex.${courseKey}LabAttempts.v1`, {});
+    const legacyAttempts = loadJson("tomcodex.adminLabAttempts.v1", {});
+    return Boolean(
+      labAttemptSummaryFor(index)
+      || (Array.isArray(attempts[moduleId]) && attempts[moduleId].length)
+      || (Array.isArray(attempts[legacyId]) && attempts[legacyId].length)
+      || (Array.isArray(legacyAttempts[moduleId]) && legacyAttempts[moduleId].length)
+      || (Array.isArray(legacyAttempts[legacyId]) && legacyAttempts[legacyId].length)
+    );
+  }
+  function nextModuleFromStudyHistory() {
+    let hasAnyHistory = false;
+    for (let index = 0; index < modules.length; index += 1) {
+      if (hasStudyHistory(index)) hasAnyHistory = true;
+      if (hasAnyHistory && bestStudyScore(index) < 80) return index;
+    }
+    return hasAnyHistory ? modules.length - 1 : 0;
+  }
+  function resolveInitialModule() {
+    if (isValidModuleIndex(requestedModule)) return requestedModule;
+    return nextModuleFromStudyHistory();
+  }
+  function passed(index) { return bestStudyScore(index) >= 80; }
   function getModuleState(index) {
     if (isAdmin) {
       return { state: "unlocked", label: "Admin access", canOpen: true };
     }
 
-    const moduleId = `${COURSE_KEY_MAP[courseName] || "admin"}-${index + 1}`;
+    const moduleId = `${courseKey}-${index + 1}`;
     
     // Check if verified - use course-specific attempts key
-    const attemptsKey = `tomcodex.${COURSE_KEY_MAP[courseName] || "admin"}LabAttempts.v1`;
+    const attemptsKey = `tomcodex.${courseKey}LabAttempts.v1`;
     const attempts = loadJson(attemptsKey, {});
     // Also check legacy admin key for backward compat
     const legacyAttempts = loadJson("tomcodex.adminLabAttempts.v1", {});
-    const legacyId = `${COURSE_KEY_MAP[courseName] || "admin"}-module-${index + 1}`;
+    const legacyId = `${courseKey}-module-${index + 1}`;
     const bestScore = attempts[`${moduleId}:summary`]?.bestScore || legacyAttempts[`${moduleId}:summary`]?.bestScore || attempts[`${legacyId}:summary`]?.bestScore || 0;
     const isModuleVerified = bestScore >= 80;
 
@@ -76,9 +135,9 @@
 
     // Check prerequisite (previous module must be verified)
     if (index > 0) {
-    const prevModuleId = `${COURSE_KEY_MAP[courseName] || "admin"}-${index}`;
-    const prevModuleIdLegacy = `${COURSE_KEY_MAP[courseName] || "admin"}-module-${index}`;
-    const prevAttemptsKey = `tomcodex.${COURSE_KEY_MAP[courseName] || "admin"}LabAttempts.v1`;
+    const prevModuleId = `${courseKey}-${index}`;
+    const prevModuleIdLegacy = `${courseKey}-module-${index}`;
+    const prevAttemptsKey = `tomcodex.${courseKey}LabAttempts.v1`;
     const prevAttempts = loadJson(prevAttemptsKey, {});
     const prevLegacyAttempts = loadJson("tomcodex.adminLabAttempts.v1", {});
     const prevBestScore = prevAttempts[`${prevModuleId}:summary`]?.bestScore || prevLegacyAttempts[`${prevModuleId}:summary`]?.bestScore || prevAttempts[`${prevModuleIdLegacy}:summary`]?.bestScore || 0;
@@ -149,7 +208,7 @@
           <span class="text-xs bg-lime/20 text-lime px-3 py-1 rounded-full font-bold uppercase tracking-wider">Founder Access Required</span>
           <h2 class="mt-6 text-3xl font-extrabold text-white">Unlock all modules in the program</h2>
           <p class="mt-4 text-slate-300 text-sm leading-6">
-            You are currently on the <strong>Free Starter Access</strong> tier. Complete all ${modules.length} Salesforce Admin modules, get unlimited Check My Work AI reviews, certification simulators, and verified completion credentials.
+            You are currently on the <strong>Free Starter Access</strong> tier. Complete all ${modules.length} ${courseName} modules, get unlimited Check My Work AI reviews, certification simulators, and verified completion credentials.
           </p>
           
           <div class="mt-8 p-4 bg-white/5 rounded-xl border border-white/10 text-left text-xs space-y-2">
@@ -258,7 +317,7 @@
     currentModule = index;
     localStorage.setItem(MODULE_SELECTION_KEY, String(index));
     const selectedUrl = new URL(window.location.href);
-    selectedUrl.searchParams.set("module", String(index));
+    selectedUrl.searchParams.set("module", String(index + 1));
     window.history.replaceState({}, "", selectedUrl);
     render();
     el("moduleContent")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -489,27 +548,74 @@
   }
 
   function topicCoverage(module, index) {
-    const practice = module.practice[index] || module.practice[0];
-    const question = module.questions[index] || module.questions[0];
+    const title = topicTitle(module.points[index]);
+    const practice = module.practice[index] || module.practice[0] || `Build and verify ${title} in a practice org.`;
+    const question = module.questions[index] || module.questions[0] || `How would you explain ${title}?`;
+    const relatedConcepts = [
+      module.points[index],
+      module.points[(index + 1) % module.points.length],
+      module.points[(index + 2) % module.points.length]
+    ].map(topicTitle);
     const isApex = courseName === "Apex Development";
+    const isAdmin = courseName === "Salesforce Administrator";
+    const isFlow = courseName === "Salesforce Flow";
+    const platformAction = isApex
+      ? `Implement ${title} in a small Apex solution and execute it with representative Salesforce records.`
+      : isFlow
+        ? `Build a focused Flow that demonstrates ${title}, then debug each important path.`
+        : `Configure ${title} in a Developer Edition org or Trailhead Playground using representative business records.`;
     const implementation = isApex
       ? [
-          "Clarify the requirement, transaction context, inputs, outputs, and failure behavior.",
-          "Implement the smallest maintainable solution with bulk processing, security, and governor limits in mind.",
-          "Write positive, negative, bulk, and permission-focused tests before deployment."
+          `Define the transaction, inputs, outputs, and expected behavior for ${title}.`,
+          platformAction,
+          `Test ${title} with positive, negative, bulk, permission, and failure scenarios.`,
+          `Compare the result with this module requirement: ${practice}`
         ]
       : [
-          "Translate the business request into users, data, access, automation, and reporting requirements.",
-          "Configure and test the solution in a safe environment with representative user personas and records.",
-          "Document the decision, validate acceptance criteria, deploy safely, and monitor adoption."
+          `Write the business requirement and acceptance criteria for ${title}.`,
+          platformAction,
+          `Test ${title} as an administrator and as a restricted business user.`,
+          `Complete this module activity and record the result: ${practice}`
         ];
     const bestPractices = isApex
-      ? ["Keep responsibilities small and names clear.", "Design for collections, security, and failure.", "Use assertions and operational logging."]
-      : ["Use least privilege and standard features first.", "Name and document every important configuration.", "Test both expected and restricted user experiences."];
+      ? [`Keep the ${title} implementation focused and clearly named.`, `Design ${title} for collections, security, governor limits, and failure handling.`, `Use meaningful assertions and operational logging to verify ${title}.`]
+      : [`Use the least-privilege access required for ${title}.`, `Give every ${title} configuration item a clear name and description.`, `Test ${title} with expected, restricted-user, and failure scenarios.`];
     const mistakes = isApex
-      ? ["Writing SOQL or DML inside loops.", "Testing only code coverage instead of behavior.", "Ignoring sharing, CRUD/FLS, limits, or error handling."]
-      : ["Building before confirming the business outcome.", "Testing only as an administrator.", "Skipping documentation, rollback, and post-release checks."];
-    return { title: topicTitle(module.points[index]), concept: module.points[index], implementation, example: practice, bestPractices, mistakes, proof: question };
+      ? [`Implementing ${title} without considering bulk transactions.`, `Testing ${title} only for code coverage instead of business behavior.`, `Ignoring sharing, CRUD/FLS, limits, or error handling while using ${title}.`]
+      : [`Configuring ${title} before defining the expected business result.`, `Testing ${title} only as a System Administrator.`, `Releasing ${title} without evidence, documentation, or a recovery plan.`];
+    const interviewQuestions = Array.from({ length: 5 }, (_, questionIndex) => {
+      const sourceQuestion = module.questions[(index + questionIndex) % module.questions.length] || question;
+      const answers = [
+        `${title} supports the ${module.title} business capability by applying this requirement: ${module.points[index]}`,
+        `A practical implementation is: ${practice}`,
+        `I would verify ${title} with expected, negative, permission, bulk, and failure scenarios.`,
+        `A strong design uses clear naming, least privilege, documented decisions, and measurable acceptance criteria.`,
+        `Mastery is proven when the learner can explain ${title}, build it from scratch, test it, and show evidence of the result.`
+      ];
+      return { question: sourceQuestion, answer: answers[questionIndex] };
+    });
+    return {
+      title,
+      concept: `${title} is part of ${module.title}. ${module.description} Businesses use ${title} to deliver a repeatable Salesforce outcome instead of relying on undocumented manual work.`,
+      keyConcepts: relatedConcepts,
+      implementation,
+      expectedOutcome: `The learner can demonstrate ${title} in Salesforce, explain the business result, and show test evidence from the practice activity.`,
+      example: `In the ${module.title} scenario, the team must use ${title} to complete this business activity: ${practice}`,
+      bestPractices,
+      mistakes,
+      interviewQuestions,
+      leitr: [
+        `Learn: Study ${title} and identify how it behaves in ${module.title}.`,
+        `Explain: Describe ${title} in simple English, including why the business needs it and one Salesforce example.`,
+        `Implement: ${practice}`,
+        `Test: Rebuild or demonstrate ${title} without notes and answer: ${question}`,
+        `Review: Revisit the ${title} explanation and implementation after 1 day, 3 days, and 7 days.`
+      ],
+      certificationFocus: isAdmin
+        ? `For the Salesforce Administrator certification, focus on selecting the correct declarative use of ${title}, recognizing its effect on users and data, and choosing the safest configuration for a scenario.`
+        : `For Salesforce Administrator certification, understand how an admin configures, governs, tests, or hands off ${title}. For developer readiness, explain the implementation, limits, security, and testing implications.`,
+      proof: `Demonstrate ${title} by completing "${practice}", showing the resulting Salesforce configuration or behavior, presenting positive and negative test evidence, and answering "${question}" without notes.`
+    };
   }
 
   function renderTopicCoverage(module) {
@@ -517,14 +623,18 @@
     el("topicCoverageCount").textContent = `${topics.length} subcategories`;
     el("topicCoverage").innerHTML = topics.map((topic, index) => `
       <details class="topic-category" ${index === 0 ? "open" : ""}>
-        <summary><span class="topic-number">${index + 1}</span><span><strong>${topic.title}</strong><small>Concept, implementation, example, standards, mistakes, and practice</small></span><span class="topic-toggle" aria-hidden="true">+</span></summary>
+        <summary><span class="topic-number">${index + 1}</span><span><strong>${topic.title}</strong><small>Concept, implementation, interview preparation, LEITR, certification, and proof</small></span><span class="topic-toggle" aria-hidden="true">+</span></summary>
         <div class="topic-category-body">
-          <div class="topic-detail topic-concept"><span>Concept</span><p>${topic.concept}</p></div>
-          <div class="topic-detail topic-example"><span>Realistic example</span><p>${topic.example}</p></div>
-          <div class="topic-detail topic-wide"><span>Implementation path</span><ol>${topic.implementation.map((item) => `<li>${item}</li>`).join("")}</ol></div>
-          <div class="topic-detail"><span>Best practices</span><ul>${topic.bestPractices.map((item) => `<li>${item}</li>`).join("")}</ul></div>
-          <div class="topic-detail topic-warning"><span>Common mistakes</span><ul>${topic.mistakes.map((item) => `<li>${item}</li>`).join("")}</ul></div>
-          <div class="topic-detail topic-proof topic-wide"><span>Prove your skill</span><p>${topic.proof}</p></div>
+          <div class="topic-detail topic-concept topic-wide"><span>1. Concept</span><p>${topic.concept}</p></div>
+          <div class="topic-detail topic-wide"><span>2. Key Concepts</span><ul>${topic.keyConcepts.map((item) => `<li>${item}</li>`).join("")}</ul></div>
+          <div class="topic-detail topic-example topic-wide"><span>3. Real Business Example</span><p>${topic.example}</p></div>
+          <div class="topic-detail topic-wide"><span>4. Salesforce Implementation</span><ol>${topic.implementation.map((item) => `<li>${item}</li>`).join("")}</ol><p><strong>Expected outcome:</strong> ${topic.expectedOutcome}</p></div>
+          <div class="topic-detail"><span>5. Best Practices</span><ul>${topic.bestPractices.map((item) => `<li>${item}</li>`).join("")}</ul></div>
+          <div class="topic-detail topic-warning"><span>6. Common Mistakes</span><ul>${topic.mistakes.map((item) => `<li>${item}</li>`).join("")}</ul></div>
+          <div class="topic-detail topic-wide"><span>7. Interview Questions and Answers</span><ol>${topic.interviewQuestions.map((item) => `<li><strong>${item.question}</strong><p>${item.answer}</p></li>`).join("")}</ol></div>
+          <div class="topic-detail topic-wide"><span>8. LEITR Learning Tasks</span><ul>${topic.leitr.map((item) => `<li>${item}</li>`).join("")}</ul></div>
+          <div class="topic-detail topic-wide"><span>9. Certification Focus</span><p>${topic.certificationFocus}</p></div>
+          <div class="topic-detail topic-proof topic-wide"><span>10. Practical Proof</span><p>${topic.proof}</p></div>
         </div>
       </details>
     `).join("");
@@ -532,16 +642,6 @@
 
   // ── Check My Work: Lab Criteria Verification ─────────────────────────────
 
-  // Map course names to criteria keys
-  const COURSE_KEY_MAP = {
-    "Salesforce Administrator": "admin",
-    "Apex Development": "apex",
-    "Salesforce Flow": "flow",
-    "Lightning Web Components": "lwc",
-    "Salesforce Integration": "integration",
-    "Salesforce Agentforce": "agentforce",
-    "Final POC Project": "poc"
-  };
 
   function loadLabResults() {
     try { return JSON.parse(localStorage.getItem(MASTERY_KEY + ".labResults")) || {}; } catch { return {}; }

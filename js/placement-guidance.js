@@ -25,7 +25,7 @@ function renderCompanies() {
   const city = cityFilter.value;
   companyGrid.innerHTML = companies.filter((company) => city === "all" || company[1] === city).map(([name, location, tier, tags]) => {
     const linkedIn = `https://www.linkedin.com/search/results/people/?keywords=${encodeURIComponent(`Salesforce ${name} ${location}`)}`;
-    return `<article class="company-card"><header><h3>${name}</h3><b>${tier.toUpperCase()}</b></header><p>${location} · Salesforce delivery and career opportunities.</p><div class="tags">${tags.map((tag) => `<span>${tag}</span>`).join("")}</div><div class="card-actions"><button data-company="${name}">Build Pitch</button><a href="${linkedIn}" target="_blank" rel="noopener noreferrer">Find People ↗</a></div></article>`;
+    return `<article class="company-card"><header><h3>${name}</h3><b>${tier.toUpperCase()}</b></header><p>${location} - Salesforce delivery and career opportunities.</p><div class="tags">${tags.map((tag) => `<span>${tag}</span>`).join("")}</div><div class="card-actions"><button data-company="${name}">Build Pitch</button><a href="${linkedIn}" target="_blank" rel="noopener noreferrer">Find People</a></div></article>`;
   }).join("");
 }
 

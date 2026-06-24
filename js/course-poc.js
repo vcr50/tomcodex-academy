@@ -364,6 +364,119 @@ const customModules = [
   }
 ];
 
+const pocProjectLabels = {
+  student: "Student Success CRM",
+  realestate: "Real Estate CRM",
+  healthcare: "Healthcare Patient CRM",
+  custom: "Custom Salesforce CRM"
+};
+
+const pocStages = [
+  { title: "Stage 1: Capstone Discovery and Foundation", moduleRange: "Modules 1-2" },
+  { title: "Stage 2: Capstone Automation, UI and Release", moduleRange: "Modules 3-4" }
+];
+
+function toHtmlList(items) {
+  return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+}
+
+function buildPocMasteryTest(module, projectLabel) {
+  const baseQuestions = [
+    [`Which artifact proves the ${projectLabel} schema is ready?`, ["Object model with relationships and field decisions", "Only a homepage screenshot", "A blank unmanaged package", "A user profile list"], 0],
+    ["What should be verified before moving a capstone build toward release?", ["Security, automation, tests, data quality, and deployment plan", "Only the app name", "Only dashboard colors", "Only Trailhead completion"], 0],
+    ["Why should capstone work include LEITR review evidence?", ["It proves learning, explanation, implementation, testing, and spaced review", "It replaces configuration", "It removes testing", "It hides project gaps"], 0],
+    [`What is the best way to document a ${projectLabel} business rule?`, ["Requirement, configuration, expected result, test evidence, and owner", "A single object label", "A package version only", "A random screenshot"], 0],
+    ["Which release habit protects production data?", ["Validate in sandbox and deploy through a reviewed plan", "Edit directly in production first", "Disable all validations permanently", "Skip user acceptance testing"], 0]
+  ];
+  return Array.from({ length: 15 }, (_, questionIndex) => {
+    const source = baseQuestions[questionIndex % baseQuestions.length];
+    const type = questionIndex < 10 ? "mcq" : questionIndex < 13 ? "scenario" : "practical";
+    return {
+      type,
+      question: questionIndex < 5 ? source[0] : `${module.title}: ${source[0]}`,
+      options: type === "mcq" ? source[1] : undefined,
+      correctAnswer: type === "mcq" ? source[2] : undefined,
+      expectedKeywords: type !== "mcq" ? ["requirement", "build", "test", "evidence"] : undefined
+    };
+  });
+}
+
+function enrichPocModules(modules, projectKey) {
+  const projectLabel = pocProjectLabels[projectKey] || pocProjectLabels.student;
+  return modules.map((module, index) => {
+    const stage = index < 2 ? pocStages[0] : pocStages[1];
+    const projectName = `TomCodeX ${projectLabel} Capstone`;
+    return {
+      ...module,
+      subCourse: stage,
+      masteryStage: stage,
+      richContent: {
+        moduleGoal: `Complete the ${module.title.toLowerCase()} milestone for the ${projectName}.`,
+        learningOutcomes: module.points,
+        simpleExplanation: `<p>This capstone module turns earlier Admin, Flow, Apex, LWC, Integration, and Agentforce skills into one working Salesforce project. Every decision must produce a build artifact and verification evidence.</p>`,
+        mainSyllabus: {
+          title: "Salesforce Final POC Capstone Build Syllabus",
+          introduction: `Use this as the primary build plan for the ${projectName}.`,
+          content: `<div class="roadmap-phase-summary"><strong>${stage.title}</strong><span>${stage.moduleRange}</span><p>${module.description}</p></div><h4>Required capstone work</h4>${toHtmlList(module.practice)}<h4>Supporting Salesforce project resources</h4>${toHtmlList(module.resources.map(([name]) => name))}`
+        },
+        detailedLessonSections: module.points.map((point, lessonIndex) => ({
+          title: `${lessonIndex + 1}. ${point}`,
+          content: `<p>Explain the requirement, configure it in Salesforce, test it with realistic data, and capture evidence for your final portfolio walkthrough.</p>`
+        })),
+        projectName,
+        projectConnection: {
+          buildsOn: index === 0 ? "Admin, data model, and security fundamentals" : modules[index - 1].title,
+          buildsNow: module.title,
+          preparesNext: modules[index + 1]?.title || "Final portfolio demo and interview walkthrough"
+        },
+        realBusinessExample: `<p>A delivery team uses this ${projectLabel} project to prove it can gather requirements, build safely, automate real work, and release with evidence.</p>`,
+        whereUsed: `<p>Used in Salesforce implementation projects, portfolio demos, client discovery sessions, release reviews, and developer interviews.</p>`,
+        stepByStepImplementation: module.practice,
+        trailheadPractice: {
+          title: "Official Capstone Practice",
+          links: module.resources.map(([name, url]) => ({ label: name, url })),
+          instructions: "Study the official resource, then apply it directly inside your capstone org before marking the module complete."
+        },
+        projectTask: {
+          artifact: `${module.title} evidence pack`,
+          summary: `Build and document this milestone inside the ${projectName}.`,
+          steps: module.practice.concat(["Record LEITR notes for what you learned, explained, implemented, tested, and reviewed."])
+        },
+        projectEvidence: [
+          "Requirement notes and acceptance criteria",
+          "Salesforce configuration or code artifact names",
+          "Test records or test class evidence",
+          "Before and after screenshots or written verification notes",
+          "Risk, security, and release notes",
+          "LEITR review dates for 1 day, 3 days, and 7 days"
+        ],
+        bestPractices: [
+          "Keep object, field, automation, and code names consistent.",
+          "Test happy path, negative path, and bulk or multi-record behavior.",
+          "Document why each design choice exists, not only what was clicked."
+        ],
+        commonMistakes: [
+          "Building features without written acceptance criteria.",
+          "Skipping security and sharing review until the end.",
+          "Showing screenshots without explaining test evidence."
+        ],
+        whyMattersInJob: `<p>Capstone delivery mirrors real Salesforce work: understand a business need, design a maintainable solution, test it, and explain tradeoffs clearly.</p>`,
+        interviewQuestions: module.questions,
+        handsOnLab: { instructions: `<p>Complete the module practice tasks in your Salesforce org and submit clear evidence for each item.</p>` },
+        labCriteria: [
+          { id: "requirements", question: "List the requirements completed in this module.", expectedKeywords: ["requirement", "acceptance"] },
+          { id: "artifact", question: "Name the Salesforce artifacts you created or changed.", expectedKeywords: ["object", "flow", "lwc", "apex", "rule"] },
+          { id: "testing", question: "Describe how you tested the module outcome.", expectedKeywords: ["test", "record", "expected"] },
+          { id: "security", question: "Explain the security or governance review performed.", expectedKeywords: ["security", "sharing", "profile", "permission"] },
+          { id: "release", question: "Write the deployment or release note for this milestone.", expectedKeywords: ["deploy", "release", "validate"] },
+          { id: "leitr_review", question: "Add your 1-day, 3-day, and 7-day LEITR review dates.", expectedKeywords: ["1 day", "3 days", "7 days"] }
+        ],
+        masteryTest: buildPocMasteryTest(module, projectLabel),
+        masteryEvaluationCriteria: ["Capstone requirement clarity", "Correct Salesforce implementation", "Testing evidence", "Release readiness", "LEITR reflection"]
+      }
+    };
+  });
+}
 const moduleMapping = {
   student: studentModules,
   realestate: realEstateModules,
@@ -371,10 +484,11 @@ const moduleMapping = {
   custom: customModules
 };
 
-const activeModules = moduleMapping[selectedPoc] || studentModules;
+const activeModules = enrichPocModules(moduleMapping[selectedPoc] || studentModules, selectedPoc);
 
 window.TomCodexCourseConfig = {
   modules: activeModules,
+  subCourses: pocStages,
   masteryKey: "tomcodex.pocMasteryScores.v1",
   courseName: "Final POC Project",
   recordLabel: "POC",

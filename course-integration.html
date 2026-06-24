@@ -31,7 +31,7 @@
 
     <section class="mx-auto grid max-w-7xl gap-6 px-5 py-10 lg:grid-cols-[.34fr_.66fr] lg:px-8">
       <aside class="space-y-5">
-        <div class="course-panel sticky-panel"><span class="course-tag">Program curriculum</span><h2 class="mt-3">Integration learning path</h2><div id="moduleNav" class="module-nav"></div></div>
+        <div class="course-panel sticky-panel"><span class="course-tag">Program curriculum</span><h2 class="mt-3">Integration learning path</h2><div class="mobile-module-picker"><label for="moduleSelect">Choose integration module</label><select id="moduleSelect" aria-label="Choose integration module"></select><p>Select a module to show its TomCodeX integration build syllabus below.</p></div><div id="moduleNav" class="module-nav"></div></div>
         <div class="course-panel"><span class="course-tag">24+ hour plan</span><h2 class="mt-3">Learning time breakdown</h2><ul class="outcome-list"><li>8 hours of guided Integration lessons</li><li>8 hours of official docs and Trailhead</li><li>8 hours of coding labs and exercises</li><li>4+ hours of tests and interview practice</li></ul></div>
         <div class="course-panel doubt-guide-card"><div class="zentom-card-heading"><img src="assets/zentom-ai-logo.svg" alt="Zentom AI"><div><span class="course-tag">Zentom · Live</span><h2 class="mt-3">Ask Zentom AI</h2></div></div><p class="mt-2 text-xs leading-5 text-slate-500">Have a doubt about the current module? Ask your AI guide without leaving the course.</p><label for="courseDoubtSpeed">Answer speed</label><select id="courseDoubtSpeed"><option value="flash">Flash Mode</option><option value="normal">Normal Mode</option><option value="deep">Deep Trainer Mode</option></select><label for="courseDoubtInput">Your doubt</label><textarea id="courseDoubtInput" placeholder="Ask anything about this module..."></textarea><button id="askCourseGuideBtn" class="course-primary w-full" type="button">Ask Zentom</button><div id="courseDoubtAnswer" class="course-doubt-answer hidden" aria-live="polite"></div></div>
         <div class="course-panel"><h2>Program outcomes</h2><ul class="outcome-list"><li>Understand REST and SOAP protocols</li><li>Configure Named & External Credentials</li><li>Parse JSON dynamically in Apex</li><li>Write inbound Apex RestResources</li><li>Publish & subscribe to Platform Events</li><li>Implement error logging & governance</li></ul></div>
@@ -43,12 +43,16 @@
             <span id="moduleLabel" class="course-tag">Module 1</span>
             <h2 id="moduleTitle" class="mt-3 text-2xl font-extrabold text-brand-950">Salesforce REST API Basics & Workbench</h2>
             <p id="moduleDescription" class="mt-3 text-slate-500"></p>
-          </div>
+          <nav class="module-top-navigation" aria-label="Module navigation"><button id="previousModuleTopBtn" class="course-secondary" type="button">Previous module</button><button id="nextModuleTopBtn" class="course-primary" type="button">Next module</button></nav></div>
           <button id="completeModuleBtn" class="complete-button" type="button">Mark module complete</button>
         </div>
 
         <!-- Rich Content timeline layout -->
         <div id="richModuleContent" class="hidden mt-6 space-y-8">
+          <div class="zentom-specialist-banner"><img src="assets/zentom-ai-logo.svg" alt="Zentom AI"><div><span>Powered by Zentom</span><h3>Salesforce integration learning assistant</h3><p>Module-aware API, auth, payload, event, and governance support.</p></div></div>
+          <div id="projectConnectionSection" class="hidden project-connection"><div><span>Builds on</span><strong id="projectBuildsOn"></strong></div><div><span>Build in this module</span><strong id="projectBuildsNow"></strong></div><div><span>Prepares for next</span><strong id="projectPreparesNext"></strong></div></div>
+          <section class="leitr-cycle-card"><div><span>TomCodeX LEITR study system</span><h3>Learn &gt; Explain &gt; Implement &gt; Test &gt; Review</h3><p>Use this rhythm in every Integration module. Keep protocol theory short, endpoint building heavy, and review spaced over time. The 1:2 rule: 1 hour learning = at least 2 hours building, testing, and debugging.</p></div><div class="leitr-cycle-grid"><article><strong>1. Learn</strong><p>Study one integration concept and its Salesforce boundary.</p></article><article><strong>2. Explain</strong><p>Describe the endpoint, auth model, payload, and failure behavior.</p></article><article><strong>3. Implement</strong><p>Build the module artifact in the student integration engine.</p></article><article><strong>4. Test</strong><p>Run success, failure, mock, logging, and permission checks.</p></article><article><strong>5. Review</strong><p>Review after 1 day, 3 days, and 7 days.</p></article></div></section>
+          <section id="richMainSyllabusSection" class="hidden tomcodex-main-syllabus"><div class="tomcodex-main-syllabus-heading"><div><span>Primary TomCodeX integration study resource</span><h3 id="richMainSyllabusTitle">Salesforce Integration Syllabus</h3><p id="richMainSyllabusIntroduction"></p></div><strong>Study this first</strong></div><div id="richMainSyllabusContent"></div></section>
           <div class="border-l-4 border-brand-500 pl-4 bg-brand-50/20 py-2 rounded-r-lg">
             <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700">Step 1: Module Goal</h3>
             <p id="richGoal" class="text-slate-600 text-sm mt-2 font-medium"></p>
@@ -61,6 +65,7 @@
             <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 3: Simple Explanation</h3>
             <div id="richExplanation" class="space-y-3 text-xs text-slate-600 leading-relaxed"></div>
           </div>
+          <div id="richDetailedLessonSection" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><div class="lesson-library-heading"><div><span class="course-tag">Supporting integration study resource</span><h3>Integration Deep-Dive Lesson Library</h3><p>Use these lessons to strengthen the main TomCodeX Integration build syllabus topics.</p></div><div class="lesson-library-actions"><strong id="detailedLessonCount"></strong><button id="expandAllLessonsBtn" class="course-secondary" type="button">Expand all</button><button id="collapseAllLessonsBtn" class="course-secondary" type="button">Collapse all</button></div></div><div id="richDetailedLesson" class="space-y-5 text-xs text-slate-600 leading-relaxed"></div></div>
           <div class="bg-brand-50/50 p-5 rounded-2xl border border-brand-100">
             <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 4: Real Business Example</h3>
             <div id="richBusiness" class="space-y-3"></div>
@@ -73,22 +78,25 @@
             <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 6: Step-by-Step Walkthrough</h3>
             <ol id="richStepByStep" class="list-decimal pl-5 space-y-2 text-slate-600 text-sm"></ol>
           </div>
+          <div id="richTrailheadPracticeSection" class="hidden bg-white p-5 rounded-2xl border border-slate-200 shadow-sm"><h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 7: Official Integration Practice</h3><div id="richTrailheadPractice"></div></div>
+          <div id="richProjectTaskSection" class="hidden bg-brand-50/50 p-5 rounded-2xl border-2 border-brand-300 shadow-sm"><h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 8: TomCodeX Integration Project Task</h3><div id="richProjectTask"></div></div>
+          <div id="richProjectEvidenceSection" class="hidden bg-cyan-50/60 p-5 rounded-2xl border border-cyan-200"><h3 class="text-sm font-bold uppercase tracking-wider text-cyan-800 mb-3">Step 9: Project Evidence Required</h3><ul id="richProjectEvidence" class="list-disc pl-5 space-y-2 text-slate-600 text-xs"></ul></div>
           <div class="grid gap-6 md:grid-cols-2">
             <div class="bg-emerald-50/40 p-5 rounded-2xl border border-emerald-100">
-              <h3 class="text-sm font-bold uppercase tracking-wider text-emerald-700 mb-3">Step 7: Best Practices</h3>
+              <h3 class="text-sm font-bold uppercase tracking-wider text-emerald-700 mb-3">Step 10: Best Practices</h3>
               <ul id="richBestPractices" class="list-disc pl-5 space-y-1.5 text-slate-600 text-xs"></ul>
             </div>
             <div class="bg-rose-50/40 p-5 rounded-2xl border border-rose-100">
-              <h3 class="text-sm font-bold uppercase tracking-wider text-rose-700 mb-3">Step 8: Common Mistakes</h3>
+              <h3 class="text-sm font-bold uppercase tracking-wider text-rose-700 mb-3">Step 11: Common Mistakes</h3>
               <ul id="richCommonMistakes" class="list-disc pl-5 space-y-1.5 text-slate-600 text-xs"></ul>
             </div>
           </div>
           <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 9: Why This Matters in Job</h3>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 12: Why This Matters in Job</h3>
             <div id="richWhyMatters"></div>
           </div>
           <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 10: Interview Key Questions</h3>
+            <h3 class="text-sm font-bold uppercase tracking-wider text-brand-700 mb-3">Step 13: Interview Key Questions</h3>
             <ul id="richInterview" class="list-disc pl-5 space-y-2 text-slate-600 text-sm"></ul>
           </div>
           <!-- Step 11, 12, 13: Hands-on Practice Lab & Check My Work -->
@@ -137,7 +145,7 @@
             <div><strong>1. Learn with AI</strong><span>Understand the concept in simple language.</span></div><div><strong>2. Study sources</strong><span>Read official docs and watch free videos.</span></div><div><strong>3. Practice</strong><span>Complete Trailhead and hands-on tasks.</span></div><div><strong>4. Prove mastery</strong><span>Answer recall and workplace questions.</span></div>
           </div>
           <div class="content-section"><h3>AI lesson overview</h3><div id="lessonPoints" class="lesson-points"></div></div>
-          <div class="content-section"><div class="topic-coverage-heading"><div><span class="course-tag">Detailed curriculum</span><h3>Complete topic coverage</h3><p>Open each subcategory to study the concept, implementation, example, best practices, common mistakes, and practical proof.</p></div><strong id="topicCoverageCount"></strong></div><div id="topicCoverage" class="topic-coverage"></div></div>
+          <div class="content-section"><div class="topic-coverage-heading"><div><span class="course-tag">Detailed curriculum</span><h3>10-part topic mastery lessons</h3><p>Every topic includes concept depth, key concepts, a business example, hands-on implementation, best practices, mistakes, five answered interview questions, LEITR tasks, certification focus, and practical proof.</p></div><strong id="topicCoverageCount"></strong></div><div id="topicCoverage" class="topic-coverage"></div></div>
           <div class="grid gap-5 md:grid-cols-2"><div class="content-section"><h3>Official and free resources</h3><div id="resourceList" class="course-resource-list"></div></div><div class="content-section"><h3>Hands-on practice</h3><div id="practiceList" class="practice-list"></div></div></div>
           <div class="content-section"><div class="flex flex-wrap items-center justify-between gap-3"><div><h3>Zentom AI mastery test</h3><p class="mt-2 text-xs text-slate-500">Zentom generates a fresh minimum of 15 questions for every attempt. Answer all questions and score 80% or higher to unlock the next module.</p></div><button id="startMasteryTestBtn" class="course-primary" type="button">Start 15-question AI test</button></div><div id="questionList" class="mastery-list"></div></div>
         </div>

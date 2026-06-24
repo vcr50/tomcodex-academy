@@ -946,6 +946,10 @@ app.get(["/learner-dashboard", "/dashboard.html"], (request, response) => {
   return response.sendFile(resolve("dashboard.html"));
 });
 
+app.get(["/learner-profile", "/learner-profile.html"], (_request, response) => {
+  return response.sendFile(resolve("learner-profile.html"));
+});
+
 app.use(/\/api\/ai\/.*/, checkAiQuota);
 
 app.post("/api/academy/verify-lab", async (request, response, next) => {

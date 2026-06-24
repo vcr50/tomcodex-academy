@@ -19,6 +19,7 @@ This roadmap covers Salesforce Administration, Advanced Administration, Service 
 - Tabs
 - Setup Menu
 - Company Profile
+- Object Manager
 - Salesforce App Creation
 - AppExchange
 
@@ -27,7 +28,7 @@ This roadmap covers Salesforce Administration, Advanced Administration, Service 
 - Create a Salesforce Developer Org
 - Create a Custom App
 - Explore Setup Menu
-- Install a Free AppExchange Package
+- AppExchange Risk Review - Installation Not Required
 
 ---
 
@@ -47,10 +48,11 @@ This roadmap covers Salesforce Administration, Advanced Administration, Service 
 
 ## Hands-On Tasks
 
-- Create Employee Object
-- Create Department Object
+- Create Student Object
+- Create Course Object
+- Create Course Enrollment Junction Object
 - Configure Relationships
-- Enable Field Tracking
+- Review the Model in Schema Builder
 
 ---
 
@@ -487,6 +489,7 @@ This roadmap covers Salesforce Administration, Advanced Administration, Service 
 - Pull Requests
 - Code Reviews
 - Merge Strategy
+- Feature Branch to Pull Request to Review to Merge
 
 ## Workflow
 
@@ -497,6 +500,8 @@ Feature Branch → Pull Request → Review → Merge
 # Phase 26: Salesforce DevOps Pipeline
 
 ## Workflow
+
+- Developer Sandbox to VS Code to Git to GitHub to CI/CD Pipeline to Production
 
 Developer Sandbox
 ↓
@@ -560,6 +565,7 @@ Production
 
 ### Features
 
+- Employee Management System
 - Employee Object
 - Department Object
 - Security Model
@@ -571,6 +577,7 @@ Production
 
 ### Features
 
+- Leave Management System
 - Approval Process
 - Flows
 - Notifications
@@ -581,6 +588,7 @@ Production
 
 ### Features
 
+- Recruitment Management System
 - Candidate Management
 - Interview Scheduling
 - Dashboards
@@ -591,6 +599,7 @@ Production
 
 ### Features
 
+- Sales CRM
 - Leads
 - Accounts
 - Contacts
@@ -615,6 +624,7 @@ Production
 
 ### Features
 
+- Salesforce DevOps Pipeline
 - Sandbox Development
 - Git Integration
 - GitHub Repository

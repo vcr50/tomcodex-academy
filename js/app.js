@@ -1533,7 +1533,7 @@ function renderSettingsForm() {
   if (settingsTierText) {
     const isFounder = identity.tier === "founder";
     settingsTierText.innerHTML = isFounder 
-      ? `<span class="text-brand-600">★ Founder Access ($19/mo)</span>` 
+      ? `<span class="text-brand-600">★ Founder Access (joining offer ₹1,999 for first 6 months, then ₹499/mo)</span>` 
       : `<span class="text-slate-500">Free Starter Access ($0/mo)</span>`;
   }
 

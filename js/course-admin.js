@@ -1,7 +1,7 @@
 const ADMIN_PROGRESS_KEY = "tomcodex.adminCourseProgress.v1";
 const modules = [
   {
-    title: "Salesforce Platform Foundations",
+    title: "Cloud & Salesforce Platform Foundations",
     description: "Learn how Salesforce CRM stores business data, navigate its core administration areas, and understand the platform concepts every beginner administrator needs.",
     points: [
       "Understand what Salesforce CRM is.",
@@ -11,7 +11,7 @@ const modules = [
       "Use the App Launcher to switch between apps.",
       "Understand the difference between Standard Objects and Custom Objects.",
       "Explain what Salesforce metadata means.",
-      "Find Company Information, Organization ID, timezone, and currency settings.",
+      "Find Company Information, masked Organization ID, timezone, and currency settings.",
       "Identify your own Salesforce user and profile.",
       "Understand the basic role of a Salesforce Administrator."
     ],
@@ -24,7 +24,7 @@ const modules = [
       "Create or access a Salesforce Developer Edition org or Trailhead Playground, then log in.",
       "Click the App Launcher, count the available apps, and write down any three app names.",
       "Click the gear icon and select Setup.",
-      "Use Quick Find to open Company Information. Record the edition, Organization ID, timezone, currency, language, and locale.",
+      "Use Quick Find to open Company Information. Record the edition, masked Organization ID only, timezone, currency, language, and locale.",
       "Open Object Manager. Explore standard objects and record the first standard object shown in your org.",
       "Use Quick Find to open Users, find your user record, and note your username, email, profile, and active status.",
       "Record the Salesforce subdomain shown in the browser address bar."
@@ -40,7 +40,7 @@ const modules = [
       "What is the difference between Standard Object and Custom Object?",
       "What is metadata in Salesforce?",
       "What is the difference between declarative and programmatic development?",
-      "Where do you find Organization ID?",
+      "Where do you find Organization ID, and why must submitted proof show only a masked Organization ID?",
       "What is Object Manager used for?",
       "What is App Launcher used for?",
       "What is the role of a Salesforce Administrator?",
@@ -62,7 +62,7 @@ const modules = [
           "Open the activation email, verify the account, create a strong password, and store the username and login URL securely.",
           "Log in and confirm that Salesforce Lightning Experience opens successfully.",
           "Click the gear icon, open <strong>Setup</strong>, and use Quick Find to open <strong>Company Information</strong>.",
-          "Review the org edition, Organization ID, default locale, language, timezone, and currency. Change settings only when needed for your learning location.",
+          "Review the org edition, masked Organization ID only, default locale, language, timezone, and currency. Change settings only when needed for your learning location.",
           "Open <strong>Users</strong>, find your user, and confirm that it is active and uses the expected email, locale, timezone, and System Administrator profile.",
           "Open the <strong>App Launcher</strong> and confirm that you can access at least one standard app such as Sales or Service.",
           "Bookmark the login page and record the org details in your learning notes. Your practice org is now ready for Module 1."
@@ -90,7 +90,7 @@ const modules = [
         "Use the App Launcher to switch between apps.",
         "Understand the difference between Standard Objects and Custom Objects.",
         "Explain what Salesforce metadata means.",
-        "Find Company Information, Organization ID, timezone, and currency settings.",
+        "Find Company Information, masked Organization ID, timezone, and currency settings.",
         "Identify your own Salesforce user and profile.",
         "Understand the basic role of a Salesforce Administrator."
       ],
@@ -189,7 +189,7 @@ const modules = [
         "Create or access a Salesforce Developer Edition org or Trailhead Playground, then log in.",
         "Click the <strong>App Launcher</strong>, count the available apps, and write down any three app names.",
         "Click the gear icon and select <strong>Setup</strong>.",
-        "Use Quick Find to open <strong>Company Information</strong>. Record the edition, Organization ID, timezone, currency, language, and locale.",
+        "Use Quick Find to open <strong>Company Information</strong>. Record the edition, masked Organization ID only, timezone, currency, language, and locale.",
         "Open <strong>Object Manager</strong>. Explore standard objects and record the first standard object shown in your org.",
         "Use Quick Find to open <strong>Users</strong>, find your user record, and note your username, email, profile, and active status.",
         "Record the Salesforce subdomain shown in the browser address bar."
@@ -224,7 +224,7 @@ const modules = [
         "What is the difference between Standard Object and Custom Object?",
         "What is metadata in Salesforce?",
         "What is the difference between declarative and programmatic development?",
-        "Where do you find Organization ID?",
+        "Where do you find Organization ID, and how should it be masked in submitted proof?",
         "What is Object Manager used for?",
         "What is App Launcher used for?",
         "What is the role of a Salesforce Administrator?",
@@ -232,7 +232,7 @@ const modules = [
       ],
       practicalAssignment: [
         "Org Edition",
-        "Organization ID",
+        "Masked Organization ID only (example: 00Dxx000000XXXX)",
         "Timezone",
         "Currency",
         "First Standard Object",
@@ -244,7 +244,7 @@ const modules = [
       ],
       knowledgeCheckQuestions: [
         "What is your Salesforce edition?",
-        "What is your Organization ID?",
+        "What is your masked Organization ID?",
         "What is your default timezone?",
         "What is the first standard object listed in Object Manager?",
         "What is your Profile name?",
@@ -262,12 +262,12 @@ const modules = [
         "I can use App Launcher.",
         "I can open Object Manager.",
         "I can find Company Information.",
-        "I can find Organization ID.",
+        "I can find Organization ID and submit only a masked value.",
         "I can find my own user profile.",
         "I completed the hands-on lab.",
         "I scored 80% or higher in the AI Mastery Test."
       ],
-      finalSummary: "Salesforce is a cloud-based CRM and application platform. It allows businesses to manage data, automate work, control security, and build custom apps using clicks and code. In this module, you learned the most important foundation concepts: Org, App, Object, Field, Record, Metadata, Setup, Object Manager, App Launcher, and Company Information. This foundation is required before learning Module 2.",
+      finalSummary: "By the end of Module 1, the learner has created or opened a safe Salesforce practice org, verified Company Information, identified org edition, timezone, currency, and masked Org ID, explored App Launcher, Setup, Object Manager, and Users, created the TomCodeX Student Success CRM custom app, reviewed one AppExchange package safely, submitted project evidence, and passed the Zentom AI Mastery Test with 80% or higher.",
       masteryTest: [
         {
           type: "mcq",
@@ -381,15 +381,15 @@ const modules = [
         },
         {
           type: "scenario",
-          question: "Scenario: A TomCodeX Academy stakeholder asks for help during Salesforce Platform Foundations. What is the difference between an org, app, object, field, and record? Explain the best Admin response, the risk to avoid, and how you would test it."
+          question: "Scenario: A TomCodeX Academy stakeholder asks for help during Cloud & Salesforce Platform Foundations. What is the difference between an org, app, object, field, and record? Explain the best Admin response, the risk to avoid, and how you would test it."
         },
         {
           type: "scenario",
-          question: "Scenario: A TomCodeX Academy stakeholder asks for help during Salesforce Platform Foundations. What is metadata, and how does it support declarative development? Explain the best Admin response, the risk to avoid, and how you would test it."
+          question: "Scenario: A TomCodeX Academy stakeholder asks for help during Cloud & Salesforce Platform Foundations. What is metadata, and how does it support declarative development? Explain the best Admin response, the risk to avoid, and how you would test it."
         },
         {
           type: "scenario",
-          question: "Scenario: A TomCodeX Academy stakeholder asks for help during Salesforce Platform Foundations. Where can an administrator find the Organization ID and user profile? Explain the best Admin response, the risk to avoid, and how you would test it."
+          question: "Scenario: A TomCodeX Academy stakeholder asks for help during Cloud & Salesforce Platform Foundations. Where can an administrator find the Organization ID and user profile, and how should sensitive proof be masked? Explain the best Admin response, the risk to avoid, and how you would test it."
         },
         {
           type: "practical",
@@ -397,7 +397,7 @@ const modules = [
         },
         {
           type: "practical",
-          question: "Practical verification: Describe the evidence you created and how Zentom can verify correct Salesforce naming and hands-on completion. Required evidence includes: Screenshot of Company Information with the Organization ID partially masked. | Screenshot of the learner's active User record and Profile name."
+          question: "Practical verification: Describe the evidence you created and how Zentom can verify correct Salesforce naming and hands-on completion. Required evidence includes a Company Information screenshot with masked Organization ID only, custom app proof, and an AppExchange risk review."
         }
       ],
       handsOnLab: {
@@ -441,11 +441,11 @@ const modules = [
         },
         {
           id: "q2",
-          question: "What is your Organization ID?",
+          question: "What is your masked Organization ID only?",
           type: "text",
-          placeholder: "Enter the Organization ID from Company Information",
+          placeholder: "Example: 00Dxx000000XXXX",
           minLength: 15,
-          hint: "Open Setup, search for Company Information, and find Salesforce.com Organization ID."
+          hint: "Open Company Information, but submit only a masked Organization ID such as 00Dxx000000XXXX."
         },
         {
           id: "q3",
@@ -511,7 +511,7 @@ const modules = [
     }
   },
   {
-    title: "Data Modeling and Custom Objects",
+    title: "Data Modeling & Object Configuration",
     description: "Design the TomCodeX Academy Student Success CRM data model using custom objects, suitable field types, relationships, Schema Builder, and data-modeling best practices.",
     points: [
       "Translate business requirements into Salesforce objects, fields, and relationships.",
@@ -2577,8 +2577,8 @@ const ADMIN_SUB_COURSES = [
 ];
 
 const ADMIN_ROADMAP_COVERAGE = [
-  { phase: "Phase 1: Cloud & Salesforce Fundamentals", track: "administrator", module: 0, topics: ["Introduction to Cloud Computing", "SaaS, PaaS, IaaS", "Salesforce CRM Overview", "Navigation", "Tabs", "Setup Menu", "Company Profile", "Salesforce App Creation", "AppExchange", "Create a Salesforce Developer Org", "Create a Custom App", "Explore Setup Menu", "Install a Free AppExchange Package"] },
-  { phase: "Phase 2: Data Model & Object Configuration", track: "administrator", module: 1, topics: ["Standard Objects", "Custom Objects", "Standard Fields", "Custom Fields", "Lookup Relationships", "Master-Detail Relationships", "Junction Objects", "Roll-Up Summary Fields", "Field History Tracking", "Create Employee Object", "Create Department Object", "Configure Relationships", "Enable Field Tracking"] },
+  { phase: "Phase 1: Cloud & Salesforce Fundamentals", track: "administrator", module: 0, topics: ["Introduction to Cloud Computing", "SaaS, PaaS, IaaS", "Salesforce CRM Overview", "Navigation", "Tabs", "Setup Menu", "Company Profile", "Object Manager", "Users", "Salesforce App Creation", "AppExchange", "Create a Salesforce Developer Org", "Create a Custom App", "Explore Setup Menu", "AppExchange Risk Review - Installation Not Required"] },
+  { phase: "Phase 2: Data Model & Object Configuration", track: "administrator", module: 1, topics: ["Standard Objects", "Custom Objects", "Standard Fields", "Custom Fields", "Lookup Relationships", "Master-Detail Relationships", "Junction Objects", "Roll-Up Summary Fields", "Field History Tracking", "Create Student Object", "Create Course Object", "Create Course Enrollment Junction Object", "Configure Relationships", "Review the Model in Schema Builder"] },
   { phase: "Phase 3: UI Customization", track: "administrator", module: 3, topics: ["Page Layouts", "Record Types", "Lightning Record Pages", "Compact Layouts", "Search Layouts", "Custom Buttons", "Custom Links", "Quick Actions", "Create Multiple Record Types", "Customize Lightning Pages", "Create Quick Actions"] },
   { phase: "Phase 4: Business Logic", track: "administrator", module: 4, topics: ["Validation Rules", "Formula Fields", "Email Validation Rule", "Phone Validation Rule", "Salary Formula Calculation"] },
   { phase: "Phase 5: Sales Cloud", track: "administrator", module: 5, topics: ["Leads", "Accounts", "Contacts", "Opportunities", "Campaigns", "Sales Process", "Create Lead Process", "Convert Leads", "Manage Opportunities", "Create Sales Dashboard"] },
@@ -2610,7 +2610,7 @@ const ADMIN_ROADMAP_COVERAGE = [
 
 const ADMIN_ROADMAP_LEARNING_GUIDE = [
   { match: "Phase 1:", outcome: "Explain the cloud delivery model, navigate Salesforce confidently, create an app, and assess an AppExchange package.", task: "Prepare a Developer Edition or Trailhead Playground, document Company Information, create a custom app, and review one free AppExchange package before installation.", evidence: "Org-readiness note, custom-app screenshot, and AppExchange risk review.", badges: [["Salesforce Platform Basics", "https://trailhead.salesforce.com/content/learn/modules/starting_force_com"], ["AppExchange Basics", "https://trailhead.salesforce.com/content/learn/modules/appexchange_basics"]] },
-  { match: "Phase 2:", outcome: "Design a maintainable Salesforce data model using the correct object, field, relationship, and audit choices.", task: "Build Employee, Department, and Employee Department data structures; configure Lookup and Master-Detail relationships; add a roll-up summary and field history tracking.", evidence: "Schema diagram, Object Manager screenshots, sample records, and relationship test results.", badges: [["Data Modeling", "https://trailhead.salesforce.com/content/learn/modules/data_modeling"], ["Picklist Administration", "https://trailhead.salesforce.com/content/learn/modules/picklist_admin"]] },
+  { match: "Phase 2:", outcome: "Design a maintainable Salesforce data model using the correct objects, fields, and relationships.", task: "Build Student, Course, and Course Enrollment; configure relationships; create sample records; and verify the model in Schema Builder.", evidence: "Schema Builder screenshot, Object Manager screenshots, sample records, and relationship test results.", badges: [["Data Modeling", "https://trailhead.salesforce.com/content/learn/modules/data_modeling"], ["Picklist Administration", "https://trailhead.salesforce.com/content/learn/modules/picklist_admin"]] },
   { match: "Phase 3:", outcome: "Create role-focused desktop and mobile experiences without confusing page layout, record page, compact layout, and action responsibilities.", task: "Create two record types, assign page layouts, customize a Lightning record page, configure a compact layout, and add a quick action.", evidence: "Record-type assignment matrix and screenshots from desktop and mobile views.", badges: [["Lightning Experience Customization", "https://trailhead.salesforce.com/content/learn/modules/lex_customization"], ["Lightning App Builder", "https://trailhead.salesforce.com/content/learn/modules/lightning_app_builder"]] },
   { match: "Phase 4:", outcome: "Protect data quality and calculate business values with maintainable validation rules and formulas.", task: "Create email and phone validation rules plus a salary calculation formula; test valid, invalid, blank, import, and automation scenarios.", evidence: "Rule formulas, test matrix, error messages, and calculated-field screenshots.", badges: [["Formulas and Validations", "https://trailhead.salesforce.com/content/learn/modules/point_click_business_logic"]] },
   { match: "Phase 5:", outcome: "Administer the standard Sales Cloud lifecycle from lead generation through converted customer and opportunity reporting.", task: "Create and convert a lead, manage an opportunity through stages, associate a campaign, and build a sales dashboard.", evidence: "Lead-conversion results, opportunity stage history, report, and dashboard screenshots.", badges: [["Sales Cloud Basics", "https://trailhead.salesforce.com/content/learn/modules/lex_sales_cloud_basics"], ["Leads and Opportunities", "https://trailhead.salesforce.com/content/learn/modules/leads_opportunities_lightning_experience"]] },
@@ -2649,14 +2649,126 @@ const ADMIN_DEVELOPER_TOPIC_ROUTES = [
   { pattern: /Git|GitHub|Branch|Pull Request|Code Review|CI\/CD|Jenkins|Gearset|Copado|Salesforce CLI|VS Code/i, course: "Developer capstone and DevOps practice", href: "course-apex.html?module=11" }
 ];
 
+const ADMIN_PHASE_ONE_DETAILS = {
+  "Introduction to Cloud Computing": { label: "Purpose", explanation: "Understand how cloud platforms deliver software through the internet without local installation.", actionLabel: "Practice", action: "Identify how Salesforce runs in the cloud and explain why users can access it from a browser or mobile device." },
+  "SaaS, PaaS, IaaS": { label: "Purpose", explanation: "Understand the difference between cloud service models and where Salesforce fits.", actionLabel: "Practice", action: "Classify Salesforce CRM as SaaS and Salesforce Platform as PaaS using one business example." },
+  "Salesforce CRM Overview": { label: "Purpose", explanation: "Understand how Salesforce helps businesses manage customers, students, leads, tasks, and service records.", actionLabel: "Practice", action: "Open the Sales or Service app and identify standard CRM objects such as Account, Contact, Lead, Opportunity, or Case." },
+  "Navigation": { label: "Purpose", explanation: "Learn how to move inside Salesforce using App Launcher, tabs, global search, record pages, and Setup.", actionLabel: "Practice", action: "Find any standard object tab, open a record list view, and use global search." },
+  "Tabs": { label: "Purpose", explanation: "Understand how tabs expose objects and pages inside an app.", actionLabel: "Practice", action: "Open an app and list the visible tabs. Explain which object or page each tab represents." },
+  "Setup Menu": { label: "Purpose", explanation: "Understand Setup as the admin control center for users, objects, automation, security, and company settings.", actionLabel: "Practice", action: "Open Setup and search for Object Manager, Users, Company Information, and Profiles." },
+  "Company Profile": { label: "Purpose", explanation: "Learn where org-level settings such as Organization ID, timezone, currency, language, locale, and licenses are stored.", actionLabel: "Practice", action: "Open Company Information and record the org edition, timezone, currency, and masked Organization ID only. Example: 00Dxx000000XXXX." },
+  "Object Manager": { label: "Purpose", explanation: "Understand Object Manager as the workspace for reviewing and configuring Salesforce objects, fields, relationships, layouts, and record settings.", actionLabel: "Practice", action: "Open Object Manager and identify at least five standard objects." },
+  "Users": { label: "Purpose", explanation: "Understand where administrators review Salesforce user identity, profile, license, active status, locale, and timezone.", actionLabel: "Practice", action: "Open Users, find your own practice user, and identify the Profile and active status without exposing sensitive details." },
+  "Salesforce App Creation": { label: "Purpose", explanation: "Understand how custom apps group tabs and features for a business team.", actionLabel: "Practice", action: "Create a custom app named TomCodeX Student Success CRM." },
+  "AppExchange": { label: "Purpose", explanation: "Understand AppExchange as Salesforce's marketplace for apps, components, and packages.", actionLabel: "Practice", action: "Review one free AppExchange package before installation. Check package name, publisher, rating, reviews, permissions requested, data access, licensing, and uninstall risk." },
+  "Create a Salesforce Developer Org": { label: "Task", explanation: "Create or access a Salesforce Developer Edition org or Trailhead Playground.", actionLabel: "Required proof", action: "Org URL, org edition, timezone, and masked Organization ID only. Example: 00Dxx000000XXXX." },
+  "Create a Custom App": { label: "Task", explanation: "Create the TomCodeX Student Success CRM custom app.", actionLabel: "Required proof", action: "Screenshot of the app name, App Launcher result, and selected tabs." },
+  "Explore Setup Menu": { label: "Task", explanation: "Visit Company Information, Users, Object Manager, and Profiles.", actionLabel: "Required proof", action: "Short navigation note containing the exact paths used." },
+  "AppExchange Risk Review - Installation Not Required": { label: "Task", explanation: "Review one free AppExchange package before installation. Installation is optional; the goal is to learn safe package review.", actionLabel: "Required proof", action: "Package name, publisher, rating, reviews, permissions requested, data access, licensing, uninstall risk, and final decision: Install or Do Not Install." }
+};
+
+const ADMIN_PHASE_ONE_LAB = {
+  title: "Guided Phase Lab: Org Readiness and Custom App Setup",
+  scenario: "TomCodeX Academy is preparing a new Salesforce org to manage students, courses, enrollments, tutor reviews, and certificates. Before building objects and automation, the admin must verify the org settings, understand navigation, create the first custom app, and review AppExchange safely.",
+  tasks: ["Create or open a Developer Edition org or Trailhead Playground.", "Open Company Information and document org details.", "Explore App Launcher, Object Manager, Users, and Setup.", "Create a custom app named TomCodeX Student Success CRM.", "Review one free AppExchange package before installation."],
+  evidence: ["Org-readiness note with masked sensitive details.", "Company Information screenshot showing masked Organization ID only.", "Custom app screenshot.", "App Launcher screenshot showing TomCodeX Student Success CRM.", "AppExchange risk review note."],
+  validation: ["Explain cloud, SaaS, PaaS, and Salesforce CRM.", "Navigate App Launcher, Setup, Object Manager, Company Information, and Users.", "Identify Org, App, Object, Field, Record, and Profile correctly.", "Create the TomCodeX Student Success CRM custom app.", "Submit correct project evidence with masked sensitive details.", "Explain why production orgs should not be used for practice.", "Review an AppExchange package safely before installation."]
+};
+
+const ADMIN_PHASE_TWO_DETAILS = {
+  "Standard Objects": { label: "Purpose", explanation: "Understand objects supplied by Salesforce for common CRM processes, such as Account, Contact, Lead, Opportunity, Case, and User.", actionLabel: "Practice", action: "Open Object Manager, identify five standard objects, and explain the business data each stores." },
+  "Custom Objects": { label: "Purpose", explanation: "Understand how custom objects store business-specific data that standard Salesforce objects do not represent.", actionLabel: "Practice", action: "Explain why TomCodeX Academy needs Student, Course, and Course Enrollment custom objects." },
+  "Standard Fields": { label: "Purpose", explanation: "Recognize Salesforce-provided fields such as Name, Created By, Last Modified By, Owner, and system timestamps.", actionLabel: "Practice", action: "Open a standard and custom object, then identify the standard fields Salesforce provides automatically." },
+  "Custom Fields": { label: "Purpose", explanation: "Store business-specific values using suitable field types that support data quality, reporting, automation, and user experience.", actionLabel: "Practice", action: "Create Email and Learning Status fields on Student, Course Code and Active fields on Course, and Progress Percentage and Enrollment Status fields on Course Enrollment." },
+  "Lookup Relationships": { label: "Purpose", explanation: "Create a flexible connection where related records can usually exist independently and maintain separate ownership.", actionLabel: "Practice", action: "Explain one situation where Course Enrollment should use Lookup instead of Master-Detail." },
+  "Master-Detail Relationships": { label: "Purpose", explanation: "Create a tightly controlled parent-child relationship where the detail requires its master and inherits ownership and sharing.", actionLabel: "Practice", action: "Explain how Master-Detail would affect Course Enrollment ownership, deletion, required parents, and roll-up summaries." },
+  "Junction Objects": { label: "Purpose", explanation: "Resolve a many-to-many relationship by connecting two parent records and storing information about their relationship.", actionLabel: "Practice", action: "Use Course Enrollment to connect one Student to one Course while storing enrollment status and progress." },
+  "Roll-Up Summary Fields": { label: "Purpose", explanation: "Calculate Count, Sum, Min, or Max values from related detail records when a Master-Detail relationship is used.", actionLabel: "Practice", action: "Describe a useful Course roll-up, such as counting related Course Enrollment records." },
+  "Field History Tracking": { label: "Purpose", explanation: "Record selected field-value changes so administrators can review who changed a tracked value and when.", actionLabel: "Practice", action: "Enable tracking for Enrollment Status or Progress Percentage and explain what history the business needs." },
+  "Create Student Object": { label: "Task", explanation: "Create Student__c with Student Name and the required learner fields.", actionLabel: "Required proof", action: "Object Manager screenshot showing Student label, Student__c API name, and selected fields." },
+  "Create Course Object": { label: "Task", explanation: "Create Course__c with Course Name and the required course fields.", actionLabel: "Required proof", action: "Object Manager screenshot showing Course label, Course__c API name, and selected fields." },
+  "Create Course Enrollment Junction Object": { label: "Task", explanation: "Create Course_Enrollment__c to connect Student and Course and store enrollment-specific information.", actionLabel: "Required proof", action: "Object Manager screenshot showing Course_Enrollment__c, relationship fields, Progress Percentage, and Enrollment Status." },
+  "Configure Relationships": { label: "Task", explanation: "Connect Course Enrollment to Student and Course using relationship types justified by the business lifecycle.", actionLabel: "Required proof", action: "Relationship decision note explaining Lookup or Master-Detail choices and their ownership, sharing, deletion, and roll-up effects." },
+  "Review the Model in Schema Builder": { label: "Task", explanation: "Use Schema Builder to visually verify that the three objects and their relationships match the intended business model.", actionLabel: "Required proof", action: "Schema Builder screenshot showing Student, Course, and Course Enrollment with both relationships." }
+};
+
+const ADMIN_PHASE_TWO_LAB = {
+  title: "Guided Phase Lab: Student Success CRM Data Model",
+  scenario: "TomCodeX Academy must replace disconnected student and course spreadsheets with a Salesforce data model. The admin must store students and courses once, connect them through Course Enrollment, and ensure each enrollment can track status and progress.",
+  tasks: ["Define the purpose of Student, Course, and Course Enrollment.", "Create the three custom objects with clean API names and descriptions.", "Add suitable business fields using correct Salesforce field types.", "Connect Course Enrollment to Student and Course.", "Create sample records and verify the model in Schema Builder."],
+  evidence: ["Schema Builder screenshot showing all three objects and relationships.", "Object Manager screenshots showing Student__c, Course__c, and Course_Enrollment__c.", "Field list showing selected labels, API names, and data types.", "Relationship decision note.", "Sample Student, Course, and Course Enrollment record proof."],
+  validation: ["Explain standard objects, custom objects, fields, records, and relationships.", "Identify the purpose of Student, Course, and Course Enrollment.", "Use correct custom object and field API names.", "Choose suitable field data types.", "Explain Lookup and Master-Detail relationship effects.", "Explain why Course Enrollment is a junction object.", "Submit evidence proving the three-object model works."]
+};
+
+const ADMIN_PHASE_SIX_DETAILS = {
+  "Users": { label: "Purpose", explanation: "Understand Salesforce users as named login identities with licenses, profiles, roles, locale settings, active status, and access assignments.", actionLabel: "Practice", action: "Open Users, review your own user record, and identify license, profile, role, active status, timezone, and locale." },
+  "Profiles": { label: "Purpose", explanation: "Understand profiles as the baseline access package for a user, including object permissions, field permissions, app visibility, login hours, and system permissions.", actionLabel: "Practice", action: "Review the System Administrator profile and identify where object permissions and field permissions are configured." },
+  "Permission Sets": { label: "Purpose", explanation: "Use permission sets to add specific access without creating a new profile for every small access variation.", actionLabel: "Practice", action: "Create or document a Student Success Tutor permission set for Student, Course, and Course Enrollment access." },
+  "Roles": { label: "Purpose", explanation: "Understand roles as a record-visibility structure that can open access upward through the role hierarchy.", actionLabel: "Practice", action: "Create or document Program Manager and Tutor roles and explain how they affect record visibility." },
+  "OWD": { label: "Purpose", explanation: "Understand Organization-Wide Defaults as the baseline record access setting for each object.", actionLabel: "Practice", action: "Review Sharing Settings and choose a justified baseline for Student and Course Enrollment records." },
+  "Sharing Rules": { label: "Purpose", explanation: "Use sharing rules to automatically open record access to users who need records beyond the OWD baseline.", actionLabel: "Practice", action: "Document one sharing rule that would give Program Managers access to relevant Student or Course Enrollment records." },
+  "Manual Sharing": { label: "Purpose", explanation: "Understand manual sharing as a record-by-record access grant used for exceptions when the sharing model allows it.", actionLabel: "Practice", action: "Explain one safe support scenario where manual sharing could be used and why it should not replace a scalable sharing design." },
+  "Field-Level Security": { label: "Purpose", explanation: "Protect sensitive fields so users can access a record without seeing or editing every field on that record.", actionLabel: "Practice", action: "Restrict at least one sensitive Student field from the Tutor persona and explain how FLS affects pages, reports, and APIs." },
+  "Create Users": { label: "Task", explanation: "Create or document practice users for Tutor and Program Manager personas.", actionLabel: "Required proof", action: "User setup note showing persona, profile, role, permission set assignment, and active status. Do not expose passwords." },
+  "Create Roles": { label: "Task", explanation: "Create or document Program Manager and Tutor roles for the Student Success CRM access model.", actionLabel: "Required proof", action: "Role hierarchy screenshot or note showing Tutor below Program Manager." },
+  "Configure Security": { label: "Task", explanation: "Configure the access model using profiles, permission sets, field-level security, OWD, roles, and sharing.", actionLabel: "Required proof", action: "Access matrix showing Student, Course, Course Enrollment, sensitive fields, and record visibility for each persona." },
+  "Test Record Access": { label: "Task", explanation: "Test both allowed and restricted behavior with realistic Tutor and Program Manager scenarios.", actionLabel: "Required proof", action: "Access-test table showing at least three allowed actions and three denied actions." }
+};
+
+const ADMIN_PHASE_SIX_LAB = {
+  title: "Guided Phase Lab: Tutor and Program Manager Access Model",
+  scenario: "TomCodeX Academy needs Tutors to update assigned student progress while Program Managers oversee student operations. The admin must grant useful access without exposing sensitive data or giving broad System Administrator-style permissions.",
+  tasks: ["Define Tutor and Program Manager responsibilities.", "Create or document users and roles for both personas.", "Create the Student Success Tutor permission set.", "Review OWD and sharing needs for Student and Course Enrollment.", "Restrict at least one sensitive Student field and test allowed and denied actions."],
+  evidence: ["Persona access matrix.", "Permission set object settings screenshot.", "Role hierarchy screenshot or note.", "Field-level security proof for a sensitive Student field.", "Allowed and denied access-test results."],
+  validation: ["Explain profile, permission set, role, OWD, sharing rule, manual sharing, and field-level security.", "Describe how object, field, and record access combine.", "Apply least privilege to Tutor and Program Manager personas.", "Protect sensitive Student fields.", "Explain the selected OWD and sharing approach.", "Test with a restricted persona instead of only System Administrator.", "Submit evidence proving allowed and denied access."]
+};
+
+const ADMIN_PHASE_THREE_DETAILS = {
+  "Page Layouts": { label: "Purpose", explanation: "Control which fields, buttons, sections, and related lists users see on a record detail page.", actionLabel: "Practice", action: "Customize the Student page layout with clear Contact Info, Learning Info, and System Info sections." },
+  "Record Types": { label: "Purpose", explanation: "Support different business processes, picklist values, and page layout assignments for the same object.", actionLabel: "Practice", action: "Document whether Student needs record types now, and explain when record types would be introduced later." },
+  "Lightning Record Pages": { label: "Purpose", explanation: "Control the Lightning component layout users see on a record page, including related lists, highlights, tabs, and custom components.", actionLabel: "Practice", action: "Create or customize a Student Lightning record page that surfaces key fields and related Course Enrollments." },
+  "Compact Layouts": { label: "Purpose", explanation: "Control the key fields shown in highlights panels and mobile record summaries.", actionLabel: "Practice", action: "Create a Student compact layout showing Student Name, Learning Status, Email, and Course Interest." },
+  "Search Layouts": { label: "Purpose", explanation: "Control which fields appear in search results and lookup dialogs so users can identify records quickly.", actionLabel: "Practice", action: "Configure Student search results to show Student Name, Email, Learning Status, and Course Interest." },
+  "Custom Buttons": { label: "Purpose", explanation: "Add object-specific actions or links that help users complete frequent work from records or lists.", actionLabel: "Practice", action: "Explain one Student Success action that belongs as a button and why it should be simple and safe." },
+  "Custom Links": { label: "Purpose", explanation: "Provide record-aware navigation to helpful internal or external resources.", actionLabel: "Practice", action: "Design a Student Resources custom link concept and document what URL or resource it should open." },
+  "Quick Actions": { label: "Purpose", explanation: "Let users quickly create records, update fields, or launch guided work from a page.", actionLabel: "Practice", action: "Create a quick action or documented design for logging a Tutor Review or follow-up task from a Student record." },
+  "Create Multiple Record Types": { label: "Task", explanation: "Create record types only when the Student process truly needs different layouts or picklist values.", actionLabel: "Required proof", action: "Record-type decision note. If created, include record type names, assigned layouts, and picklist differences." },
+  "Customize Lightning Pages": { label: "Task", explanation: "Customize the Student Lightning record page so staff can see the most important fields and related enrollments quickly.", actionLabel: "Required proof", action: "Lightning App Builder screenshot showing the Student record page layout and activation assignment." },
+  "Create Quick Actions": { label: "Task", explanation: "Create a quick action that reduces clicks for a common Student Success task.", actionLabel: "Required proof", action: "Quick action screenshot or design note showing action name, object, fields, and where it appears." }
+};
+
+const ADMIN_PHASE_THREE_LAB = {
+  title: "Guided Phase Lab: Student Success CRM User Experience",
+  scenario: "TomCodeX Academy has a working data model and security model. Now staff need a simple Lightning experience where Tutors and Program Managers can open the Student Success CRM app, find the right records, view important fields, and complete common actions without confusion.",
+  tasks: ["Create or verify tabs for Student, Course, and Course Enrollment.", "Build or update the Student Success CRM Lightning app navigation.", "Customize Student and Course Enrollment page layouts.", "Create a Student Lightning record page and compact layout.", "Create Active Students and Pending Enrollments list views and one useful quick action."],
+  evidence: ["App Manager or App Launcher screenshot showing Student Success CRM.", "Student page layout screenshot.", "Student Lightning record page screenshot.", "Compact layout or search layout proof.", "List view and quick action proof."],
+  validation: ["Explain page layouts, Lightning record pages, compact layouts, search layouts, tabs, buttons, links, and quick actions.", "Create a usable Student Success CRM app experience.", "Place important fields and related lists where users can find them.", "Explain when record types are needed and when they are unnecessary.", "Create list views that support daily work.", "Create or document one useful quick action.", "Submit evidence proving the app is visible and usable."]
+};
+
 function adminRoadmapTopicExplanation(topic, entry) {
+  if (entry.phase.startsWith("Phase 1:") && ADMIN_PHASE_ONE_DETAILS[topic]) {
+    const detail = ADMIN_PHASE_ONE_DETAILS[topic];
+    return { meaning: detail.explanation, practice: detail.action, meaningLabel: detail.label, practiceLabel: detail.actionLabel };
+  }
+  if (entry.phase.startsWith("Phase 2:") && ADMIN_PHASE_TWO_DETAILS[topic]) {
+    const detail = ADMIN_PHASE_TWO_DETAILS[topic];
+    return { meaning: detail.explanation, practice: detail.action, meaningLabel: detail.label, practiceLabel: detail.actionLabel };
+  }
+  if (entry.phase.startsWith("Phase 3:") && ADMIN_PHASE_THREE_DETAILS[topic]) {
+    const detail = ADMIN_PHASE_THREE_DETAILS[topic];
+    return { meaning: detail.explanation, practice: detail.action, meaningLabel: detail.label, practiceLabel: detail.actionLabel };
+  }
+  if (entry.phase.startsWith("Phase 6:") && ADMIN_PHASE_SIX_DETAILS[topic]) {
+    const detail = ADMIN_PHASE_SIX_DETAILS[topic];
+    return { meaning: detail.explanation, practice: detail.action, meaningLabel: detail.label, practiceLabel: detail.actionLabel };
+  }
   const actionTopic = /^(Create|Configure|Customize|Install|Explore|Convert|Manage|Test|Import|Update|Export|Deploy|Validate|Run|Analyze|Review|Audit|Execute|Connect|Retrieve|Initialize|Commit|Push|Pull)/.test(topic);
   const flowTopic = /Flow|Records|Assignment|Decision|Loop|Variables|Constants|Formulas|Templates|Choice|Collections/.test(topic) && entry.phase.includes("Phase 8:");
   const securityTopic = /Users|Profiles|Permission|Roles|OWD|Sharing|Security|Access/.test(topic);
   const deliveryTopic = /Git|Branch|Pull Request|CI\/CD|Deployment|Sandbox|Release|Production|Metadata|CLI|VS Code/.test(topic);
   const developerRoute = ADMIN_DEVELOPER_TOPIC_ROUTES.find((route) => route.pattern.test(topic));
-  let meaning = `${topic} is a required ${entry.phase.replace(/^Phase \d+:\s*/, "")} capability. Learn what it controls, when to use it, its dependencies, and the risks of configuring it incorrectly.`;
-  let practice = `Find or configure ${topic} in a practice org, test a successful and unsuccessful scenario, and explain the business result.`;
+  let meaning = `${topic} supports the ${entry.phase.replace(/^Phase \d+:\s*/, "")} business process by giving administrators a named Salesforce capability they can configure, test, document, and support. Learners must connect ${topic} to the users, records, automation, security, or delivery result affected by this phase.`;
+  let practice = `Demonstrate ${topic} in a practice org using a named business scenario, record the exact configuration or result, test an expected and unsuccessful scenario, and explain the observed Salesforce behavior.`;
   if (developerRoute) {
     meaning = `${topic} is covered in Advanced Admin at awareness, monitoring, governance, and developer-handoff level. Full implementation depth belongs in the <a href="${developerRoute.href}"><strong>${developerRoute.course}</strong></a> course.`;
     practice = `Inspect or safely demonstrate ${topic}, document the Admin responsibility and risk, then identify the implementation work that must continue in ${developerRoute.course}.`;
@@ -2673,22 +2785,286 @@ function adminRoadmapTopicExplanation(topic, entry) {
     meaning = `${topic} supports controlled Salesforce delivery. Understand how it improves traceability, validation, collaboration, deployment safety, and rollback readiness.`;
     practice = `Demonstrate ${topic} in a small metadata change and capture the commands, review evidence, validation, and recovery steps.`;
   }
-  return { meaning, practice };
+  return { meaning, practice, meaningLabel: "Explanation", practiceLabel: "Task-based practice" };
+}
+
+function adminResourceSearchUrl(source, topic) {
+  return `${source}${encodeURIComponent(`Salesforce Admin ${topic} tutorial`)}`;
+}
+
+const OFFICIAL_ADMIN_DOCS_MAP = {
+  "Introduction to Cloud Computing": "https://help.salesforce.com/s/articleView?id=xcloud.basics_welcome_salesforce_users.htm&type=5",
+  "SaaS, PaaS, IaaS": "https://www.salesforce.com/in/blog/what-is-iaas-paas-saas/",
+  "Salesforce CRM Overview": "https://help.salesforce.com/s/articleView?id=xcloud.basics_welcome_salesforce_users.htm&type=5",
+  "Navigation": "https://help.salesforce.com/s/articleView?id=xcloud.lex_find_record_layout.htm&type=5",
+  "Tabs": "https://help.salesforce.com/s/articleView?id=platform.custom_tab_overview.htm&type=5",
+  "Setup Menu": "https://help.salesforce.com/s/articleView?id=platform.customize_app_setup_overview.htm&type=5",
+  "Company Profile": "https://help.salesforce.com/s/articleView?id=xcloud.company_information_fields.htm&type=5",
+  "Object Manager": "https://help.salesforce.com/s/articleView?id=platform.extend_click_find_objectmgmt_lex.htm&type=5",
+  "Users": "https://help.salesforce.com/s/articleView?id=platform.admin_users.htm&type=5",
+  "Profiles": "https://help.salesforce.com/s/articleView?id=sf.profiles_about.htm&type=5",
+  "Permission Sets": "https://help.salesforce.com/s/articleView?id=platform.perm_sets_overview.htm&type=5",
+  "Roles": "https://help.salesforce.com/s/articleView?id=platform.security_controlling_access_using_hierarchies.htm&type=5",
+  "OWD": "https://help.salesforce.com/s/articleView?id=platform.sharing_model_fields.htm&type=5",
+  "Sharing Rules": "https://help.salesforce.com/s/articleView?id=platform.security_sharing_rule_types.htm&type=5",
+  "Manual Sharing": "https://help.salesforce.com/s/articleView?id=platform.granting_access_to_records.htm&type=5",
+  "Field-Level Security": "https://help.salesforce.com/s/articleView?id=platform.users_profiles_field_perms.htm&type=5",
+  "Standard Objects": "https://help.salesforce.com/s/articleView?id=xcloud.basics_object_types.htm&type=5",
+  "Custom Objects": "https://help.salesforce.com/s/articleView?id=sf.custom_objects.htm&type=5",
+  "Standard Fields": "https://help.salesforce.com/s/articleView?id=sf.fields_standard_fields.htm&type=5",
+  "Custom Fields": "https://help.salesforce.com/s/articleView?id=sf.custom_fields.htm&type=5",
+  "Lookup Relationships": "https://help.salesforce.com/s/articleView?id=platform.overview_of_custom_object_relationships.htm&type=5",
+  "Master-Detail Relationships": "https://help.salesforce.com/s/articleView?id=platform.relationships_considerations.htm&type=5",
+  "Junction Objects": "https://help.salesforce.com/s/articleView?id=platform.relationships_manytomany.htm&type=5",
+  "Roll-Up Summary Fields": "https://help.salesforce.com/s/articleView?id=platform.fields_about_roll_up_summary_fields.htm&type=5",
+  "Field History Tracking": "https://help.salesforce.com/s/articleView?id=sf.tracking_field_history.htm&type=5",
+  "Page Layouts": "https://help.salesforce.com/s/articleView?id=sf.customize_layout.htm&type=5",
+  "Record Types": "https://help.salesforce.com/s/articleView?id=sf.customize_recordtype.htm&type=5",
+  "Lightning Record Pages": "https://help.salesforce.com/s/articleView?id=sf.lightning_page_overview.htm&type=5",
+  "Compact Layouts": "https://help.salesforce.com/s/articleView?id=sf.compact_layouts.htm&type=5",
+  "Search Layouts": "https://help.salesforce.com/s/articleView?id=sf.customize_search_layout.htm&type=5",
+  "Custom Buttons": "https://help.salesforce.com/s/articleView?id=sf.customize_enterprise_custom_buttons_and_links.htm&type=5",
+  "Custom Links": "https://help.salesforce.com/s/articleView?id=sf.customize_enterprise_custom_buttons_and_links.htm&type=5",
+  "Quick Actions": "https://help.salesforce.com/s/articleView?id=sf.actions_overview.htm&type=5",
+  "Validation Rules": "https://help.salesforce.com/s/articleView?id=sf.validation_rules_overview.htm&type=5",
+  "Formula Fields": "https://help.salesforce.com/s/articleView?id=sf.formulas_about.htm&type=5",
+  "Leads": "https://help.salesforce.com/s/articleView?id=sf.leads_about.htm&type=5",
+  "Accounts": "https://help.salesforce.com/s/articleView?id=sf.accounts_about.htm&type=5",
+  "Contacts": "https://help.salesforce.com/s/articleView?id=sf.contacts_about.htm&type=5",
+  "Opportunities": "https://help.salesforce.com/s/articleView?id=sf.opportunities_about.htm&type=5",
+  "Campaigns": "https://help.salesforce.com/s/articleView?id=sf.campaigns_about.htm&type=5",
+  "Sales Process": "https://help.salesforce.com/s/articleView?id=sf.sales_process_setup.htm&type=5",
+  "Workflow Rules": "https://help.salesforce.com/s/articleView?id=sf.workflow_rules_about.htm&type=5",
+  "Approval Processes": "https://help.salesforce.com/s/articleView?id=sf.approvals.htm&type=5",
+  "Process Builder": "https://help.salesforce.com/s/articleView?id=sf.process_overview.htm&type=5",
+  "Flow Builder": "https://help.salesforce.com/s/articleView?id=sf.flow.htm&type=5",
+  "Screen Flow": "https://help.salesforce.com/s/articleView?id=sf.flow_distribute_screen.htm&type=5",
+  "Auto-Launched Flow": "https://help.salesforce.com/s/articleView?id=sf.flow_distribute_autolaunch.htm&type=5",
+  "Record Triggered Flow": "https://help.salesforce.com/s/articleView?id=sf.flow_concepts_trigger_record.htm&type=5",
+  "Scheduled Triggered Flow": "https://help.salesforce.com/s/articleView?id=sf.flow_concepts_trigger_schedule.htm&type=5",
+  "Platform Event Triggered Flow": "https://help.salesforce.com/s/articleView?id=sf.flow_concepts_trigger_event.htm&type=5",
+  "Subflow": "https://help.salesforce.com/s/articleView?id=sf.flow_ref_elements_subflow.htm&type=5",
+  "Data Import Wizard": "https://help.salesforce.com/s/articleView?id=sf.data_import_wizard.htm&type=5",
+  "Data Loader": "https://help.salesforce.com/s/articleView?id=sf.data_loader.htm&type=5",
+  "Reports": "https://help.salesforce.com/s/articleView?id=sf.reports_and_dashboards_overview.htm&type=5",
+  "Report Types": "https://help.salesforce.com/s/articleView?id=sf.reports_report_types.htm&type=5",
+  "Dashboards": "https://help.salesforce.com/s/articleView?id=sf.dashboards_overview.htm&type=5",
+  "Developer Sandbox": "https://help.salesforce.com/s/articleView?id=sf.data_sandbox_environments.htm&type=5",
+  "Change Sets": "https://help.salesforce.com/s/articleView?id=sf.changesets.htm&type=5",
+  "Cases": "https://help.salesforce.com/s/articleView?id=sf.cases_about.htm&type=5",
+  "Queues": "https://help.salesforce.com/s/articleView?id=sf.queues_about.htm&type=5"
+};
+
+function adminDocsReferenceUrl(topic, entry) {
+  if (OFFICIAL_ADMIN_DOCS_MAP[topic]) {
+    return OFFICIAL_ADMIN_DOCS_MAP[topic];
+  }
+
+  const lowerTopic = topic.toLowerCase();
+  
+  if (lowerTopic.includes("flow") || lowerTopic.includes("subflow") || lowerTopic.includes("assignment") || lowerTopic.includes("decision") || lowerTopic.includes("loop") || lowerTopic.includes("variables") || lowerTopic.includes("constants") || lowerTopic.includes("choice sets") || lowerTopic.includes("collections") || lowerTopic.includes("get records") || lowerTopic.includes("create records") || lowerTopic.includes("update records") || lowerTopic.includes("delete records")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.flow.htm&type=5";
+  }
+  if (lowerTopic.includes("apex") || lowerTopic.includes("class") || lowerTopic.includes("method") || lowerTopic.includes("trigger") || lowerTopic.includes("anonymous") || lowerTopic.includes("jobs") || lowerTopic.includes("batch") || lowerTopic.includes("queueable") || lowerTopic.includes("debug logs")) {
+    return "https://developer.salesforce.com/docs/atlas.en-us.apexcode.meta/apexcode/";
+  }
+  if (lowerTopic.includes("soql") || lowerTopic.includes("sosl") || lowerTopic.includes("where clause") || lowerTopic.includes("order by") || lowerTopic.includes("limit") || lowerTopic.includes("aggregate") || lowerTopic.includes("query") || lowerTopic.includes("queries")) {
+    if (entry && entry.phase && entry.phase.includes("Developer Console")) {
+      return "https://help.salesforce.com/s/articleView?id=sf.developer_console.htm&type=5";
+    }
+    return "https://developer.salesforce.com/docs/atlas.en-us.soql_sosl.meta/soql_sosl/";
+  }
+  if (lowerTopic.includes("developer console") || lowerTopic.includes("query editor") || lowerTopic.includes("debugging") || lowerTopic.includes("logs") || lowerTopic.includes("analyze logs") || lowerTopic.includes("run queries")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.developer_console.htm&type=5";
+  }
+  if (lowerTopic.includes("developer org") || lowerTopic.includes("playground")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.setup_dx_playgrounds.htm&type=5";
+  }
+  if (lowerTopic.includes("appexchange")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.appexchange_install.htm&type=5";
+  }
+  if (lowerTopic.includes("schema builder")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.schema_builder.htm&type=5";
+  }
+  if (lowerTopic.includes("relationship") || lowerTopic.includes("lookup") || lowerTopic.includes("master-detail")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.relationships_considerations.htm&type=5";
+  }
+  if (lowerTopic.includes("junction object")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.relationships_many_to_many.htm&type=5";
+  }
+  if (lowerTopic.includes("roll-up")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.fields_about_roll_up_summary_fields.htm&type=5";
+  }
+  if (lowerTopic.includes("custom object") || lowerTopic.includes("object") || lowerTopic.includes("student object") || lowerTopic.includes("course object")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.custom_objects.htm&type=5";
+  }
+  if (lowerTopic.includes("custom field") || lowerTopic.includes("field") || lowerTopic.includes("standard field")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.custom_fields.htm&type=5";
+  }
+  if (lowerTopic.includes("record type")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.customize_recordtype.htm&type=5";
+  }
+  if (lowerTopic.includes("compact layout")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.compact_layouts.htm&type=5";
+  }
+  if (lowerTopic.includes("search layout")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.customize_search_layout.htm&type=5";
+  }
+  if (lowerTopic.includes("page layout") || lowerTopic.includes("lightning page") || lowerTopic.includes("record page")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.customize_layout.htm&type=5";
+  }
+  if (lowerTopic.includes("quick action") || lowerTopic.includes("action")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.actions_overview.htm&type=5";
+  }
+  if (lowerTopic.includes("button") || lowerTopic.includes("link")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.customize_enterprise_custom_buttons_and_links.htm&type=5";
+  }
+  if (lowerTopic.includes("validation rule") || lowerTopic.includes("validation")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.validation_rules_overview.htm&type=5";
+  }
+  if (lowerTopic.includes("formula")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.formulas_about.htm&type=5";
+  }
+  if (lowerTopic.includes("lead")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.leads_about.htm&type=5";
+  }
+  if (lowerTopic.includes("account")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.accounts_about.htm&type=5";
+  }
+  if (lowerTopic.includes("contact")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.contacts_about.htm&type=5";
+  }
+  if (lowerTopic.includes("opportunity") || lowerTopic.includes("opportunities")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.opportunities_about.htm&type=5";
+  }
+  if (lowerTopic.includes("campaign")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.campaigns_about.htm&type=5";
+  }
+  if (lowerTopic.includes("sales process")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.sales_process_setup.htm&type=5";
+  }
+  if (lowerTopic.includes("profile") || lowerTopic.includes("permission") || lowerTopic.includes("role") || lowerTopic.includes("owd") || lowerTopic.includes("sharing") || lowerTopic.includes("security") || lowerTopic.includes("access") || lowerTopic.includes("user")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.security_data_access.htm&type=5";
+  }
+  if (lowerTopic.includes("workflow") || lowerTopic.includes("approval") || lowerTopic.includes("process builder")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.approvals.htm&type=5";
+  }
+  if (lowerTopic.includes("import") || lowerTopic.includes("export") || lowerTopic.includes("loader") || lowerTopic.includes("wizard") || lowerTopic.includes("csv") || lowerTopic.includes("data cleanup") || lowerTopic.includes("data management") || lowerTopic.includes("insert") || lowerTopic.includes("update") || lowerTopic.includes("delete") || lowerTopic.includes("upsert") || lowerTopic.includes("existing data")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.data_import_wizard.htm&type=5";
+  }
+  if (lowerTopic.includes("report") || lowerTopic.includes("dashboard")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.reports_and_dashboards_overview.htm&type=5";
+  }
+  if (lowerTopic.includes("sandbox")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.data_sandbox_environments.htm&type=5";
+  }
+  if (lowerTopic.includes("change set") || lowerTopic.includes("deployment") || lowerTopic.includes("deploy") || lowerTopic.includes("release") || lowerTopic.includes("cutover") || lowerTopic.includes("code freeze") || lowerTopic.includes("backup")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.changesets.htm&type=5";
+  }
+  if (lowerTopic.includes("case") || lowerTopic.includes("queue") || lowerTopic.includes("escalation") || lowerTopic.includes("entitlement") || lowerTopic.includes("milestone") || lowerTopic.includes("knowledge") || lowerTopic.includes("support")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.cases_about.htm&type=5";
+  }
+  if (lowerTopic.includes("custom settings") || lowerTopic.includes("custom labels") || lowerTopic.includes("custom metadata") || lowerTopic.includes("labels")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.custom_metadata_types_about.htm&type=5";
+  }
+  if (lowerTopic.includes("audit") || lowerTopic.includes("compliance") || lowerTopic.includes("login history") || lowerTopic.includes("setup audit trail")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.security_basics.htm&type=5";
+  }
+  if (lowerTopic.includes("api") || lowerTopic.includes("postman") || lowerTopic.includes("workbench") || lowerTopic.includes("rest") || lowerTopic.includes("integration")) {
+    return "https://developer.salesforce.com/docs/atlas.en-us.integration_patterns_and_practices.meta/integration_patterns_and_practices/integ_pat_intro_overview.htm";
+  }
+  if (lowerTopic.includes("devops") || lowerTopic.includes("git") || lowerTopic.includes("github") || lowerTopic.includes("repository") || lowerTopic.includes("branch") || lowerTopic.includes("merge") || lowerTopic.includes("pull request") || lowerTopic.includes("ci/cd") || lowerTopic.includes("cli") || lowerTopic.includes("vs code") || lowerTopic.includes("code review")) {
+    return "https://developer.salesforce.com/tools/salesforcecli";
+  }
+  if (lowerTopic.includes("ai") || lowerTopic.includes("prompt") || lowerTopic.includes("einstein") || lowerTopic.includes("generative")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.prompt_builder_about.htm&type=5";
+  }
+  if (lowerTopic.includes("agentforce") || lowerTopic.includes("agent")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.agentforce_about.htm&type=5";
+  }
+  if (lowerTopic.includes("capstone") || lowerTopic.includes("employee management") || lowerTopic.includes("leave management") || lowerTopic.includes("recruitment") || lowerTopic.includes("sales crm")) {
+    return "https://help.salesforce.com/s/articleView?id=sf.fundamentals_crm_overview.htm&type=5";
+  }
+
+  if (entry && entry.phase) {
+    const lowerPhase = entry.phase.toLowerCase();
+    if (lowerPhase.includes("security") || lowerPhase.includes("user management")) {
+      return "https://help.salesforce.com/s/articleView?id=sf.security_data_access.htm&type=5";
+    }
+    if (lowerPhase.includes("data model") || lowerPhase.includes("object configuration")) {
+      return "https://help.salesforce.com/s/articleView?id=sf.custom_objects.htm&type=5";
+    }
+    if (lowerPhase.includes("ui") || lowerPhase.includes("customization")) {
+      return "https://help.salesforce.com/s/articleView?id=sf.customize_layout.htm&type=5";
+    }
+    if (lowerPhase.includes("business logic")) {
+      return "https://help.salesforce.com/s/articleView?id=sf.validation_rules_overview.htm&type=5";
+    }
+    if (lowerPhase.includes("flow")) {
+      return "https://help.salesforce.com/s/articleView?id=sf.flow.htm&type=5";
+    }
+    if (lowerPhase.includes("sales")) {
+      return "https://help.salesforce.com/s/articleView?id=sf.sales_process_setup.htm&type=5";
+    }
+    if (lowerPhase.includes("service")) {
+      return "https://help.salesforce.com/s/articleView?id=sf.cases_about.htm&type=5";
+    }
+    if (lowerPhase.includes("devops") || lowerPhase.includes("git")) {
+      return "https://developer.salesforce.com/tools/salesforcecli";
+    }
+    if (lowerPhase.includes("agentforce")) {
+      return "https://help.salesforce.com/s/articleView?id=sf.agentforce_about.htm&type=5";
+    }
+  }
+
+  return "https://help.salesforce.com/";
+}
+
+function adminTopicSummary(topic, entry, explanation) {
+  const phaseName = entry.phase.replace(/^Phase \d+:\s*/, "");
+  if (explanation.meaningLabel === "Purpose") {
+    return `${topic} gives this module a clear beginner foundation: ${explanation.meaning}`;
+  }
+  if (explanation.meaningLabel === "Task") {
+    return `${topic} is a proof-based build activity for ${phaseName}. The learner must complete it in a safe practice org, capture evidence, and explain the Salesforce result in simple business language.`;
+  }
+  return `${topic} belongs to ${phaseName}. It connects the business requirement to Salesforce setup, testing, user behavior, and administrator support.`;
+}
+
+function adminTopicResourceLinks(topic, entry) {
+  return {
+    docs: [`Salesforce Docs: ${topic}`, adminDocsReferenceUrl(topic, entry)],
+    video: ["Free video resource", adminResourceSearchUrl("https://www.youtube.com/results?search_query=", topic)]
+  };
 }
 
 function buildAdminRoadmapLesson(entry, guideOverride = null) {
   const guide = guideOverride || ADMIN_ROADMAP_LEARNING_GUIDE.find((item) => entry.phase.startsWith(item.match)) || ADMIN_ROADMAP_LEARNING_GUIDE.at(-1);
   const topicLessons = entry.topics.map((topic, topicIndex) => {
     const explanation = adminRoadmapTopicExplanation(topic, entry);
-    return `<article class="roadmap-topic-card"><span>${String(topicIndex + 1).padStart(2, "0")}</span><div><h6>${topic}</h6><p><strong>Explanation:</strong> ${explanation.meaning}</p><p><strong>Task-based practice:</strong> ${explanation.practice}</p></div></article>`;
+    const resources = adminTopicResourceLinks(topic, entry);
+    const summary = adminTopicSummary(topic, entry, explanation);
+    return `<article class="roadmap-topic-card"><span>${String(topicIndex + 1).padStart(2, "0")}</span><div><h6>${topic}</h6><p><strong>Summary Explanation:</strong> ${summary}</p><p><strong>${explanation.meaningLabel}:</strong> ${explanation.meaning}</p><p><strong>${explanation.practiceLabel}:</strong> ${explanation.practice}</p><div class="roadmap-topic-links"><a href="${resources.docs[1]}" target="_blank" rel="noopener noreferrer"><strong>Docs:</strong> ${resources.docs[0]}</a><a href="${resources.video[1]}" target="_blank" rel="noopener noreferrer"><strong>Free video:</strong> YouTube tutorial search</a></div></div></article>`;
   }).join("");
-  const badges = guide.badges.map(([title, url]) => `<a class="trailhead-badge-card" href="${url}" target="_blank" rel="noopener noreferrer"><span>Official Trailhead</span><strong>${title}</strong><small>Open module or badge</small></a>`).join("");
+  const badges = guide.badges.map(([title, url]) => `<a class="trailhead-badge-card" href="${url}" target="_blank" rel="noopener noreferrer"><span>TomCodeX Trailmix resource</span><strong>${title}</strong><small>Official Trailhead module selected for this phase</small></a>`).join("");
+  const detailedLab = entry.phase.startsWith("Phase 1:")
+    ? ADMIN_PHASE_ONE_LAB
+    : entry.phase.startsWith("Phase 2:")
+      ? ADMIN_PHASE_TWO_LAB
+      : entry.phase.startsWith("Phase 3:")
+        ? ADMIN_PHASE_THREE_LAB
+        : entry.phase.startsWith("Phase 6:")
+          ? ADMIN_PHASE_SIX_LAB
+          : null;
+  const phaseLab = detailedLab
+    ? `<div class="roadmap-phase-lab roadmap-guided-lab"><div><span>Guided phase lab</span><h6>${detailedLab.title.replace("Guided Phase Lab: ", "")}</h6><p><strong>Business scenario:</strong> ${detailedLab.scenario}</p><ol>${detailedLab.tasks.map((task) => `<li>${task}</li>`).join("")}</ol></div><div><span>Required evidence</span><ul>${detailedLab.evidence.map((item) => `<li>${item}</li>`).join("")}</ul><h6>Zentom AI Validation Criteria</h6><ol>${detailedLab.validation.map((item) => `<li>${item}</li>`).join("")}</ol><p><strong>Passing Score:</strong> 80%</p></div></div>`
+    : `<div class="roadmap-phase-lab"><div><span>Guided phase lab</span><h6>Task-based work</h6><p>${guide.task}</p></div><div><span>Required proof</span><h6>Evidence to submit</h6><p>${guide.evidence}</p></div></div>`;
   return `
     <section class="roadmap-phase-lesson">
       <div class="roadmap-phase-summary"><span>${entry.track === "advanced-administrator" ? "Advanced Administrator" : "Administrator"} syllabus phase</span><h5>${entry.phase}</h5><p>${guide.outcome}</p></div>
       <div class="roadmap-topic-grid">${topicLessons}</div>
-      <div class="roadmap-phase-lab"><div><span>Guided phase lab</span><h6>Task-based work</h6><p>${guide.task}</p></div><div><span>Required proof</span><h6>Evidence to submit</h6><p>${guide.evidence}</p></div></div>
-      <div class="roadmap-trailhead"><h6>Recommended Salesforce Trailhead modules and badges</h6><div>${badges}</div><p>Complete the Trailhead hands-on challenges, then apply the same skill in the TomCodeX guided phase lab. Trailhead completion alone does not replace the project evidence.</p></div>
+      ${phaseLab}
+      <div class="roadmap-trailhead"><h6>TomCodeX Trailmix modules for this phase</h6><div>${badges}</div><p>Trailhead is mapped at phase/module level because not every syllabus subtopic has an exact matching Trailhead module. Complete the curated Trailmix resources, then apply the same skill in the TomCodeX guided phase lab. Trailhead completion alone does not replace the project evidence.</p></div>
     </section>`;
 }
 
@@ -2704,33 +3080,32 @@ const ADMIN_MASTERY_EVALUATION_CRITERIA = [
 
 const ADMIN_PROJECT_TASKS = [
   {
-    title: "Prepare the TomCodeX Student Success CRM Practice Org",
-    purpose: "Create a safe Salesforce learning environment and confirm that the future Student Success CRM can be configured without affecting production data.",
+    title: "Create the TomCodeX Student Success CRM Foundation",
+    purpose: "Prepare a safe Salesforce practice org, create the first custom app, and complete a safe AppExchange risk review.",
     objects: ["Company Information", "User", "App Launcher", "Object Manager"],
-    fields: ["Organization ID", "Salesforce Edition", "Default Time Zone", "Currency Locale", "User Profile"],
+    fields: ["Masked Organization ID only", "Salesforce Edition", "Default Time Zone", "Currency Locale", "User Profile"],
     flows: ["Not required in this module"],
     reportsDashboards: ["Not required in this module"],
     apexLwc: ["Not required in the Admin course"],
     steps: [
-      "Create or open a Trailhead Playground or Salesforce Developer Edition org.",
-      "Open Setup and record the Salesforce edition, Organization ID, default time zone, currency, language, and locale.",
-      "Open Users, find your own user, and confirm the username, email, profile, locale, time zone, and active status.",
-      "Open Object Manager and identify at least five standard objects.",
-      "Open App Launcher and record three apps that are available.",
-      "Create a secure project note named TomCodeX Student Success CRM Org Readiness."
+      "Create the TomCodeX Student Success CRM custom app and confirm it appears in App Launcher.",
+      "Review one free AppExchange package without installing it. Record package name, publisher, rating, reviews, permissions, data access, licensing, uninstall risk, and an Install or Do Not Install decision."
     ],
-    expected: "A safe practice org is ready, its core settings are documented, and the learner can navigate Setup, Users, Object Manager, and App Launcher.",
+    expected: "A safe practice org is ready, Company Information is verified with masked sensitive details, the learner can navigate core admin areas, the TomCodeX Student Success CRM app exists, and an AppExchange package has been reviewed safely.",
     evidence: [
-      "Screenshot of Company Information with the Organization ID partially masked.",
-      "Screenshot of the learner's active User record and Profile name.",
-      "Org readiness note containing the subdomain, three App Launcher apps, and five standard objects.",
-      "A LEITR note containing your 1:2 study schedule, spaced review plan (1 day, 3 days, 7 days), and reflections."
+      "Org-readiness note with org edition, timezone, currency, and masked Organization ID only. Example: 00Dxx000000XXXX.",
+      "Company Information screenshot with the Organization ID masked.",
+      "Custom app screenshot and App Launcher screenshot showing TomCodeX Student Success CRM.",
+      "AppExchange risk review note with the final Install or Do Not Install decision."
     ],
     validation: [
-      "Confirm the learner used a practice org and did not expose passwords, tokens, or a full Organization ID.",
-      "Verify the note uses correct terms for Org, App, Object, Field, Record, and Profile.",
-      "Check that the learner explains why production must not be used for practice.",
-      "Verify that the LEITR note outlines the spaced review schedule (1 day, 3 days, 7 days) and study reflections."
+      "Explain cloud, SaaS, PaaS, and Salesforce CRM.",
+      "Navigate App Launcher, Setup, Object Manager, Company Information, and Users.",
+      "Identify Org, App, Object, Field, Record, and Profile correctly.",
+      "Create the TomCodeX Student Success CRM custom app.",
+      "Submit correct project evidence with masked sensitive details.",
+      "Explain why production orgs should not be used for practice.",
+      "Review an AppExchange package safely before installation."
     ]
   },
   {
@@ -3057,6 +3432,7 @@ function buildAdminMasteryTest(module, projectTask) {
 modules.forEach((module, index) => {
   const rich = module.richContent;
   if (!rich) return;
+  const optionalDeepDiveOnly = true;
 
   const roadmapPhases = ADMIN_ROADMAP_COVERAGE.filter((entry) => entry.module === index);
   const trackId = index < 6 ? "administrator" : "advanced-administrator";
@@ -3105,6 +3481,133 @@ modules.forEach((module, index) => {
   rich.projectName = ADMIN_PROJECT_NAME;
   rich.projectTask = projectTask;
   rich.projectEvidence = projectTask.evidence;
+  if (index === 0) {
+    rich.moduleGoal = "Build confidence with cloud basics and Salesforce navigation, prepare a safe practice org, create the TomCodeX Student Success CRM app, and review AppExchange safely.";
+    rich.learningOutcomes = [
+      "Explain cloud computing, SaaS, PaaS, IaaS, and Salesforce CRM.",
+      "Identify Org, App, Object, Field, Record, and Profile correctly.",
+      "Navigate App Launcher, tabs, Setup, Company Information, Object Manager, and Users.",
+      "Identify org edition, timezone, currency, and masked Organization ID only.",
+      "Create the TomCodeX Student Success CRM custom app.",
+      "Review an AppExchange package safely before installation."
+    ];
+    rich.handsOnLab = {
+      title: "Guided Phase Lab: Org Readiness and Custom App Setup",
+      instructions: `<p class="text-slate-600 text-xs leading-relaxed">Complete the Guided Phase Lab story shown in the primary TomCodeX syllabus. Use this lab section to confirm that the org, custom app, and AppExchange risk review are complete before answering Check My Work.</p><p class="mt-3 text-xs text-brand-800"><strong>Do not submit a full Organization ID.</strong> Use a masked value such as 00Dxx000000XXXX.</p>`
+    };
+    rich.practicalAssignment = [];
+    rich.knowledgeCheckQuestions = [];
+    rich.completionChecklist = [
+      "I created or opened a safe Salesforce practice org.",
+      "I verified Company Information.",
+      "I identified org edition, timezone, currency, and masked Org ID.",
+      "I explored App Launcher, Setup, Object Manager, and Users.",
+      "I created the TomCodeX Student Success CRM custom app.",
+      "I reviewed one AppExchange package safely.",
+      "I submitted project evidence.",
+      "I passed the Zentom AI Mastery Test with 80% or higher."
+    ];
+    rich.finalSummary = "By the end of Module 1, the learner has created or opened a safe Salesforce practice org, verified Company Information, identified org edition, timezone, currency, and masked Org ID, explored App Launcher, Setup, Object Manager, and Users, created the TomCodeX Student Success CRM custom app, reviewed one AppExchange package safely, submitted project evidence, and passed the Zentom AI Mastery Test with 80% or higher.";
+  }
+  if (index === 1) {
+    rich.moduleGoal = "Build a clear, working Student Success CRM data model using Student, Course, and Course Enrollment.";
+    rich.learningOutcomes = [
+      "Explain standard objects, custom objects, standard fields, custom fields, and records.",
+      "Choose suitable Salesforce field types for student, course, and enrollment data.",
+      "Explain Lookup and Master-Detail relationship behavior.",
+      "Explain why Course Enrollment is a junction object.",
+      "Create Student, Course, and Course Enrollment with clean API names.",
+      "Create sample records and verify the model in Schema Builder."
+    ];
+    projectTask.steps = [
+      "Create Student__c, Course__c, and Course_Enrollment__c with clear descriptions and suitable fields.",
+      "Connect Course Enrollment to Student and Course using justified relationship types.",
+      "Create sample records and verify the complete model in Schema Builder."
+    ];
+    projectTask.expected = "Student, Course, and Course Enrollment form a working three-object Student Success CRM data model with correct fields, relationships, and sample records.";
+    projectTask.evidence = [
+      "Schema Builder screenshot showing Student, Course, Course Enrollment, and both relationships.",
+      "Object Manager screenshots showing Student__c, Course__c, and Course_Enrollment__c.",
+      "Field and relationship decision note explaining selected data types and relationship behavior.",
+      "Sample Student, Course, and Course Enrollment record proof."
+    ];
+    rich.projectEvidence = projectTask.evidence;
+    rich.handsOnLab = {
+      title: "Guided Phase Lab: Student Success CRM Data Model",
+      instructions: `<p class="text-slate-600 text-xs leading-relaxed">Complete the Guided Phase Lab story shown in the primary TomCodeX syllabus. Use this lab section to confirm the three custom objects, relationships, and sample records work before answering Check My Work.</p>`
+    };
+    rich.practicalAssignment = [];
+    rich.knowledgeCheckQuestions = [];
+    rich.completionChecklist = [
+      "I explained standard objects, custom objects, fields, records, and relationships.",
+      "I created Student__c, Course__c, and Course_Enrollment__c.",
+      "I added suitable fields with clear API names and descriptions.",
+      "I configured and explained the Student and Course relationships.",
+      "I explained why Course Enrollment is a junction object.",
+      "I created sample Student, Course, and Course Enrollment records.",
+      "I submitted Schema Builder and Object Manager evidence.",
+      "I passed the Zentom AI Mastery Test with 80% or higher."
+    ];
+    rich.finalSummary = "By the end of Module 2, the learner has built and explained a working Student Success CRM data model using Student, Course, and Course Enrollment, verified the relationships with sample records and Schema Builder, submitted evidence, and passed the Zentom AI Mastery Test with 80% or higher.";
+  }
+  if (index === 2) {
+    rich.moduleGoal = "Secure the Student Success CRM with least-privilege access for Tutor and Program Manager personas.";
+    rich.learningOutcomes = [
+      "Explain users, profiles, permission sets, roles, OWD, sharing rules, manual sharing, and field-level security.",
+      "Describe how object, field, and record access combine.",
+      "Create or document Tutor and Program Manager personas.",
+      "Create the Student Success Tutor permission set.",
+      "Protect a sensitive Student field with field-level security.",
+      "Test allowed and denied access for realistic user scenarios."
+    ];
+    projectTask.steps = [
+      "Create or document Tutor and Program Manager users, roles, and access responsibilities.",
+      "Create the Student Success Tutor permission set with the required object and field access.",
+      "Review OWD, sharing, and field-level security, then test allowed and denied actions."
+    ];
+    projectTask.expected = "Tutors receive only the access needed to support assigned students, Program Managers receive oversight access, and restricted Student data remains protected.";
+    projectTask.evidence = [
+      "Persona access matrix for Tutor and Program Manager.",
+      "Screenshot of Student Success Tutor permission set object settings.",
+      "Role hierarchy, OWD, sharing, and field-level security proof.",
+      "Access-test table showing allowed and denied actions."
+    ];
+    rich.projectEvidence = projectTask.evidence;
+    rich.handsOnLab = {
+      title: "Guided Phase Lab: Tutor and Program Manager Access Model",
+      instructions: `<p class="text-slate-600 text-xs leading-relaxed">Complete the Guided Phase Lab story shown in the primary TomCodeX syllabus. Use this lab section to confirm the security model, permission set, field protection, and access tests are complete before answering Check My Work.</p>`
+    };
+    rich.finalSummary = "By the end of Module 3, the learner has created a least-privilege Student Success CRM access model for Tutor and Program Manager personas, protected sensitive data, tested allowed and denied actions, submitted evidence, and passed the Zentom AI Mastery Test with 80% or higher.";
+  }
+  if (index === 3) {
+    rich.moduleGoal = "Create a simple, usable Student Success CRM app experience for Tutors and Program Managers.";
+    rich.learningOutcomes = [
+      "Explain tabs, Lightning apps, page layouts, Lightning record pages, compact layouts, search layouts, and quick actions.",
+      "Create or verify Student, Course, and Course Enrollment tabs.",
+      "Build or update the Student Success CRM Lightning app navigation.",
+      "Customize Student and Course Enrollment page layouts.",
+      "Create a Student Lightning record page, compact layout, and useful list views.",
+      "Create or document one quick action that supports daily Student Success work."
+    ];
+    projectTask.steps = [
+      "Create or verify the Student Success CRM Lightning app with Student, Course, Course Enrollment, Tasks, Reports, and Dashboards navigation.",
+      "Customize Student and Course Enrollment page layouts, compact/search layout behavior, and the Student Lightning record page.",
+      "Create Active Students and Pending Enrollments list views plus one useful quick action or documented quick-action design."
+    ];
+    projectTask.expected = "Tutors and Program Managers can open one Student Success CRM app, find the right records, see important fields, and complete common actions with fewer clicks.";
+    projectTask.evidence = [
+      "App Launcher or App Manager screenshot showing Student Success CRM and navigation items.",
+      "Student and Course Enrollment page layout screenshots.",
+      "Student Lightning record page and compact/search layout proof.",
+      "Active Students, Pending Enrollments, and quick action proof."
+    ];
+    rich.projectEvidence = projectTask.evidence;
+    rich.handsOnLab = {
+      title: "Guided Phase Lab: Student Success CRM User Experience",
+      instructions: `<p class="text-slate-600 text-xs leading-relaxed">Complete the Guided Phase Lab story shown in the primary TomCodeX syllabus. Use this lab section to confirm the app, layouts, record page, list views, and quick action are complete before answering Check My Work.</p>`
+    };
+    rich.finalSummary = "By the end of Module 4, the learner has created a simple Student Success CRM user experience with app navigation, page layouts, a Lightning record page, list views, a quick action, project evidence, and a passing Zentom AI Mastery Test score of 80% or higher.";
+  }
   rich.masteryTest ||= buildAdminMasteryTest(module, projectTask);
   rich.masteryEvaluationCriteria = ADMIN_MASTERY_EVALUATION_CRITERIA;
   const standard = ADMIN_STANDARD_COVERAGE[index];
@@ -3114,14 +3617,14 @@ modules.forEach((module, index) => {
         if (!target.includes(item)) target.push(item);
       });
     };
-    appendUnique(module.points, standard.topics);
+    if (!optionalDeepDiveOnly) appendUnique(module.points, standard.topics);
     appendUnique(module.practice, standard.practice);
     appendUnique(module.questions, standard.questions);
     rich.learningOutcomes ||= [];
-    appendUnique(rich.learningOutcomes, standard.outcomes);
+    if (!optionalDeepDiveOnly) appendUnique(rich.learningOutcomes, standard.outcomes);
     rich.detailedLessonSections ||= [];
     if (!rich.detailedLessonSections.some((section) => section.title === standard.title)) {
-      rich.detailedLessonSections.push({ title: standard.title, content: standard.html });
+      rich.detailedLessonSections.push({ title: optionalDeepDiveOnly ? `Optional Admin Deep-Dive: ${standard.title}` : standard.title, content: standard.html });
     }
   }
   const deep = ADMIN_DEEP_DIVE_COVERAGE[index];
@@ -3134,10 +3637,15 @@ modules.forEach((module, index) => {
         if (!exists) target.push(item);
       });
     };
-    appendUnique(rich.detailedLessonSections, deep.sections, "title");
-    appendUnique(rich.learningOutcomes, deep.outcomes);
-    appendUnique(module.practice, deep.practice);
-    appendUnique(module.questions, deep.questions);
+    const deepSections = optionalDeepDiveOnly
+      ? deep.sections.map((section) => ({ ...section, title: `Optional Admin Deep-Dive: ${section.title}` }))
+      : deep.sections;
+    appendUnique(rich.detailedLessonSections, deepSections, "title");
+    if (!optionalDeepDiveOnly) {
+      appendUnique(rich.learningOutcomes, deep.outcomes);
+      appendUnique(module.practice, deep.practice);
+      appendUnique(module.questions, deep.questions);
+    }
   }
   const deepResources = ADMIN_DEEP_RESOURCES[index] || [];
   deepResources.forEach((resource) => {
@@ -3146,17 +3654,17 @@ modules.forEach((module, index) => {
     }
   });
   rich.keyNotes ||= module.points;
-  standard?.topics.forEach((topic) => {
+  (optionalDeepDiveOnly ? [] : standard?.topics || []).forEach((topic) => {
     if (!rich.keyNotes.includes(topic)) rich.keyNotes.push(topic);
   });
-  deep?.outcomes.forEach((outcome) => {
+  (optionalDeepDiveOnly ? [] : deep?.outcomes || []).forEach((outcome) => {
     if (!rich.keyNotes.includes(outcome)) rich.keyNotes.push(outcome);
   });
   rich.flashcards ||= module.questions.map((question, questionIndex) => ({
     front: question,
     back: module.points[questionIndex % module.points.length]
   }));
-  standard?.questions.forEach((question, questionIndex) => {
+  (optionalDeepDiveOnly ? [] : standard?.questions || []).forEach((question, questionIndex) => {
     if (!rich.flashcards.some((card) => card.front === question)) {
       rich.flashcards.push({
         front: question,
@@ -3164,23 +3672,23 @@ modules.forEach((module, index) => {
       });
     }
   });
-  deep?.flashcards.forEach((card) => {
+  (optionalDeepDiveOnly ? [] : deep?.flashcards || []).forEach((card) => {
     if (!rich.flashcards.some((existing) => existing.front === card.front)) {
       rich.flashcards.push(card);
     }
   });
   rich.practicalAssignment ||= module.practice;
-  standard?.practice.forEach((item) => {
+  (optionalDeepDiveOnly ? [] : standard?.practice || []).forEach((item) => {
     if (!rich.practicalAssignment.includes(item)) rich.practicalAssignment.push(item);
   });
-  deep?.practice.forEach((item) => {
+  (optionalDeepDiveOnly ? [] : deep?.practice || []).forEach((item) => {
     if (!rich.practicalAssignment.includes(item)) rich.practicalAssignment.push(item);
   });
   rich.knowledgeCheckQuestions ||= module.questions;
-  standard?.questions.forEach((question) => {
+  (optionalDeepDiveOnly ? [] : standard?.questions || []).forEach((question) => {
     if (!rich.knowledgeCheckQuestions.includes(question)) rich.knowledgeCheckQuestions.push(question);
   });
-  deep?.questions.forEach((question) => {
+  (optionalDeepDiveOnly ? [] : deep?.questions || []).forEach((question) => {
     if (!rich.knowledgeCheckQuestions.includes(question)) rich.knowledgeCheckQuestions.push(question);
   });
   rich.completionChecklist ||= [
@@ -3188,18 +3696,33 @@ modules.forEach((module, index) => {
     "I completed Check My Work.",
     "I scored 80% or higher in the AI Mastery Test."
   ];
+  rich.practicalAssignment = [];
+  rich.knowledgeCheckQuestions = [];
+  if (index >= 2) {
+    rich.completionChecklist = [
+      `I completed the Module ${index + 1} guided phase lab.`,
+      `I built the TomCodeX project task: ${projectTask.title}.`,
+      "I submitted the required project evidence.",
+      "I answered Check My Work with specific Salesforce names and proof.",
+      "I reviewed the Trailhead hands-on practice.",
+      "I can explain the module best practices and common mistakes.",
+      "I prepared for the interview questions.",
+      "I passed the Zentom AI Mastery Test with 80% or higher."
+    ];
+    rich.finalSummary ||= `By the end of Module ${index + 1}, the learner has completed the guided phase lab, built "${projectTask.title}", submitted project evidence, answered Check My Work, reviewed Trailhead practice, prepared interview answers, and passed the Zentom AI Mastery Test with 80% or higher.`;
+  }
   rich.masteryPreparationQuestions ||= module.questions;
-  standard?.questions.forEach((question) => {
+  (optionalDeepDiveOnly ? [] : standard?.questions || []).forEach((question) => {
     if (!rich.masteryPreparationQuestions.includes(question)) rich.masteryPreparationQuestions.push(question);
   });
-  deep?.questions.forEach((question) => {
+  (optionalDeepDiveOnly ? [] : deep?.questions || []).forEach((question) => {
     if (!rich.masteryPreparationQuestions.includes(question)) rich.masteryPreparationQuestions.push(question);
   });
   rich.finalSummary ||= `You completed ${module.title} as part of the connected Student Success CRM Admin project.`;
-  if (!rich.completionChecklist.includes(`I completed the TomCodeX project task: ${projectTask.title}`)) {
+  if (!optionalDeepDiveOnly && !rich.completionChecklist.includes(`I completed the TomCodeX project task: ${projectTask.title}`)) {
     rich.completionChecklist.unshift(`I completed the TomCodeX project task: ${projectTask.title}`);
   }
-  if (!rich.completionChecklist.includes("I completed the official Trailhead hands-on practice.")) {
+  if (!optionalDeepDiveOnly && !rich.completionChecklist.includes("I completed the official Trailhead hands-on practice.")) {
     rich.completionChecklist.unshift("I completed the official Trailhead hands-on practice.");
   }
 
@@ -3209,13 +3732,123 @@ modules.forEach((module, index) => {
       instructions: `<p class="text-slate-600 text-xs leading-relaxed mb-3">${rich.labTask.description || "Complete the connected Student Success CRM lab."}</p><ol class="list-decimal pl-5 space-y-1.5 text-slate-600 text-xs">${(rich.labTask.steps || []).map((step) => `<li>${step}</li>`).join("")}</ol>`
     };
   }
-  if (rich.handsOnLab && deep?.practice?.length && !rich.handsOnLab.instructions.includes("Deep-dive evidence")) {
+  if (!optionalDeepDiveOnly && rich.handsOnLab && deep?.practice?.length && !rich.handsOnLab.instructions.includes("Deep-dive evidence")) {
     rich.handsOnLab.instructions += `<div class="mt-4 rounded-xl border border-blue-200 bg-blue-50 p-3"><strong class="text-xs text-blue-900">Deep-dive evidence</strong><ol class="list-decimal pl-5 mt-2 space-y-1 text-xs text-blue-800">${deep.practice.map((item) => `<li>${item}</li>`).join("")}</ol></div>`;
   }
-  if (rich.handsOnLab && !rich.handsOnLab.instructions.includes(projectTask.title)) {
+  if (!optionalDeepDiveOnly && rich.handsOnLab && !rich.handsOnLab.instructions.includes(projectTask.title)) {
     rich.handsOnLab.instructions += `<div class="mt-4 rounded-xl border border-brand-200 bg-brand-50 p-3"><strong class="text-xs text-brand-900">Connected project task: ${projectTask.title}</strong><p class="mt-2 text-xs text-brand-800">${projectTask.expected}</p></div>`;
   }
   rich.labCriteria ||= rich.labTask?.labQuestions || [];
+  if (index === 0) {
+    rich.labCriteria = [
+      { id: "cloud_crm", question: "Explain cloud computing, SaaS, PaaS, and Salesforce CRM using one Salesforce business example.", type: "text", minLength: 100 },
+      { id: "navigation", question: "Describe the exact paths you used to open App Launcher, Setup, Object Manager, Company Information, and Users.", type: "text", minLength: 100 },
+      { id: "foundation_terms", question: "Explain Org, App, Object, Field, Record, and Profile using your practice org.", type: "text", minLength: 100 },
+      { id: "custom_app", question: "What exact custom app name did you create, and which tabs did you add?", type: "text", expectedKeywords: ["TomCodeX Student Success CRM"], minLength: 50 },
+      { id: "project_evidence", question: "Describe your submitted project evidence. Include org edition, timezone, currency, masked Organization ID only, custom app proof, and AppExchange risk review.", type: "text", placeholder: "Use a masked Organization ID such as 00Dxx000000XXXX.", minLength: 120 },
+      { id: "practice_org_safety", question: "Why should a production Salesforce org not be used for learning and practice?", type: "text", minLength: 60 },
+      { id: "appexchange_review", question: "Give your AppExchange Install or Do Not Install decision and explain the publisher, rating, reviews, permissions, data access, licensing, and uninstall risk you reviewed.", type: "text", minLength: 120 }
+    ];
+  }
+  if (index === 1) {
+    rich.labCriteria = [
+      { id: "object_model", question: "Explain the purpose of Student, Course, and Course Enrollment and why each requires its own Salesforce object.", type: "text", minLength: 100 },
+      { id: "api_names", question: "Provide the exact API names of the three custom objects you created.", type: "text", expectedKeywords: ["Student__c", "Course__c", "Course_Enrollment__c"], minLength: 50 },
+      { id: "field_types", question: "List important fields you created and explain why each Salesforce field type fits the stored data.", type: "text", minLength: 120 },
+      { id: "relationships", question: "Explain the relationship types connecting Course Enrollment to Student and Course, including ownership, sharing, deletion, and required-parent behavior.", type: "text", minLength: 120 },
+      { id: "junction_object", question: "Why is Course Enrollment a junction object, and what enrollment-specific data does it store?", type: "text", minLength: 80 },
+      { id: "sample_records", question: "Describe the sample Student, Course, and Course Enrollment records you created and how they prove the model works.", type: "text", minLength: 100 },
+      { id: "project_evidence", question: "Describe your Schema Builder, Object Manager, field decision, relationship decision, and sample-record evidence.", type: "text", minLength: 120 }
+    ];
+  }
+  if (index === 2) {
+    rich.labCriteria = [
+      { id: "security_layers", question: "Explain how object, field, and record access combine in Salesforce.", type: "text", minLength: 100 },
+      { id: "persona_model", question: "Describe the Tutor and Program Manager personas and the access each needs.", type: "text", minLength: 100 },
+      { id: "permission_set", question: "What exact permission set did you create or document, and what object access does it grant?", type: "text", expectedKeywords: ["Student Success Tutor"], minLength: 100 },
+      { id: "field_security", question: "Name one sensitive Student field you protected and explain how field-level security affects pages, reports, and APIs.", type: "text", minLength: 100 },
+      { id: "record_access", question: "Explain the OWD, role, and sharing approach you selected for Student and Course Enrollment records.", type: "text", minLength: 120 },
+      { id: "access_tests", question: "Describe at least three allowed actions and three denied actions from your access-test table.", type: "text", minLength: 120 },
+      { id: "project_evidence", question: "Describe the persona matrix, permission set screenshot, role or sharing proof, FLS proof, and access-test evidence you submitted.", type: "text", minLength: 120 }
+    ];
+  }
+  if (index === 3) {
+    rich.labCriteria = [
+      { id: "ui_layers", question: "Explain the difference between a tab, Lightning app, page layout, Lightning record page, compact layout, search layout, and quick action.", type: "text", minLength: 120 },
+      { id: "app_navigation", question: "What exact app name and navigation items did you configure for the Student Success CRM experience?", type: "text", expectedKeywords: ["Student Success CRM"], minLength: 80 },
+      { id: "page_layouts", question: "Describe the Student and Course Enrollment page layout changes you made and why they help users.", type: "text", minLength: 100 },
+      { id: "record_page", question: "Describe the Student Lightning record page or activation assignment you configured.", type: "text", minLength: 80 },
+      { id: "list_views", question: "What list views did you create, and what filters make them useful for daily work?", type: "text", expectedKeywords: ["Active Students", "Pending Enrollments"], minLength: 100 },
+      { id: "quick_action", question: "Describe the quick action you created or designed, including object, purpose, fields, and placement.", type: "text", minLength: 100 },
+      { id: "project_evidence", question: "Describe your app navigation, page layout, Lightning record page, compact/search layout, list view, and quick action evidence.", type: "text", minLength: 120 }
+    ];
+  }
+  if (index === 4) {
+    rich.labCriteria = [
+      { id: "validation_use_case", question: "Explain why validation rules are used in Salesforce instead of user training alone, and give one student data example.", type: "text", minLength: 100 },
+      { id: "email_validation", question: "Provide the exact formula you configured for the Student Email validation rule.", type: "text", minLength: 50, expectedKeywords: ["Student__c", "Email__c"] },
+      { id: "enrollment_validation", question: "Provide the exact formula you configured for the Course Enrollment Progress validation rule (preventing completion before progress reaches 100%).", type: "text", minLength: 60, expectedKeywords: ["Course_Enrollment__c", "Progress_Percentage__c", "Completed"] },
+      { id: "formula_vs_validation", question: "What is the difference between a Formula field and a validation-rule formula?", type: "text", minLength: 80 },
+      { id: "testing_boundaries", question: "Describe the boundary test cases you performed (e.g. empty fields, progress of 99% vs 100%) and the expected results.", type: "text", minLength: 120 },
+      { id: "project_evidence", question: "Describe your validation rules, formulas, error messages, and testing evidence.", type: "text", minLength: 120 },
+      { id: "data_quality_impact", question: "How do validation rules prevent dirty data during imports and background API integrations?", type: "text", minLength: 80 }
+    ];
+  }
+  if (index === 5) {
+    rich.labCriteria = [
+      { id: "reports_created", question: "List the names and purposes of the three reports you created for Student Success CRM.", type: "text", minLength: 100, expectedKeywords: ["Learning Status", "Enrollment Progress", "Follow-Up"] },
+      { id: "dashboard_components", question: "What exact dashboard name did you configure, and which chart components did you add?", type: "text", minLength: 80, expectedKeywords: ["Student Success Operations Dashboard"] },
+      { id: "report_filtering", question: "Explain the grouping and filter logic you used for the Enrollment Progress report.", type: "text", minLength: 80 },
+      { id: "folder_security", question: "Explain how folder sharing and Organization-Wide Defaults (OWD) affect report and dashboard visibility for different users.", type: "text", minLength: 100 },
+      { id: "business_value", question: "Give one concrete business decision or follow-up action a Program Manager can make based on this dashboard.", type: "text", minLength: 100 },
+      { id: "project_evidence", question: "Describe your reports, dashboard, folder security, and visibility test evidence.", type: "text", minLength: 120 },
+      { id: "standard_objects_use", question: "Explain the standard Sales and Service Cloud objects (Leads, Opportunities, Cases) and how they fit into the academy's operational pipeline.", type: "text", minLength: 100 }
+    ];
+  }
+  if (index === 6) {
+    rich.labCriteria = [
+      { id: "flow_trigger", question: "Explain why you chose a record-triggered Flow for Student Welcome, including the object, trigger timing (before vs after save), and entry conditions.", type: "text", minLength: 100, expectedKeywords: ["Student__c", "Active"] },
+      { id: "task_creation", question: "Describe the elements and fields you configured in the Flow to create the welcome Task record.", type: "text", minLength: 100, expectedKeywords: ["Task", "Subject", "Active"] },
+      { id: "duplicate_prevention", question: "How does your Flow ensure that multiple welcome Tasks are not created for the same Student?", type: "text", minLength: 80 },
+      { id: "flow_debugging", question: "Explain how you used Flow Builder's Debug mode to test both positive and negative paths.", type: "text", minLength: 100 },
+      { id: "platform_events", question: "What is the difference between a Platform Event-triggered Flow and a standard Record-triggered Flow?", type: "text", minLength: 80 },
+      { id: "project_evidence", question: "Describe your Flow canvas, entry conditions, debug runs, and task record evidence.", type: "text", minLength: 120 },
+      { id: "autolaunched_flows", question: "Explain the role of Autolaunched Flows and when they should be preferred over triggered flows.", type: "text", minLength: 80 }
+    ];
+  }
+  if (index === 7) {
+    rich.labCriteria = [
+      { id: "flow_trigger", question: "Explain the trigger object, timing, and entry conditions for the Enrollment Follow-Up Flow.", type: "text", minLength: 100, expectedKeywords: ["Course_Enrollment__c", "Pending"] },
+      { id: "subflow_integration", question: "If you created a reusable subflow, explain its input variables, outputs, and how it is invoked.", type: "text", minLength: 80 },
+      { id: "fault_handling", question: "Explain how and where you added fault paths in your Flow, and what action is taken when an error occurs.", type: "text", minLength: 100, expectedKeywords: ["fault"] },
+      { id: "asynchronous_paths", question: "What is the difference between a Schedule-triggered Flow, a scheduled path, and an asynchronous path?", type: "text", minLength: 100 },
+      { id: "bulk_considerations", question: "How does Flow Builder execute data elements (like Update Records) to avoid hitting governor limits in bulk transactions?", type: "text", minLength: 80 },
+      { id: "project_evidence", question: "Describe your Flow canvas, fault paths, debug logs, and notification evidence.", type: "text", minLength: 120 },
+      { id: "variables_formulas", question: "Describe the variables and formula resources you configured to support dynamic calculations inside the Flow.", type: "text", minLength: 80 }
+    ];
+  }
+  if (index === 8) {
+    rich.labCriteria = [
+      { id: "approval_process", question: "Describe the API name, entry criteria, steps, and final actions of your graduation approval process.", type: "text", minLength: 100, expectedKeywords: ["Student_Graduation_Approval"] },
+      { id: "approval_lifecycle", question: "Explain how the record lock, approver assignment, and email alerts behave during a record's approval lifecycle.", type: "text", minLength: 100 },
+      { id: "agentforce_governance", question: "Explain the key components of your Agentforce governance blueprint, including allowed topics and human escalation.", type: "text", minLength: 120, expectedKeywords: ["TomCodeX Student Success Assistant"] },
+      { id: "change_management", question: "What sandboxes (Developer, Full, etc.) are used for UAT, and how do Change Sets deploy configuration?", type: "text", minLength: 100 },
+      { id: "project_evidence", question: "Describe your approval process canvas, UAT plan, and Agentforce governance blueprint evidence.", type: "text", minLength: 120 },
+      { id: "ai_trust_layer", question: "Explain the Einstein Trust Layer's role in masking sensitive student data during generative AI interactions.", type: "text", minLength: 100 },
+      { id: "prompt_builder_use", question: "How does Prompt Builder ground LLM calls using CRM record merge fields?", type: "text", minLength: 80 }
+    ];
+  }
+  if (index === 9) {
+    rich.labCriteria = [
+      { id: "data_migration", question: "Describe how you prepared, mapped, and imported your test Student records, including reconciliation counts.", type: "text", minLength: 100, expectedKeywords: ["Student__c", "Email__c"] },
+      { id: "duplicate_rules", question: "Explain the matching rule and duplicate rule you configured to detect and handle duplicate Student emails.", type: "text", minLength: 100 },
+      { id: "deployment_checklist", question: "What key items belong on your metadata deployment checklist before releasing to production?", type: "text", minLength: 100 },
+      { id: "production_operations", question: "Describe three tasks in your production Admin runbook (monitoring, backup, user support).", type: "text", minLength: 100 },
+      { id: "agentforce_launch", question: "Explain your launch plan for the Student Success Assistant, including allowed topics, actions, and security.", type: "text", minLength: 120, expectedKeywords: ["Student Success Support"] },
+      { id: "project_evidence", question: "Describe your data import log, duplicate rule tests, deployment runbook, and final Assistant launch plan.", type: "text", minLength: 120 },
+      { id: "git_branching", question: "Describe the Git branching, pull request, code review, and merge strategy used in your team's DevOps pipeline.", type: "text", minLength: 100 }
+    ];
+  }
   if (!rich.labCriteria.some((criterion) => criterion.id === "project_evidence")) {
     rich.labCriteria.push({
       id: "project_evidence",
@@ -3227,7 +3860,7 @@ modules.forEach((module, index) => {
     });
   }
   const deepCriterion = ADMIN_DEEP_LAB_CRITERIA[index];
-  if (deepCriterion && !rich.labCriteria.some((criterion) => criterion.id === "deep_evidence")) {
+  if (!optionalDeepDiveOnly && deepCriterion && !rich.labCriteria.some((criterion) => criterion.id === "deep_evidence")) {
     rich.labCriteria.push({
       id: "deep_evidence",
       question: deepCriterion,

@@ -55,15 +55,24 @@ describe("Flow course Admin-pattern curriculum", () => {
       expect(rich.projectEvidence.join(" ")).toContain("LEITR");
       expect(rich.projectEvidence.join(" ")).toContain("1:2 rule");
       expect(rich.projectEvidence.join(" ")).toContain("1 day, 3 days, and 7 days");
-      expect(rich.labCriteria).toHaveLength(5);
-      expect(rich.labCriteria.map((criterion) => criterion.id)).toEqual([
-        "flow_identity",
-        "flow_logic",
-        "flow_tests",
-        "flow_evidence",
-        "leitr_review"
-      ]);
-      expect(rich.labCriteria.find((criterion) => criterion.id === "leitr_review").question).toContain("1:2 rule");
+      expect(rich.labCriteria).toHaveLength(7);
+      const expectedIds = [
+        ["flow_purpose", "flow_variables", "formula_resources", "decision_matrix", "flow_identity", "project_evidence", "leitr_review"],
+        ["trigger_timing", "entry_conditions", "priority_triage", "task_creation", "flow_identity", "project_evidence", "leitr_review"],
+        ["screen_design", "input_validation", "conditional_visibility", "page_placement", "flow_identity", "project_evidence", "leitr_review"],
+        ["decision_outcomes", "assignment_vs_update", "routing_formulas", "default_outcome", "flow_identity", "project_evidence", "leitr_review"],
+        ["collection_variables", "loop_processing", "loop_limits", "batch_update", "flow_identity", "project_evidence", "leitr_review"],
+        ["subflow_benefits", "input_outputs", "parent_invocation", "subflow_limits", "flow_identity", "project_evidence", "leitr_review"],
+        ["fault_purpose", "error_context", "logging_design", "notification_channel", "flow_identity", "project_evidence", "leitr_review"],
+        ["scheduled_vs_path", "asynchronous_benefits", "stale_reminder_logic", "scheduled_limits", "flow_identity", "project_evidence", "leitr_review"],
+        ["running_context", "security_risks", "flow_governance", "access_testing", "flow_identity", "project_evidence", "leitr_review"],
+        ["debug_rollback", "test_coverage", "recursion_prevention", "limit_analysis", "flow_identity", "project_evidence", "leitr_review"],
+        ["invocable_apex", "http_callout", "platform_events", "orchestration_use", "flow_identity", "project_evidence", "leitr_review"],
+        ["dependency_planning", "deployment_tools", "rollback_plan", "post_deployment", "flow_identity", "project_evidence", "leitr_review"]
+      ];
+      const index = _moduleNumber - 1;
+      expect(rich.labCriteria.map((criterion) => criterion.id)).toEqual(expectedIds[index]);
+      expect(rich.labCriteria.find((criterion) => criterion.id === "leitr_review").question).toContain("1:2");
       expect(rich.labCriteria.find((criterion) => criterion.id === "leitr_review").question).toContain("1-day, 3-day, and 7-day review dates");
       expect(rich.masteryTest).toHaveLength(15);
     }

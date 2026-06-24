@@ -1,9 +1,9 @@
-/* ============================================================
-   THEME SYSTEM — dark default, light override
+﻿/* ============================================================
+   THEME SYSTEM â€” dark default, light override
    Applied via: html[data-theme="light"] { ... }
    ============================================================ */
 
-/* ── Dark theme (default) ── */
+/* â”€â”€ Dark theme (default) â”€â”€ */
 :root {
   --clr-bg:          #000000;       /* Samsung pitch-black */
   --clr-bg-2:        #121212;       /* Samsung charcoal grey */
@@ -42,7 +42,7 @@
   --clr-link-active-border: rgba(10,132,255,0.3);
 }
 
-/* ── Light theme override ── */
+/* â”€â”€ Light theme override â”€â”€ */
 html[data-theme="light"] {
   --clr-bg:          #f2f2f7;       /* Samsung light background */
   --clr-bg-2:        #ffffff;
@@ -81,14 +81,14 @@ html[data-theme="light"] {
   --clr-link-active-border: #8ad9f5;
 }
 
-/* ── Global body background ── */
+/* â”€â”€ Global body background â”€â”€ */
 html[data-theme] body {
   background-color: var(--clr-bg) !important;
   color: var(--clr-text) !important;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* ── Tailwind utility overrides for Dark Mode ── */
+/* â”€â”€ Tailwind utility overrides for Dark Mode â”€â”€ */
 html[data-theme="dark"] body {
   background-color: var(--clr-bg) !important;
   color: var(--clr-text) !important;
@@ -177,24 +177,24 @@ html[data-theme="dark"] .text-brand-950 {
   color: var(--clr-brand-text) !important;
 }
 
-/* ── Custom Tailwind colour: mist ── */
+/* â”€â”€ Custom Tailwind colour: mist â”€â”€ */
 html[data-theme="dark"] .bg-mist {
   background-color: var(--clr-bg) !important;
 }
 
-/* ── border-slate-150 (custom non-standard Tailwind class) ── */
+/* â”€â”€ border-slate-150 (custom non-standard Tailwind class) â”€â”€ */
 html[data-theme="dark"] .border-slate-150 {
   border-color: var(--clr-border) !important;
 }
 
-/* ── Dashboard header ── */
+/* â”€â”€ Dashboard header â”€â”€ */
 html[data-theme="dark"] .dashboard-header {
   background-color: var(--clr-nav-bg) !important;
   border-color: var(--clr-nav-border) !important;
   backdrop-filter: blur(14px);
 }
 
-/* ── Hero inner white card (Salesforce Lifelong Learning Path box) ── */
+/* â”€â”€ Hero inner white card (Salesforce Lifelong Learning Path box) â”€â”€ */
 html[data-theme="dark"] .rounded-2xl.bg-white.p-6.text-ink {
   background-color: var(--clr-card-bg) !important;
   color: var(--clr-text) !important;
@@ -208,18 +208,18 @@ html[data-theme="dark"] .rounded-2xl.bg-white.p-6.text-ink .h-3.overflow-hidden 
   background-color: var(--clr-surface) !important;
 }
 
-/* ── Passport / Settings stat boxes ── */
+/* â”€â”€ Passport / Settings stat boxes â”€â”€ */
 html[data-theme="dark"] .bg-white.p-3.rounded-2xl {
   background-color: var(--clr-bg-2) !important;
 }
 
-/* ── Skill Passport Stats card and Certificate Eligibility card ── */
+/* â”€â”€ Skill Passport Stats card and Certificate Eligibility card â”€â”€ */
 html[data-theme="dark"] .bg-slate-50.border.border-slate-200 {
   background-color: var(--clr-bg-2) !important;
   border-color: var(--clr-border) !important;
 }
 
-/* ── Lab history right column ── */
+/* â”€â”€ Lab history right column â”€â”€ */
 html[data-theme="dark"] .bg-white.border.border-slate-200.rounded-3xl {
   background-color: var(--clr-card-bg) !important;
   border-color: var(--clr-border) !important;
@@ -228,32 +228,32 @@ html[data-theme="dark"] .bg-white.border.border-slate-200.rounded-3xl h3 {
   color: var(--clr-text) !important;
 }
 
-/* ── Settings quota section ── */
+/* â”€â”€ Settings quota section â”€â”€ */
 html[data-theme="dark"] .bg-slate-50.border.border-slate-200.rounded-xl {
   background-color: var(--clr-bg-2) !important;
   border-color: var(--clr-border) !important;
 }
 
-/* ── Progress bars with bg-slate-200 track ── */
+/* â”€â”€ Progress bars with bg-slate-200 track â”€â”€ */
 html[data-theme="dark"] .bg-slate-200.h-2,
 html[data-theme="dark"] .w-full.bg-slate-200 {
   background-color: var(--clr-surface) !important;
 }
 
-/* ── Status badges / eligibility badges ── */
+/* â”€â”€ Status badges / eligibility badges â”€â”€ */
 html[data-theme="dark"] .bg-slate-100.text-slate-400 {
   background-color: var(--clr-surface) !important;
   color: var(--clr-text-3) !important;
 }
 
-/* ── POC selector dropdown ── */
+/* â”€â”€ POC selector dropdown â”€â”€ */
 html[data-theme="dark"] .bg-slate-100.border.border-slate-300 {
   background-color: var(--clr-input-bg) !important;
   border-color: var(--clr-input-border) !important;
   color: var(--clr-text) !important;
 }
 
-/* ── Disabled inputs (e.g. email field in settings) ── */
+/* â”€â”€ Disabled inputs (e.g. email field in settings) â”€â”€ */
 html[data-theme="dark"] input:disabled,
 html[data-theme="dark"] .bg-slate-100.cursor-not-allowed {
   background-color: var(--clr-surface) !important;
@@ -261,7 +261,7 @@ html[data-theme="dark"] .bg-slate-100.cursor-not-allowed {
   color: var(--clr-text-3) !important;
 }
 
-/* ── Emerald buttons (Download Certificate) ── */
+/* â”€â”€ Emerald buttons (Download Certificate) â”€â”€ */
 html[data-theme="dark"] .bg-emerald-50 {
   background-color: rgba(52, 211, 153, 0.1) !important;
   border-color: rgba(52, 211, 153, 0.25) !important;
@@ -276,12 +276,12 @@ html[data-theme="dark"] .hover\:bg-emerald-100:hover {
   background-color: rgba(52, 211, 153, 0.18) !important;
 }
 
-/* ── Brand-50 light blue chip ── */
+/* â”€â”€ Brand-50 light blue chip â”€â”€ */
 html[data-theme="dark"] .bg-brand-50 {
   background-color: var(--clr-brand-light) !important;
 }
 
-/* ── Explore courses button dark mode ── */
+/* â”€â”€ Explore courses button dark mode â”€â”€ */
 html[data-theme="dark"] .dashboard-explore {
   border-color: var(--clr-brand) !important;
   color: var(--clr-brand-text) !important;
@@ -290,12 +290,12 @@ html[data-theme="dark"] .dashboard-explore:hover {
   background-color: var(--clr-brand-light) !important;
 }
 
-/* ── View AI roadmap button and similar outline buttons ── */
+/* â”€â”€ View AI roadmap button and similar outline buttons â”€â”€ */
 html[data-theme="dark"] .border.border-brand-600 {
   border-color: var(--clr-brand) !important;
 }
 
-/* ── Catch-all for remaining text-slate classes ── */
+/* â”€â”€ Catch-all for remaining text-slate classes â”€â”€ */
 html[data-theme="dark"] .text-slate-800 {
   color: var(--clr-text) !important;
 }
@@ -305,20 +305,20 @@ html[data-theme="dark"] .text-slate-300 {
 }
 
 
-/* ── Dashboard header direct colour ── */
+/* â”€â”€ Dashboard header direct colour â”€â”€ */
 html[data-theme="dark"] .dashboard-header.bg-white,
 html[data-theme="dark"] header.dashboard-header {
   background-color: var(--clr-nav-bg) !important;
   border-color: var(--clr-nav-border) !important;
 }
 
-/* ── Settings form label text colours ── */
+/* â”€â”€ Settings form label text colours â”€â”€ */
 html[data-theme="dark"] .text-slate-700 label,
 html[data-theme="dark"] label.text-slate-700 {
   color: var(--clr-text-2) !important;
 }
 
-/* ── Settings borders ── */
+/* â”€â”€ Settings borders â”€â”€ */
 html[data-theme="dark"] .border-slate-350 {
   border-color: var(--clr-border-2) !important;
 }
@@ -326,33 +326,33 @@ html[data-theme="dark"] .border-slate-150 {
   border-color: var(--clr-border) !important;
 }
 
-/* ── Fallback: any remaining bg-slate-100 ── */
+/* â”€â”€ Fallback: any remaining bg-slate-100 â”€â”€ */
 html[data-theme="dark"] .bg-slate-100 {
   background-color: var(--clr-bg-2) !important;
 }
 
-/* ── bg-white/95 academy-home sticky header ── */
+/* â”€â”€ bg-white/95 academy-home sticky header â”€â”€ */
 html[data-theme="dark"] .bg-white\/95 {
   background-color: var(--clr-nav-bg) !important;
 }
 
-/* ── bg-brand-50 CTA section ── */
+/* â”€â”€ bg-brand-50 CTA section â”€â”€ */
 html[data-theme="dark"] .bg-brand-50 {
   background-color: var(--clr-bg-2) !important;
 }
 
-/* ── Rounded white cards inside dark hero sections ── */
+/* â”€â”€ Rounded white cards inside dark hero sections â”€â”€ */
 html[data-theme="dark"] .rounded-2xl.bg-white {
   background-color: var(--clr-card-bg) !important;
   color: var(--clr-text) !important;
 }
 
-/* ── Gamification dashboard bg overrides ── */
+/* â”€â”€ Gamification dashboard bg overrides â”€â”€ */
 html[data-theme="dark"] .bg-slate-50 {
   background-color: var(--clr-bg-2) !important;
 }
 
-/* ── Navigation dropdown menus (Certification Prep, Learn, AI Lab, etc.) ── */
+/* â”€â”€ Navigation dropdown menus (Certification Prep, Learn, AI Lab, etc.) â”€â”€ */
 html[data-theme="dark"] .site-nav-menu {
   background: var(--clr-menu-bg) !important;
   border-color: var(--clr-menu-border) !important;
@@ -379,7 +379,7 @@ html[data-theme="dark"] .site-nav-plan-badge {
   color: var(--clr-text-3) !important;
 }
 
-/* ── Theme toggle button ── */
+/* â”€â”€ Theme toggle button â”€â”€ */
 .tc-theme-toggle {
   display: inline-flex;
   align-items: center;
@@ -405,7 +405,7 @@ html[data-theme="dark"] .site-nav-plan-badge {
   transform: rotate(20deg) scale(1.08);
 }
 @media (min-width: 1121px) {
-  /* On desktop the nav is visible — move toggle inside the nav row */
+  /* On desktop the nav is visible â€” move toggle inside the nav row */
   .tc-theme-toggle {
     margin-left: 0.5rem;
     margin-right: 0;
@@ -414,11 +414,11 @@ html[data-theme="dark"] .site-nav-plan-badge {
 }
 
 *{box-sizing:border-box}html{scroll-behavior:smooth}button,input,select,textarea{font:inherit}button{cursor:pointer}
-/* ── Site header ── */
+/* â”€â”€ Site header â”€â”€ */
 .site-header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--clr-nav-border);background:var(--clr-nav-bg);box-shadow:0 4px 18px var(--clr-shadow);backdrop-filter:blur(14px);transition:background 0.25s,border-color 0.25s}.site-header-main{display:flex;max-width:96rem;min-height:4.5rem;margin:0 auto;align-items:center;gap:1rem;padding:.55rem 1.25rem}.site-brand{display:flex;min-width:max-content;align-items:center;gap:.65rem;color:var(--clr-text)}.site-brand img{width:auto;height:3rem}.site-brand span,.site-brand strong,.site-brand small{display:block}.site-brand strong{font-size:.78rem;color:var(--clr-text)}.site-brand small{max-width:10rem;overflow:hidden;color:var(--clr-text-2);font-size:.62rem;text-overflow:ellipsis;white-space:nowrap}.site-navigation{display:flex;margin-left:auto;align-items:center;gap:.2rem}.site-navigation a,.site-nav-group summary{border-radius:.6rem;color:var(--clr-text-2);font-size:.73rem;font-weight:750;white-space:nowrap}.site-direct-link,.site-login-link,.site-nav-group summary{display:block;padding:.65rem .65rem}.site-navigation a:hover,.site-navigation a[aria-current="page"],.site-nav-group summary:hover{background:var(--clr-link-active-bg);color:var(--clr-brand-hover)}.site-navigation a[aria-current="page"]{box-shadow:inset 0 0 0 1px var(--clr-link-active-border)}.site-login-link{margin-left:.3rem!important;background:var(--clr-brand)!important;color:#fff!important;padding:.68rem .8rem!important}.site-login-link:hover{background:var(--clr-brand-hover)!important}.site-nav-group{position:relative}.site-nav-group summary{display:flex;align-items:center;gap:.3rem;cursor:pointer;list-style:none}.site-nav-group summary::-webkit-details-marker{display:none}.site-nav-group[open] summary{background:var(--clr-link-active-bg);color:var(--clr-brand-hover)}.site-nav-menu{position:absolute;top:calc(100% + .55rem);left:50%;display:grid;width:19rem;transform:translateX(-50%);gap:.25rem;border:1px solid var(--clr-menu-border);border-radius:.85rem;background:var(--clr-menu-bg);padding:.45rem;box-shadow:0 18px 48px var(--clr-shadow)}.site-nav-menu a{display:block;padding:.7rem}.site-nav-menu strong,.site-nav-menu small{display:block}.site-nav-menu strong{color:var(--clr-menu-strong);font-size:.75rem}.site-nav-menu small{margin-top:.18rem;color:var(--clr-menu-small);font-size:.62rem;font-weight:500;line-height:1.35;white-space:normal}.site-nav-menu a:hover strong,.site-nav-menu a[aria-current="page"] strong{color:var(--clr-brand-hover)}.site-menu-toggle{display:none;align-items:center;gap:.22rem;border:1px solid var(--clr-border);border-radius:.65rem;background:var(--clr-card-bg);padding:.65rem;color:var(--clr-text-2)}.site-menu-toggle span{display:block;width:1rem;height:2px;background:var(--clr-text-2)}.site-menu-toggle b{margin-left:.35rem;font-size:.7rem}
 @media(max-width:1120px){.site-menu-toggle{display:flex}.tc-theme-toggle{margin-left:auto;margin-right:.35rem}.site-navigation{position:absolute;top:calc(100% + 1px);right:0;left:0;display:none;max-height:calc(100vh - 5rem);margin:0;overflow-y:auto;border-bottom:1px solid var(--clr-nav-border);background:var(--clr-menu-bg);padding:.75rem 1rem 1rem;box-shadow:0 14px 30px var(--clr-shadow)}.site-navigation.open{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;gap:.5rem}.site-navigation a,.site-nav-group summary{font-size:.78rem}.site-direct-link,.site-login-link,.site-nav-group summary{padding:.75rem}.site-login-link{margin:0!important;text-align:center}.site-nav-group{position:static}.site-nav-menu{position:static;width:auto;margin-top:.3rem;transform:none;border:0;background:var(--clr-bg-2);padding:.3rem;box-shadow:none}.site-nav-menu a{padding:.6rem}.site-nav-group[open]{grid-column:1/-1}.site-navigation .tc-theme-toggle{width:100%!important;height:auto!important;padding:.75rem!important;margin:0!important;aspect-ratio:auto!important;font-size:0.9rem!important;border-radius:0.6rem!important;grid-column:span 1!important}}@media(max-width:560px){.site-header-main{min-height:4rem;padding:.45rem .75rem}.site-brand img{height:2.7rem}.site-brand strong{font-size:.7rem}.site-brand small{max-width:8rem}.site-navigation.open{grid-template-columns:1fr}.site-nav-group[open]{grid-column:auto}.site-menu-toggle b{display:none}}
 .dashboard-header{position:sticky;top:0;z-index:50}.dashboard-header-inner{max-width:96rem}.dashboard-main-nav{gap:.25rem}.dashboard-main-nav a,.dashboard-main-nav button{white-space:nowrap;border-radius:.65rem;padding:.65rem .75rem;color:var(--clr-text-2);transition:background .2s,color .2s}.dashboard-main-nav a:hover,.dashboard-main-nav button:hover{background:var(--clr-link-active-bg);color:var(--clr-brand-hover)}.dashboard-tutor-button{white-space:nowrap}@media(max-width:640px){.dashboard-brand span{display:none}.dashboard-tutor-button{padding:.65rem .8rem;font-size:.75rem}}@media(min-width:1280px) and (max-width:1400px){.dashboard-main-nav a,.dashboard-main-nav button{padding:.6rem .55rem;font-size:.78rem}.dashboard-explore{padding-left:.75rem;padding-right:.75rem}}
-.course-card{overflow:hidden;border:1px solid var(--clr-card-border);border-radius:1rem;background:var(--clr-card-bg);transition:transform .2s,box-shadow .2s}.course-card:hover{transform:translateY(-4px);box-shadow:0 18px 42px var(--clr-shadow)}.course-cover{display:grid;height:9rem;place-items:center;background-image:linear-gradient(135deg,var(--tw-gradient-from),var(--tw-gradient-to));color:#fff;font-size:2rem;font-weight:800}.course-cover-illustration{overflow:hidden}.course-cover-illustration img{width:100%;height:100%;object-fit:cover;transition:transform .35s ease}.course-card:hover .course-cover-illustration img{transform:scale(1.035)}.course-card h3{margin-top:.75rem;font-size:1.05rem;font-weight:800;color:var(--clr-text)}.course-card p{margin-top:.5rem;color:var(--clr-text-2);font-size:.875rem;line-height:1.55}.course-meta{margin-top:1rem;border-top:1px solid var(--clr-border);padding-top:.8rem;color:var(--clr-text-3);font-size:.75rem;font-weight:600}.course-tag,.level-badge{display:inline-flex;border-radius:999px;background:var(--clr-link-active-bg);padding:.3rem .65rem;color:var(--clr-brand-hover);font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+.course-card{overflow:hidden;border:1px solid var(--clr-card-border);border-radius:1rem;background:var(--clr-card-bg);transition:transform .2s,box-shadow .2s}.course-card:hover{transform:translateY(-4px);box-shadow:0 18px 42px var(--clr-shadow)}.course-cover{display:grid;height:10.75rem;place-items:center;background:#062c3a;background-image:linear-gradient(135deg,var(--tw-gradient-from),var(--tw-gradient-to));color:#fff;font-size:2rem;font-weight:800}.course-cover-illustration{overflow:hidden;padding:.45rem;background:#062c3a}.course-cover-illustration img{width:100%;height:100%;border-radius:.75rem;object-fit:contain;transition:transform .35s ease}.course-card:hover .course-cover-illustration img{transform:scale(1.025)}.course-card h3{margin-top:.75rem;font-size:1.05rem;font-weight:800;color:var(--clr-text)}.course-card p{margin-top:.5rem;color:var(--clr-text-2);font-size:.875rem;line-height:1.55}.course-meta{margin-top:1rem;border-top:1px solid var(--clr-border);padding-top:.8rem;color:var(--clr-text-3);font-size:.75rem;font-weight:600}.course-tag,.level-badge{display:inline-flex;border-radius:999px;background:var(--clr-link-active-bg);padding:.3rem .65rem;color:var(--clr-brand-hover);font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em}
 .tab-navbar{position:sticky;top:.75rem;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);max-width:48rem;margin:0 auto 2rem;padding:.35rem;border:1px solid var(--clr-border);border-radius:999px;background:var(--clr-bg-2);box-shadow:0 10px 30px var(--clr-shadow);backdrop-filter:blur(12px);transition:background-color 0.25s,border-color 0.25s}.tab-button{border-radius:999px;padding:.65rem 1.1rem;color:var(--clr-text-2);font-size:.82rem;font-weight:700;transition:.22s cubic-bezier(0.4,0,0.2,1);border:none;background:transparent;text-align:center;cursor:pointer}.tab-button:hover{background:var(--clr-surface);color:var(--clr-text)}.tab-button.active{background:var(--clr-brand);color:#ffffff;box-shadow:0 2px 10px rgba(10,132,255,0.25)}.tab-panel[hidden],.hidden{display:none}
 .academy-card{border:1px solid var(--clr-card-border);border-radius:1.5rem;background:var(--clr-card-bg);padding:1.75rem;box-shadow:0 12px 32px var(--clr-shadow);transition:background-color 0.25s,border-color 0.25s}.academy-card h2{margin-bottom:1.1rem;font-size:1.3rem;font-weight:800;color:var(--clr-text)}.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem}.stat-card{border:1px solid var(--clr-border);border-radius:1.15rem;background:var(--clr-surface);padding:.9rem;transition:background-color 0.25s,border-color 0.25s}.stat-card strong{display:block;font-size:1.35rem;color:var(--clr-text)}.stat-card span,.tiny-text,.small-label{color:var(--clr-text-3);font-size:.75rem}.stat-card p{margin-top:.2rem;color:var(--clr-text-2);font-size:.7rem}
 .day-controls label{display:block;margin-bottom:.35rem;color:var(--clr-text-2);font-size:.75rem;font-weight:700}input,select,textarea{width:100%;border:1px solid var(--clr-input-border);border-radius:1rem;background:var(--clr-input-bg);padding:.75rem .9rem;color:var(--clr-text);outline:none;transition:border-color 0.2s ease,background-color 0.2s ease,box-shadow 0.2s ease}input:focus,select:focus,textarea:focus{border-color:var(--clr-brand);box-shadow:0 0 0 3px var(--clr-brand-light)}textarea{min-height:8rem;resize:vertical}.day-controls select{border-color:var(--clr-border-2);background:var(--clr-bg-3);color:var(--clr-text)}.day-controls select option{background:var(--clr-bg-3);color:var(--clr-text)}.day-controls button{margin-top:.6rem;border:1px solid var(--clr-border-2);border-radius:999px;padding:.65rem;background:var(--clr-surface);color:var(--clr-text);font-size:.75rem;font-weight:700;transition:all 0.2s}.day-controls button:hover{background:var(--clr-border-2)}button:disabled{cursor:not-allowed;opacity:.4}label{display:block;margin:.8rem 0 .35rem;color:var(--clr-text-2);font-size:.8rem;font-weight:700}.primary-button{margin-top:1rem;width:100%;border-radius:999px;background:var(--clr-brand);padding:.8rem;color:#ffffff;font-weight:800;border:none;transition:background-color 0.2s ease,transform 0.15s ease}.primary-button:hover{background:var(--clr-brand-hover);transform:scale(1.01)}.primary-button:active{transform:scale(0.99)}

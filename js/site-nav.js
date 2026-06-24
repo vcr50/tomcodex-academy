@@ -1,6 +1,10 @@
 (function () {
   const SESSION_KEY = "tomcodex.authSession.v1";
   const IDENTITY_KEY = "tomcodex.authIdentity.v1";
+  let recentCourse = "course-admin.html";
+  try {
+    recentCourse = localStorage.getItem("tomcodex.recentCourse.v1") || "course-admin.html";
+  } catch {}
   const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
   const pages = {
     "index.html": "Academy Home",
@@ -39,8 +43,8 @@
     { label: "Learn", items: learnItems },
     { label: "AI Lab", items: [
       ["dashboard.html?tab=trainer", "AI Learning Mentor", "Explain doubts and concepts"],
-      ["course-admin.html", "Check My Work", "Answer lab questions to verify your Salesforce setup"],
-      ["course-admin.html", "AI Mastery Test", "15-question module evaluation"],
+      [recentCourse, "Check My Work", "Answer lab questions to verify your Salesforce setup"],
+      [recentCourse, "AI Mastery Test", "15-question module evaluation"],
       ["interview.html", "AI Interviewer", "Technical and behavioral mock interviews"],
       ["placement-guidance.html", "Placement Guidance", "Companies, referrals, and outreach templates"],
       ["code-review-ai.html", "Code Review AI", "Review Apex/LWC code and flows"],
